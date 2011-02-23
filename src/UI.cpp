@@ -161,15 +161,15 @@ void UI::render()
 
     if( localPause && stats->lives > 0 )
     {
-        de::Engine::Graphics().add( outerMenuBox, DefaultBoxColour, 9, FBO_UI );
+        /*de::Engine::Graphics().add( outerMenuBox, DefaultBoxColour, 9, FBO_UI );
         de::Engine::Graphics().add( innerMenuBox, DefaultSelectedBoxColour, 10, FBO_UI );
-        PauseMenu.render();
+        PauseMenu.render();*/
     }
 
 
     if( stats->lives < 0 )
-    {
+    {/*
         ContinueMenu.render();
-        Continue.render( FBO_UI );
+        Continue.render( FBO_UI );*/
     }
 }

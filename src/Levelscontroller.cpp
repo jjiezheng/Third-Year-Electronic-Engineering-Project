@@ -229,7 +229,7 @@ void LevelEnd::reLoadTextures()
 
 void LevelEnd::render()
 {
-    de::Engine::Graphics().add( fullScreenFade, FBO_UI );
+    /*de::Engine::Graphics().add( fullScreenFade, FBO_UI );*/
 
     pressButton.render( FBO_UI );
     level.render( FBO_UI );

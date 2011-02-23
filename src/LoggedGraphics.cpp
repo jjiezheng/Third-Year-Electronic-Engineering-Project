@@ -29,34 +29,10 @@ namespace de
             return wrapped->render();
         }
 
-        bool LoggedGraphics::add( const de::classes::Sprite &_Sprite, const int &_type )
-        {
-            //de::io::log << "add was called with a Sprite.\n";
-            return wrapped->add( _Sprite, _type );
-        }
-
-        bool LoggedGraphics::add( std::vector<de::classes::Sprite> &_Sprites, const int &_type )
-        {
-            //de::io::log << "add was called with Sprites.\n";
-            return wrapped->add( _Sprites, _type );
-        }
-
-        bool LoggedGraphics::add( const de::classes::Line &_Line, const int &_type )
-        {
-            //de::io::log << "add was called with a Line.\n";
-            return wrapped->add( _Line, _type );
-        }
-
         bool LoggedGraphics::add( renderObject *_Object )
         {
             //de::io::log << "add was called with a Line.\n";
             return wrapped->add( _Object );
-        }
-
-        bool LoggedGraphics::add( const de::classes::Poly &_poly, const de::classes::Colour &_colour, const int &_priority, const int &_type )
-        {
-            //de::io::log << "add was called with a Poly.\n";
-            return wrapped->add( _poly, _colour, _priority, _type );
         }
 
         void LoggedGraphics::toggleFullscreen()

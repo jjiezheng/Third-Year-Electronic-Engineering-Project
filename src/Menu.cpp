@@ -139,7 +139,7 @@ void BaseMenuList::render()
         iterMenuItems->render();
     }
 
-    de::Engine::Graphics().add( curser, colour, 11, FBO_UI );
+    /*de::Engine::Graphics().add( curser, colour, 11, FBO_UI );*/
 }
 
 void BaseMenuList::handleEvent( const SDL_Event &event )

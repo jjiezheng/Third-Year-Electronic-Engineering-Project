@@ -336,7 +336,7 @@ namespace Attrition
 
             visualHitbox.update( hitbox );
             visualHitbox.render( label, _layer );
-            de::Engine::Graphics().add( axisAligned, Colour(1,1,1,0.3 ), 10, _layer );
+            /*de::Engine::Graphics().add( axisAligned, Colour(1,1,1,0.3 ), 10, _layer );*/
         }
     }
 

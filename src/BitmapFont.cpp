@@ -199,7 +199,7 @@ namespace de
                     reload();
                     reloadSprites = false;
                 }
-                Engine::Graphics().add( Sprites, _type );
+                /*Engine::Graphics().add( Sprites, _type );*/
             }
         }
     }

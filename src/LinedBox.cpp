@@ -75,20 +75,20 @@ namespace de
 
 
         void LinedBox::render( const de::enums::Collision &_label, const int &_type )
-        {
+        {/*
             Engine::Graphics().add( edge, _type );
             if( _label == ENEMY )
                 Engine::Graphics().add( box, enemy, 10, _type );
             else if( _label == FRIENDLY )
                 Engine::Graphics().add( box, friendly, 10, _type );
             else
-                de::io::error << "Wrong label given to Lined Box\n";
+                de::io::error << "Wrong label given to Lined Box\n";*/
         }
 
         void LinedBox::render( const Colour &_colour, const int &_type )
-        {
+        {/*
             Engine::Graphics().add( edge, _type );
-            Engine::Graphics().add( box, _colour, 10, _type );
+            Engine::Graphics().add( box, _colour, 10, _type );*/
         }
 
     }

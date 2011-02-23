@@ -169,7 +169,7 @@ namespace de
 
         void Sprite::render( const int &_type )
         {
-            Engine::Graphics().add( *this, _type );
+            /*Engine::Graphics().add( *this, _type );*/
         }
 
 
@@ -484,7 +484,7 @@ namespace de
 
         void Poly::render( const de::classes::Colour &_colour, const int &_type )
         {
-            Engine::Graphics().add( *this, _colour, 20, _type );
+            /*Engine::Graphics().add( *this, _colour, 20, _type );*/
         }
 
 

@@ -19,7 +19,7 @@ namespace de
 
             int spriteNumber;
             int batchNumber;
-            float screenWidth, screenHeight;
+            int screenWidth, screenHeight;
         };
 
         struct VideoInfo

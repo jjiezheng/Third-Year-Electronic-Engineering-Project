@@ -3,6 +3,7 @@
 
 #include <State.h>
 #include <string>
+#include "StringObject.h"
 
 namespace de
 {
@@ -34,8 +35,10 @@ namespace de
 				lua_State *luaState;
 				luabind::object global, currentState;
 
+				StringObject message, ErrorInstructions, ErrorFile;
+				/*
 				de::classes::SpriteString message, ErrorInstructions, ErrorFile;
-				de::classes::ColourBlender fade;
+				de::classes::ColourBlender fade;*/
 
 		};
 	}

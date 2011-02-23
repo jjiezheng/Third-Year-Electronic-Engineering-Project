@@ -106,7 +106,7 @@ void textBox::render( fboTypes _fbo, fboTypes _fbo2, bool _actAsButton )
 
         boxLocation.changeRect( width + 5, height + 10 );
     }
-
+	/*
     if( _actAsButton )
     {
         if( hasFocus && hoverEvent )
@@ -123,7 +123,7 @@ void textBox::render( fboTypes _fbo, fboTypes _fbo2, bool _actAsButton )
             de::Engine::Graphics().add( boxLocation, DefaultBoxColour, 10, _fbo );
         else if( !hasFocus )
             de::Engine::Graphics().add( boxLocation, DefaultSelectedBoxColour, 10, _fbo );
-    }
+    }*/
 }
 
 

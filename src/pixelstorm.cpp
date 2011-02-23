@@ -122,7 +122,7 @@ namespace Attrition
                 delete currentState;
                 currentState = nextState;
                 nextState = NULL;
-                overlay->newState();
+                de::Engine::Audio().stopMusic();
             }
         }
     }

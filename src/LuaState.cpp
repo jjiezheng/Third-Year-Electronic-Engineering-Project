@@ -1,5 +1,5 @@
 #include "LuaState.h"
-#include "Pixelstorm.h"
+//#include "Pixelstorm.h"
 #include "CoreEngine.h"
 
 namespace fs = boost::filesystem;
@@ -25,13 +25,6 @@ namespace
         de::io::tests << _message << "\n";
     }
 
-    float get( const de::classes::Vector &_vec, bool _x )
-    {
-        if( _x )
-            return _vec.x;
-        return _vec.y;
-    }
-
     void setResources( const std::string &_location )
     {
         de::Engine::Resources().load( _location );
@@ -43,7 +36,6 @@ namespace
         [
             luabind::def( "include", (std::string(*)(const std::string &)) &::include ),
             luabind::def( "Log", (void(*)(const std::string &)) &::print ),
-            luabind::def( "get", (float(*)(const de::classes::Vector &, bool)) &::get ),
             luabind::def( "loadResources", (void(*)(const std::string &)) &::setResources )
         ];
     }
@@ -63,11 +55,23 @@ namespace de
 	{
 		LuaState::LuaState( const std::string &_luaPath, bool _altControls ) :luaError(false), active(false), altControls(_altControls), luaState(NULL)
 		{
-			ErrorInstructions.set( "Error in lua file. Edit then press F5.", "GeoSansLight", de::classes::Vector(640, 380), 11, de::enums::ALIGN_CENTRE );
-			ErrorInstructions.setColour( de::classes::Colour( 1.0, 0.0, 0.0, 1.0 ) );
+			ErrorInstructions.font( "visitor" ).shader( "String" ).depth( false );
+			ErrorInstructions.setUniform( "Projection", glm::perspective( 45.0f, 16.0f/10.0f, 0.1f, 1000.0f ) );
+			ErrorInstructions.setUniform( "View", glm::rotate( glm::translate( glm::mat4(1.0), glm::vec3(0.0f,0.0f,-950.0f ) ), 180.0f, glm::vec3( 1.0f,0.0f,0.0f) ) );
+			ErrorInstructions.setUniform( "Colour", glm::vec4( 0.67f, 0.16f, 0.16f,0.8f ) );
+			ErrorInstructions.text( "Error in current lua file. Edit then press F5." );
 
-			ErrorFile.set( "", "GeoSansLight", de::classes::Vector(640, 420), 11, de::enums::ALIGN_CENTRE );
-			ErrorFile.setColour( de::classes::Colour( 1.0, 0.0, 0.0, 1.0 ) );
+			ErrorFile.font( "visitor" ).shader( "String" ).depth( false );
+			ErrorFile.setUniform( "Projection", glm::perspective( 45.0f, 16.0f/10.0f, 0.1f, 1000.0f ) );
+			ErrorFile.setUniform( "View", glm::rotate( glm::translate( glm::mat4(1.0), glm::vec3(0.0f,-20.0f,-950.0f ) ), 180.0f, glm::vec3( 1.0f,0.0f,0.0f) ) );
+			ErrorFile.setUniform( "Colour", glm::vec4( 0.67f, 0.16f, 0.16f,0.8f ) );
+			ErrorFile.text( "Error in lua file. Edit then press F5." );
+
+			message.font( "visitor" ).shader( "String" ).depth( false );
+			message.setUniform( "Projection", glm::perspective( 45.0f, 16.0f/10.0f, 0.1f, 1000.0f ) );
+			message.setUniform( "View", glm::rotate( glm::translate( glm::mat4(1.0), glm::vec3(0.0f,20.0f,-950.0f ) ), 180.0f, glm::vec3( 1.0f,0.0f,0.0f) ) );
+			message.setUniform( "Colour", glm::vec4( 0.67f, 0.16f, 0.16f,0.8f ) );
+			message.text( "Error in lua file. Edit then press F5." );
 
 			luaPath = _luaPath;
 			loadLuaState( luaPath );
@@ -83,63 +87,63 @@ namespace de
 		}
 
 		void LuaState::loadLuaState( const std::string &_luaPath )
-    {
-        luaState = luaL_newstate();
-        luaL_openlibs(luaState);
-        luabind::open(luaState);
-
-		for( iter = LuaAPI.begin(); iter != LuaAPI.end(); ++iter )
 		{
-			iter->second(luaState);
+			luaState = luaL_newstate();
+			luaL_openlibs(luaState);
+			luabind::open(luaState);
+
+			for( iter = LuaAPI.begin(); iter != LuaAPI.end(); ++iter )
+			{
+				iter->second(luaState);
+			}
+			exportOther(luaState);
+
+
+			fs::path dir( Roots->get( root::LUA ) + "States/" + _luaPath + ".lua" );
+			if( luaL_dofile( luaState, dir.file_string().c_str() ) )
+			{
+				luaError = true;
+				message.text( "Lua Sytax Error" );
+			}
+			else
+			{
+				luaError = false;
+			}
+			
+			ErrorFile.text( "The file is at \"" + Roots->get( root::LUA ) + _luaPath + ".lua\" from the exe root." );
+			//fade.Setup( de::classes::Colour( 0.0f, 0.0f, 0.0f, 1.0f ) , de::classes::Colour( 0.0f, 0.0f, 0.0f, 0.0f ) , 3000 );*/
+			/*
+			if( altControls )
+			{
+				message.set( "State " + _luaPath +" Loaded", "System", de::classes::Vector(2, 20), 11, de::enums::ALIGN_RIGHT );
+			}
+			else
+			{
+				message.set( "State " + _luaPath +" Loaded", "System", de::classes::Vector(2, 10), 11, de::enums::ALIGN_RIGHT );
+			}
+			*/
+			if( !luaError)
+			{
+				try
+				{
+					global = luabind::globals(luaState);
+					currentState = global[_luaPath];
+					luabind::call_function<void>( currentState["Start"], currentState );
+				}
+				catch( luabind::error &e)
+				{
+					std::string error = lua_tostring( e.state(), -1 );
+
+					de::io::error << e.what() << "\n";
+					de::io::error << error << "\n";
+
+					luaError = true;
+					message.text( "Lua Error :Start" );
+					/*fade.Setup( de::classes::Colour( 0.0f, 0.0f, 0.0f, 1.0f ) , de::classes::Colour( 0.0f, 0.0f, 0.0f, 0.0f ) , 3000 );*/
+				}
+			}
+
 		}
-        exportOther(luaState);
-
-
-        fs::path dir( Roots->get( root::LUA ) + "States/" + _luaPath + ".lua" );
-        if( luaL_dofile( luaState, dir.file_string().c_str() ) )
-        {
-            luaError = true;
-            message = "Lua Sytax Error";
-        }
-        else
-        {
-            luaError = false;
-        }
-
-        ErrorFile = "The file is \"" + Roots->get( root::LUA ) + _luaPath + ".lua" + "\"";
-        fade.Setup( de::classes::Colour( 0.0f, 0.0f, 0.0f, 1.0f ) , de::classes::Colour( 0.0f, 0.0f, 0.0f, 0.0f ) , 3000 );
-
-        if( altControls )
-        {
-            message.set( "State " + _luaPath +" Loaded", "System", de::classes::Vector(2, 20), 11, de::enums::ALIGN_RIGHT );
-        }
-        else
-        {
-            message.set( "State " + _luaPath +" Loaded", "System", de::classes::Vector(2, 10), 11, de::enums::ALIGN_RIGHT );
-        }
-
-        if( !luaError)
-        {
-            try
-            {
-                global = luabind::globals(luaState);
-                currentState = global[_luaPath];
-                luabind::call_function<void>( currentState["Start"], currentState );
-            }
-            catch( luabind::error &e)
-            {
-                std::string error = lua_tostring( e.state(), -1 );
-
-                de::io::error << e.what() << "\n";
-                de::io::error << error << "\n";
-
-                luaError = true;
-                message = "Lua Error :Start";
-                fade.Setup( de::classes::Colour( 0.0f, 0.0f, 0.0f, 1.0f ) , de::classes::Colour( 0.0f, 0.0f, 0.0f, 0.0f ) , 3000 );
-            }
-        }
-
-    }
 
 		bool LuaState::handleEvents( const SDL_Event &_event )
 		{
@@ -167,8 +171,8 @@ namespace de
 					de::io::error << error << "\n";
 
 					luaError = true;
-					message = "Lua Error :HandleEvents";
-					fade.Setup( de::classes::Colour( 0.0f, 0.0f, 0.0f, 1.0f ) , de::classes::Colour( 0.0f, 0.0f, 0.0f, 0.0f ) , 3000 );
+					message.text( "Lua Error :HandleEvents" );
+					/*fade.Setup( de::classes::Colour( 0.0f, 0.0f, 0.0f, 1.0f ) , de::classes::Colour( 0.0f, 0.0f, 0.0f, 0.0f ) , 3000 );*/
 				}
 			}
 			if( altControls )
@@ -223,12 +227,12 @@ namespace de
 					de::io::error << error << "\n";
 
 					luaError = true;
-					message = "Lua Error :Logic";
-					fade.Setup( de::classes::Colour( 0.0f, 0.0f, 0.0f, 1.0f ) , de::classes::Colour( 0.0f, 0.0f, 0.0f, 0.0f ) , 3000 );
+					message.text( "Lua Error :Logic" );
+					/*fade.Setup( de::classes::Colour( 0.0f, 0.0f, 0.0f, 1.0f ) , de::classes::Colour( 0.0f, 0.0f, 0.0f, 0.0f ) , 3000 );*/
 				}
 			}
 
-        message.setColour( fade.logic( _deltaTicks ) );
+        //message.setColour( fade.logic( _deltaTicks ) );
 
         return true;
     }
@@ -248,17 +252,18 @@ namespace de
 					de::io::error << error << "\n";
 
 					luaError = true;
-					message = "Lua Error :Render";
-					fade.Setup( de::classes::Colour( 0.0f, 0.0f, 0.0f, 1.0f ) , de::classes::Colour( 0.0f, 0.0f, 0.0f, 0.0f ) , 3000 );
+					message.text( "Lua Error :Render" );
+					/*fade.Setup( de::classes::Colour( 0.0f, 0.0f, 0.0f, 1.0f ) , de::classes::Colour( 0.0f, 0.0f, 0.0f, 0.0f ) , 3000 );*/
 				}
 			}
 			else
 			{
-				ErrorInstructions.render( de::enums::FBO_AFTER );
-				ErrorFile.render( de::enums::FBO_AFTER );
+				ErrorInstructions.render();
+				ErrorFile.render();
+				message.render();
 			}
 
-			message.render( de::enums::FBO_AFTER );
+			//message.render( de::enums::FBO_AFTER );
 		}
 
 		void LuaState::reLoadTextures()
@@ -276,10 +281,11 @@ namespace de
 					de::io::error << error << "\n";
 
 					luaError = true;
-					message = "Lua Error :Reload";
-					fade.Setup( de::classes::Colour( 0.0f, 0.0f, 0.0f, 1.0f ) , de::classes::Colour( 0.0f, 0.0f, 0.0f, 0.0f ) , 3000 );
+					message.text( "Lua Error :Reload" );
+					/*fade.Setup( de::classes::Colour( 0.0f, 0.0f, 0.0f, 1.0f ) , de::classes::Colour( 0.0f, 0.0f, 0.0f, 0.0f ) , 3000 );*/
 				}
 			}
+
 			message.reload();
 			ErrorInstructions.reload();
 			ErrorFile.reload();

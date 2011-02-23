@@ -43,14 +43,6 @@ namespace de
                 //! Renders everything that has been passed into the class since the last time this function was called and then swaps the framebuffer.
                 frameDetails render();
 
-                //! Add a Sprite with a de::enums::fboTypes for rendering this frame.
-                bool add( const de::classes::Sprite &_Sprite, const int &_type );
-                //! Add Sprites with a de::enums::fboTypes for rendering this frame.
-                bool add( std::vector<de::classes::Sprite> &_Sprites, const int &_type );
-                //! Add a Line with a de::enums::fboTypes for rendering this frame.
-                bool add( const de::classes::Line &_Line, const int &_type );
-                //! Add a Coloured Poly with a de::enums::fboTypes for rendering this frame.
-                bool add( const de::classes::Poly &_poly, const de::classes::Colour &_colour, const int &_priority, const int &_type );
                 //! Add a 3D mesh for rendering this frame.
                 bool add( renderObject *_Object );
 
@@ -63,17 +55,14 @@ namespace de
                 const de::graphics::VideoInfo& getVideoSettings();
 
 
-
                 //!Load the texture with the name "_fileName" in the texture folder.
                 Uint32 loadTexture( const std::string& _fileName, int &_width, int &_height );
                 //!Unload texture "_texture"
                 void unloadTexture( Uint32 &_texture );
-
                 //!Load shader "_name"
                 bool loadShader( lua_State* L, Shader &_shader, const std::string &_name );
                 //!Unload the shader "_shader"
                 bool unloadShader( Shader &_shader );
-
 
             private:
                 Uint32 loadTexture( const std::string& _fileName, int &_width, int &_height, int _textureDimensions );
@@ -100,10 +89,8 @@ namespace de
                 lua_State *luaState;
 
                 std::vector< renderObject* > Objects;
-                de::graphics::SpriteBuffer GameBuffer, UIBuffer, OtherBuffer;
                 de::graphics::FboGame fboGame;
                 de::graphics::FboUI fboUI;
-                de::classes::Colour backgroundColour;
 
                 ShaderModule shaderModule;
                 TextureModule textureModule;

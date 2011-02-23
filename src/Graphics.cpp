@@ -21,10 +21,6 @@ namespace de
     namespace graphics
     {
         Graphics::Graphics( const VideoInfo &_videoSettings )
-            :GameBuffer( glVersion::GL_1_1 ),
-             UIBuffer( glVersion::GL_1_1 ),
-             OtherBuffer( glVersion::GL_1_1 ),
-             backgroundColour( 1.0, 1.0, 1.0, 0.0 )
         {
             videoInfo = SDL_GetVideoInfo();
             videoSettings = _videoSettings;
@@ -33,10 +29,6 @@ namespace de
         }
 
         Graphics::Graphics()
-            :GameBuffer( glVersion::GL_1_1 ),
-             UIBuffer( glVersion::GL_1_1 ),
-             OtherBuffer( glVersion::GL_1_1 ),
-             backgroundColour( 1.0, 1.0, 1.0, 0.0 )
         {
             luaState = lua_open();
             luaL_openlibs(luaState);
@@ -152,10 +144,6 @@ namespace de
                 fboUI.freeAll();
                 fbosSetup = false;
             }
-
-            GameBuffer.clear();
-            UIBuffer.clear();
-            OtherBuffer.clear();
         }
 
         const VideoInfo& Graphics::getVideoSettings()
@@ -194,83 +182,15 @@ namespace de
 
         frameDetails Graphics::getFrameInfo()
         {
-            int number( spriteNumber );
-            spriteNumber = 0;
-            return frameDetails( number, (int)( GameBuffer.size() + UIBuffer.size() + OtherBuffer.size() ), screenWidth, screenHeight );
+            return frameDetails( 0, 0, screenWidth, screenHeight );
         }
 
 
 
-
-        bool Graphics::add( std::vector<Sprite> &_Sprites, const int &_type )
-        {
-            static std::vector<Sprite>::iterator iterSprite;
-            for( iterSprite = _Sprites.begin(); iterSprite < _Sprites.end(); ++iterSprite )
-            {
-                add( (*iterSprite), _type );
-            }
-            return true;
-        }
-
-        bool Graphics::add( const Sprite &_Sprite, const int &_type )
-        {
-            ++spriteNumber;
-
-            if( _type == FBO_GAME )
-                GameBuffer.add( _Sprite );
-
-            else if( _type == FBO_UI )
-                UIBuffer.add( _Sprite );
-
-            else if( _type == FBO_AFTER )
-                OtherBuffer.add( _Sprite );
-
-            else
-                OtherBuffer.add( _Sprite );
-
-            return true;
-        }
-
-        bool Graphics::add( const Line &_Line, const int &_type )
-        {
-            if( _type == FBO_GAME )
-                GameBuffer.add( _Line );
-
-            else if( _type == FBO_UI )
-                UIBuffer.add( _Line );
-
-            else if( _type == FBO_AFTER )
-                OtherBuffer.add( _Line );
-
-            else
-                OtherBuffer.add( _Line );
-
-            return true;
-        }
 
         bool Graphics::add( renderObject *_Object )
         {
             Objects.push_back( _Object );
-            return true;
-        }
-
-        bool Graphics::add( const Poly &_poly, const Colour &_colour, const int &_priority, const int &_type )
-        {
-            ++spriteNumber;
-
-            if( _type == FBO_GAME )
-                GameBuffer.add( _poly, _colour, _priority );
-
-            else if( _type == FBO_UI )
-                UIBuffer.add( _poly, _colour, _priority );
-
-            else if( _type == FBO_AFTER )
-                OtherBuffer.add( _poly, _colour, _priority );
-
-            else
-                OtherBuffer.add( _poly, _colour, _priority );
-
-
             return true;
         }
 
@@ -299,80 +219,33 @@ namespace de
 
             if( videoSettings.postFX )
             {
-                fboGame.activate( videoSettings );
-
-                    CHECKGL( glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) );
-                    GameBuffer.render();
-
-                CHECKGL( glBindFramebuffer(GL_FRAMEBUFFER, 0) );
-
-
                 fboUI.activate( videoSettings );
-
                     CHECKGL( glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) );
-                    UIBuffer.add( fboGame.render( videoSettings ) );
-                    UIBuffer.render();
-
-                    CHECKGL( glAlphaFunc( GL_GREATER, 0.1 ) );
-                    CHECKGL( glEnable( GL_ALPHA_TEST ) );
-                    CHECKGL( glEnable( GL_DEPTH_TEST ) );
-                        std::vector<renderObject*>::iterator objectIter;
-                        for( objectIter = Objects.begin(); objectIter != Objects.end(); ++objectIter )
-                        {
-                            (*objectIter)->localRender();
-                        }
-                    CHECKGL( glDisable( GL_DEPTH_TEST ) );
-                    CHECKGL( glDisable( GL_ALPHA_TEST ) );
-
+                    std::vector<renderObject*>::iterator objectIter;
+                    for( objectIter = Objects.begin(); objectIter != Objects.end(); ++objectIter )
+                    {
+                        (*objectIter)->localRender();
+                    }
                 CHECKGL( glBindFramebuffer(GL_FRAMEBUFFER, 0) );
 
-
-                CHECKGL( glClearColor( backgroundColour.r, backgroundColour.g, backgroundColour.b, backgroundColour.a  ) );
                 CHECKGL( glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) );
                 fboUI.render( videoSettings );
-                OtherBuffer.render();
             }
             else
             {
                 CHECKGL( glDisable( GL_DEPTH_TEST ) );
                 CHECKGL( glBindFramebuffer(GL_FRAMEBUFFER, 0) );
-                CHECKGL( glClearColor( backgroundColour.r, backgroundColour.g, backgroundColour.b, backgroundColour.a  ) );
                 CHECKGL( glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) );
 
-                CHECKGL( glPushMatrix() );
 
-                    CHECKGL( glTranslatef( centre.x , centre.y, 0.0 ) );
-                    CHECKGL( glPushMatrix() );
-
-                        CHECKGL( glTranslatef( 400 , 0.0, 0.0 ) );
-                        GameBuffer.render();
-
-                    CHECKGL( glPopMatrix() );
-
-                    UIBuffer.render();
-
-                    if( multiSample ) CHECKGL( glEnable(GL_MULTISAMPLE) );
-                    /*CHECKGL( glAlphaFunc( GL_GREATER, 0.5 ) );
-                    CHECKGL( glEnable( GL_ALPHA_TEST ) );
-                    CHECKGL( glEnable( GL_DEPTH_TEST ) );*/
-                    //CHECKGL( glEnable( GL_BLEND ) );
-
-                        std::vector<renderObject*>::iterator objectIter;
-                        for( objectIter = Objects.begin(); objectIter != Objects.end(); ++objectIter )
-                        {
-                            (*objectIter)->localRender();
-                        }
-						/*
-                    CHECKGL( glDisable( GL_DEPTH_TEST ) );
-                    CHECKGL( glDisable( GL_ALPHA_TEST ) );*/
-                    //CHECKGL( glDisable( GL_BLEND ) );
-                    if( multiSample ) CHECKGL( glDisable(GL_MULTISAMPLE) );
-
-                    OtherBuffer.render();
-
-                CHECKGL( glPopMatrix() );
+                if( multiSample ) CHECKGL( glEnable(GL_MULTISAMPLE) );
+                    std::vector<renderObject*>::iterator objectIter;
+                    for( objectIter = Objects.begin(); objectIter != Objects.end(); ++objectIter )
+                    {
+                        (*objectIter)->localRender();
+                    }
+                if( multiSample ) CHECKGL( glDisable(GL_MULTISAMPLE) );
             }
-
             Objects.clear();
         }
 
@@ -506,7 +379,6 @@ namespace de
 
             getCentreVector( screenWidth, screenHeight );
 
-            CHECKGL( glClearColor( backgroundColour.r, backgroundColour.g, backgroundColour.b, backgroundColour.a  ) );
             CHECKGL( glClearDepth( 1 ) );
 
 
@@ -540,11 +412,6 @@ namespace de
             de::io::log << "Available | OpenGL | " << glToString( OpenGL ) << " | GLSL | " << glToString( GLSL ) << "\n";
             de::io::log << "Using | OpenGL | " << glToString( videoSettings.OpenGL ) << " | GLSL | " << glToString( videoSettings.GLSL ) << "\n";
             de::io::log << "Graphics card | " << renderer << " | " << vendor << "\n";
-
-
-            GameBuffer.set( videoSettings.OpenGL );
-            UIBuffer.set( videoSettings.OpenGL );
-            OtherBuffer.set( videoSettings.OpenGL );
 
             return true;
         }

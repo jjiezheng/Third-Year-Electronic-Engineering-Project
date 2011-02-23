@@ -190,12 +190,12 @@ void UIspline::render( fboTypes _fbo )
     if( pointerNotSet )
         return;
 
-
+	/*
     de::Engine::Graphics().add( line, _fbo );
 
     if( !(draggingEvent || hoverEvent) )
         de::Engine::Graphics().add( boxLocation, Colour( DefaultSelectedBoxColour.r, DefaultSelectedBoxColour.g, DefaultSelectedBoxColour.b, 0.3f ), 10, _fbo );
-
+		*/
     for ( iterLinedBox = BoxPoints.begin(); iterLinedBox < BoxPoints.end(); ++iterLinedBox )
     {
         if( (iterLinedBox == activeBox) && draggingEvent )

@@ -31,15 +31,7 @@ namespace de
                 //! Renders everything that has been passed into the class since the last time this function was call and then swade the buffers
                 virtual frameDetails render() = 0;
 
-                //! Add a Sprite with a de::enums::fboTypes for rendering this frame.
-                virtual bool add( const de::classes::Sprite &_Sprite, const int &_type ) = 0;
-                //! Add Sprites with a de::enums::fboTypes for rendering this frame.
-                virtual bool add( std::vector<de::classes::Sprite> &_Sprites, const int &_type ) = 0;
-                //! Add a Line with a de::enums::fboTypes for rendering this frame.
-                virtual bool add( const de::classes::Line &_Line, const int &_type ) = 0;
                 virtual bool add( renderObject *_Object ) = 0;
-                //! Add a Coloured Poly with a de::enums::fboTypes for rendering this frame.
-                virtual bool add( const de::classes::Poly &_poly, const de::classes::Colour &_colour, const int &_priority, const int &_type ) = 0;
 
                 virtual void toggleFullscreen() = 0;
                 virtual void resize( int _screenWidth, int _screenHeight ) = 0;
@@ -71,15 +63,8 @@ namespace de
                 //! Renders everything that has been passed into the class since the last time this function was call and then swade the buffers
                 frameDetails render();
 
-                //! Add a Sprite with a de::enums::fboTypes for rendering this frame.
-                bool add( const de::classes::Sprite &_Sprite, const int &_type ) { return true; }
-                //! Add Sprites with a de::enums::fboTypes for rendering this frame.
-                bool add( std::vector<de::classes::Sprite> &_Sprites, const int &_type ) { return true; }
-                //! Add a Line with a de::enums::fboTypes for rendering this frame.
-                bool add( const de::classes::Line &_Line, const int &_type ) { return true; }
+                
                 bool add( renderObject *_Object ) { return true; }
-                //! Add a Coloured Poly with a de::enums::fboTypes for rendering this frame.
-                bool add( const de::classes::Poly &_poly, const de::classes::Colour &_colour, const int &_priority, const int &_type ) { return true; }
 
                 void toggleFullscreen() {}
                 void resize( int _screenWidth, int _screenHeight ) {}

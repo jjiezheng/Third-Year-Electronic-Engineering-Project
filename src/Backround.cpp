@@ -31,7 +31,7 @@ void Backround::logic( Uint32 deltaTicks )
 void Backround::render()
 {
     background.render( FBO_GAME );
-
+	/*
     de::Engine::Graphics().add( leftBorder,  DefaultSelectedBoxColour, 1, FBO_UI );
-    de::Engine::Graphics().add( rightBorder, DefaultSelectedBoxColour, 1, FBO_UI );
+    de::Engine::Graphics().add( rightBorder, DefaultSelectedBoxColour, 1, FBO_UI );*/
 }

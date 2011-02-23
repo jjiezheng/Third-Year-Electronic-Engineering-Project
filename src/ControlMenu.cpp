@@ -63,7 +63,7 @@ bool SetKeyboard::logic()
 
 void SetKeyboard::render()
 {
-    de::Engine::Graphics().add( box, DefaultSelectedBoxColour, 5, FBO_UI );
+    /*de::Engine::Graphics().add( box, DefaultSelectedBoxColour, 5, FBO_UI );*/
     currentText.render(FBO_UI);
 }
 
@@ -203,7 +203,7 @@ bool SetJoystick::logic()
 
 void SetJoystick::render()
 {
-    de::Engine::Graphics().add( box, DefaultSelectedBoxColour, 12, FBO_UI );
+    /*de::Engine::Graphics().add( box, DefaultSelectedBoxColour, 12, FBO_UI );*/
 
     if( !gotJoystick )
         pickJoy.render(FBO_UI);

@@ -14,7 +14,7 @@ namespace de
             return vert;  // for multiple operators.
         }
 
-		vertex& operator + ( vertex& vert, const glm::vec2& _displace )
+		vertex operator + ( vertex& vert, const glm::vec2& _displace )
         {
 			vertex temp(vert);
 			temp.r = vert.r + _displace.x;

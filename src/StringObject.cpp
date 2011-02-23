@@ -5,12 +5,9 @@
 StringObject::StringObject(void)
 {
 }
-
-
 StringObject::~StringObject(void)
 {
 }
-
 
 StringObject& StringObject::font( const std::string &_font )
 {
@@ -129,15 +126,12 @@ void StringObject::reload()
 {
 	renderableText.reload();
 }
-
 void StringObject::render()
 {
 	de::Engine::Graphics().add( this );
 }
-
 void StringObject::localRender()
 {
 	if( refresh) rebuild();
-
 	renderableText.localRender();
 }

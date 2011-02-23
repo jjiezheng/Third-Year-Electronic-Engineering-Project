@@ -139,5 +139,5 @@ void Scrollingbackground::logic( Uint32 deltaTicks )
 
 void Scrollingbackground::render( fboTypes _fbo )
 {
-    de::Engine::Graphics().add( Clouds, _fbo );
+    /*de::Engine::Graphics().add( Clouds, _fbo );*/
 }

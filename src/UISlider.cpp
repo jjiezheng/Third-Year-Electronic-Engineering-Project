@@ -139,9 +139,9 @@ void UISlider::render( fboTypes _fbo, fboTypes _fbo2  )
     if(pointerNotSet)
         return;
 
-    name.render( _fbo2 );
-    de::Engine::Graphics().add( line, _fbo2 );
-
+    name.render( _fbo2 );/*
+    de::Engine::Graphics().add( line, _fbo2 );*/
+	/*
     if(hoverEvent && !draggingEvent)
     {
         here.render( _fbo2 );
@@ -155,7 +155,7 @@ void UISlider::render( fboTypes _fbo, fboTypes _fbo2  )
     else
     {
         de::Engine::Graphics().add( slider, DefaultSelectedBoxColour, 10, _fbo );
-    }
+    }*/
 }
 
 
