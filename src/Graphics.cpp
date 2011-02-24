@@ -10,7 +10,6 @@
 
 
 using namespace de::classes;
-using namespace de::internal;
 using namespace de::enums;
 using namespace de::filesystem;
 
@@ -182,7 +181,7 @@ namespace de
 
         frameDetails Graphics::getFrameInfo()
         {
-            return frameDetails( 0, 0, screenWidth, screenHeight );
+            return frameDetails( screenWidth, screenHeight );
         }
 
 
@@ -275,11 +274,11 @@ namespace de
 
             if( _screenWidth/16*10 > _screenHeight )
             {
-                BasicSettings::globalScreenRatio = screenRatio = (1280.0/screenWidth)/(800.0/screenHeight);
+                BasicSettings::globalScreenRatio = screenRatio = (1280.0f/screenWidth)/(800.0f/screenHeight);
                 BasicSettings::borderHorizontal = false;
 
                 int difference = ( _screenWidth - (_screenHeight/10*16) )/2;
-                centre = Vector( difference,0 );
+                centre = Vector( difference,0.0f );
                 BasicSettings::mouseOffset = centre;
 
                 CHECKGL( glOrtho( 0, 1280.0/screenRatio, 800.0, 0, -1, 1 ) );
@@ -287,8 +286,8 @@ namespace de
             }
             else
             {
-                screenRatio = (1280.0/screenWidth)/(800.0/screenHeight);
-                BasicSettings::globalScreenRatio = (1280.0/screenWidth);
+                screenRatio = (1280.0f/screenWidth)/(800.0f/screenHeight);
+                BasicSettings::globalScreenRatio = (1280.0f/screenWidth);
                 BasicSettings::borderHorizontal = true;
 
                 int difference = ( _screenHeight - (_screenWidth/16*10)  )/2;

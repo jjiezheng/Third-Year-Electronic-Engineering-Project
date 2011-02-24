@@ -14,16 +14,13 @@ namespace de
     {
 
         float currentFrameRate, Timer;
-        int currentSpriteNumber, currentBatchNumber, frame;
+        int frame;
         int screenWidth, screenHeight;
 
 
 
         void getFrameDetails( graphics::frameDetails _frameDetails )
         {
-
-            currentSpriteNumber = _frameDetails.spriteNumber;
-            currentBatchNumber = _frameDetails.batchNumber;
             screenWidth = _frameDetails.screenWidth;
             screenHeight = _frameDetails.screenHeight;
         }
@@ -45,16 +42,6 @@ namespace de
             return currentFrameRate;
         }
 
-        const int& spriteNumber()
-        {
-            return currentSpriteNumber;
-        }
-
-        const int& batchNumber()
-        {
-            return currentBatchNumber;
-        }
-
         void Resolution( int &_screenWidth, int &_screenHeight )
         {
             _screenWidth = screenWidth;
@@ -68,17 +55,6 @@ namespace de
         {
             return ( "FPS:" + de::misc::toString( FrameRate() ) );
         }
-
-        std::string getspriteNumber()
-        {
-            return ( "Sprites:" + de::misc::toString( spriteNumber() ) );
-        }
-
-        std::string getbatchNumber()
-        {
-            return ( "Batches:" + de::misc::toString( batchNumber() ) );
-        }
-
         std::string getResolution()
         {
             return ( "Resolution:" + de::misc::toString(screenWidth) + "X" + de::misc::toString(screenHeight) );

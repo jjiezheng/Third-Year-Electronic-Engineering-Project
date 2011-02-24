@@ -20,13 +20,9 @@ namespace de
         void getTime( const int &_delta );
 
         const float& FrameRate();
-        const int& spriteNumber();
-        const int& batchNumber();
         void Resolution( int &_screenWidth, int &_screenHeight );
 
         std::string getFrameRate();
-        std::string getspriteNumber();
-        std::string getbatchNumber();
         std::string getResolution();
     }
 }

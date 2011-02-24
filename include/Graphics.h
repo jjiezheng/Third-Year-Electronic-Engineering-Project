@@ -2,23 +2,16 @@
 #define GRAPHICS_H_
 
 #include "Base.h"
-#include "Coords.h"
-#include "Settings.h"
 #include "FrameBufferObject.h"
-#include "SpriteBuffer.h"
 #include "frameDetails.h"
 #include "IGraphics.h"
 #include "Material.h"
-#include "PostFX.h"
 #include "renderObject.h"
+
 
 #include "ShaderModule.h"
 #include "TextureModule.h"
 #include "ContextModule.h"
-
-
-
-#include <lua.hpp>
 
 
 namespace de

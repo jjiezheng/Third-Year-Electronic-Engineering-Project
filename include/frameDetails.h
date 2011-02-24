@@ -11,14 +11,12 @@ namespace de
     {
         struct frameDetails
         {
-            frameDetails( int _spriteNumber, int _batchNumber, int _screenWidth, int _screenHeight )
-                :spriteNumber( _spriteNumber ), batchNumber( _batchNumber ), screenWidth( _screenWidth ), screenHeight( _screenHeight ) {}
+            frameDetails( int _screenWidth, int _screenHeight )
+                :screenWidth( _screenWidth ), screenHeight( _screenHeight ) {}
 
             frameDetails()
-                :spriteNumber( 0 ), batchNumber( 0 ), screenWidth( 0 ), screenHeight( 0 ) {}
+                :screenWidth( 0 ), screenHeight( 0 ) {}
 
-            int spriteNumber;
-            int batchNumber;
             int screenWidth, screenHeight;
         };
 
