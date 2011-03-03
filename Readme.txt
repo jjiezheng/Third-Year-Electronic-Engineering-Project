@@ -10,9 +10,3 @@ To do:
 - PostFX system
 - Assimp mesh loader 
 - Add animation support to Object3D
-
-Tested browsers:
-
-- FireFox 3.6
-- Opera 10
-
