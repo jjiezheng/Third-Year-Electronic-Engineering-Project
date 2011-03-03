@@ -156,8 +156,7 @@ Object3D& Object3D::setType( const std::string &_type )
 
 Object3D& Object3D::load( const std::string &_name, const std::string &_shader )
 {
-    return loadCTM( _name, _shader );
-	//return loadAssimp( _name, _shader );
+	return loadAssimp( _name, _shader );
 }
 
 Object3D& Object3D::loadAssimp( const std::string &_name, const std::string &_shader )
@@ -170,23 +169,22 @@ Object3D& Object3D::loadAssimp( const std::string &_name, const std::string &_sh
     refreshVBO = true;
     meshName = _name;
 
-    std::string path( Roots->get( root::MESHES )+meshName+".lwo" );
+    std::string path( Roots->get( root::MESHES )+meshName );
     const aiScene* scene = importer.ReadFile( path.c_str(),
         aiProcess_CalcTangentSpace |
         aiProcess_Triangulate |
-        aiProcess_MakeLeftHanded |
         aiProcess_JoinIdenticalVertices |
         aiProcess_SortByPType |
-        aiProcess_CalcTangentSpace |
-        aiProcess_JoinIdenticalVertices |
         aiProcess_GenSmoothNormals |
         aiProcess_LimitBoneWeights |
         aiProcess_RemoveRedundantMaterials |
+		aiProcess_ImproveCacheLocality |
         aiProcess_OptimizeMeshes );
 
     if( !scene )
     {
         de::io::error << importer.GetErrorString() << "\n";
+		return *this;
     }
 
 	if( scene->HasMeshes() )
@@ -213,7 +211,7 @@ Object3D& Object3D::loadAssimp( const std::string &_name, const std::string &_sh
 			aiVector3D* verts = _mesh->mVertices;
 			for( i = 0; i!=num; ++i)
 			{
-				VertexBuffer.push_back( vertex( verts[num].x, verts[num].y, verts[num].y, 1.0f ) );
+				VertexBuffer.push_back( vertex( verts[i].x, verts[i].y, verts[i].z, 1.0f ) );
 			}
 			de::io::log << "VertexBuffer.size() = " << VertexBuffer.size() << "\n";
 
@@ -242,7 +240,7 @@ Object3D& Object3D::loadAssimp( const std::string &_name, const std::string &_sh
 			aiVector3D* verts = _mesh->mNormals;
 			for( i = 0; i!=num; ++i)
 			{
-				VertexBuffer.push_back( vertex( verts[num].x, verts[num].y, verts[num].y, 1.0f ) );
+				VertexBuffer.push_back( vertex( verts[i].x, verts[i].y, verts[i].z, 1.0f ) );
 			}
 		}
 
@@ -255,82 +253,6 @@ Object3D& Object3D::loadAssimp( const std::string &_name, const std::string &_sh
     return *this;
 }
 
-Object3D& Object3D::loadCTM( const std::string &_name, const std::string &_shader )
-{
-    using namespace de::filesystem;
-    using namespace de::graphics;
-
-    set( _shader );
-    type = GL_TRIANGLES;
-    refreshVBO = true;
-    meshName = _name;
-
-    CTMcontext ctmContext = ctmNewContext(CTM_IMPORT);
-    ctmLoad(ctmContext, (Roots->get( root::MESHES )+meshName+".ctm").c_str() );
-    unsigned int indexCount = 3 * ctmGetInteger(ctmContext, CTM_TRIANGLE_COUNT);
-    unsigned int vertexCount = ctmGetInteger(ctmContext, CTM_VERTEX_COUNT);
-
-
-    int i;
-    const CTMuint* indices = ctmGetIntegerArray(ctmContext, CTM_INDICES);
-    for( i = 0; i!=indexCount; ++i)
-    {
-        ElementBuffer.push_back( indices[i] );
-    }
-
-
-    const CTMfloat* vertices = ctmGetFloatArray(ctmContext, CTM_VERTICES);
-    de::graphics::AttributeTypes attType;
-    shader.getAttribute( "Position", attType );
-    AttributeInfo["Position"] = bufferInfo( VertexBuffer.size()*sizeof(de::graphics::vertex), vertexCount, attType );
-
-    for( i = 0; i!=vertexCount; ++i)
-    {
-        int pos = i*3;
-        VertexBuffer.push_back( vertex( vertices[pos], vertices[pos+1], vertices[pos+2], 1.0f ) );
-    }
-
-
-    if( ctmGetInteger(ctmContext, CTM_HAS_NORMALS) )
-    {
-        const CTMfloat* normals = ctmGetFloatArray(ctmContext, CTM_NORMALS);
-        de::graphics::AttributeTypes attTypeNormal;
-        shader.getAttribute( "Normal", attTypeNormal );
-        AttributeInfo["Normal"] = bufferInfo( VertexBuffer.size()*sizeof(de::graphics::vertex), vertexCount, attTypeNormal );
-
-
-        for( i = 0; i!=vertexCount; ++i)
-        {
-            int pos = i*3;
-            VertexBuffer.push_back( vertex( normals[pos], normals[pos+1], normals[pos+2], 0.0f ) );
-        }
-    }
-    else
-    {
-        de::io::error << "No normals found in mesh:" << meshName << "\n";
-    }
-
-    const CTMfloat* uv = ctmGetFloatArray(ctmContext, CTM_UV_MAP_1);
-    if( uv )
-    {
-        std::string texture = stripFileEnding( ctmGetUVMapString( ctmContext, CTM_UV_MAP_1, CTM_FILE_NAME ) );
-        setUniform( "Texture0", texture );
-        de::io::log << "texture = " << texture << "\n";
-
-        de::graphics::AttributeTypes uvType;
-        shader.getAttribute( "Tex", uvType );
-        AttributeInfo["Tex"] = bufferInfo( VertexBuffer.size()*sizeof(de::graphics::vertex), vertexCount, uvType );
-        for( i = 0; i!=vertexCount; ++i)
-        {
-            int pos = i*2;
-            VertexBuffer.push_back( vertex( uv[pos], uv[pos+1], 0.0f, 0.0f ) );
-        }
-    }
-
-    ctmFreeContext(ctmContext);
-
-    return *this;
-}
 
 void Object3D::makeBuffers()
 {

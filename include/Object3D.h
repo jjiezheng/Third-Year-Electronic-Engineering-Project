@@ -4,7 +4,6 @@
 #include "Material.h"
 #include "renderObject.h"
 #include "CoreEnumsAndClasses.h"
-#include <openctm.h>
 #include <assimp.hpp>
 
 
@@ -54,7 +53,6 @@ class Object3D : public de::graphics::renderObject
 
     private:
         void makeBuffers();
-        Object3D& loadCTM( const std::string &_name, const std::string &_shader );
         Object3D& loadAssimp( const std::string &_name, const std::string &_shader );
 
 
