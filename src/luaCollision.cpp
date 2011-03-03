@@ -20,7 +20,7 @@ namespace de
                     .def( "teleport",  (void(de::collision::OBB::*)( const glm::vec2 & )) &de::collision::OBB::teleport )
 					.def( "rotate",  (void(de::collision::OBB::*)( const float & )) &de::collision::OBB::rotate )
 					.def( "rotate",  (void(de::collision::OBB::*)( const float &, const float & )) &de::collision::OBB::rotate )
-					.def( "rotate",  (bool(de::collision::OBB::*)(  const glm::vec3 &, const glm::mat4 & )) &de::collision::OBB::containsPoint ),
+					.def( "contains_point",  (bool(de::collision::OBB::*)( const glm::vec3 & )) &de::collision::OBB::containsPoint ),
 
 
                 luabind::class_<de::collision::VisualHitbox>( "visualHitbox" )

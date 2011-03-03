@@ -431,8 +431,8 @@ void Object3D::localRender()
     {
         CHECKGL( glDisableVertexAttribArray( shader.getAttribute( AttIter->first ) ) );
     }
-    CHECKGL( glBindBuffer( GL_ARRAY_BUFFER, 0 ) );
-    CHECKGL( glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0) );
+    //CHECKGL( glBindBuffer( GL_ARRAY_BUFFER, 0 ) );
+    //CHECKGL( glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0) );
     CHECKGL( glUseProgram( 0 ) );
 }
 

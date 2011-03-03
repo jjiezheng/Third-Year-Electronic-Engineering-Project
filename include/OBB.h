@@ -11,7 +11,6 @@ namespace de
         {
             friend std::ostream& operator<< ( std::ostream &_output, const OBB &_obb );
             public:
-                //! Basic Constructor.
                 OBB();
                 OBB( const float &_width, const float &_height );
 
@@ -21,17 +20,13 @@ namespace de
                 void rotate( const float &_rotation );
                 void rotate( const float &_cos, const float &_sin );
 
-                //! Checks to see if the point "_point" is inside the Poly. Returns true if yes. Uses Barrycentric coordinates.
-                bool containsPoint( const glm::vec3 &_point, const glm::mat4 &_mat );
+                bool containsPoint( const glm::vec3 &_point );
 
             public:
                 glm::mat2 orientation;
                 glm::vec2 half,centre;
                 float radiusSqrd;
                 bool active;
-
-            private:
-                bool isPointInTriangle( const glm::vec2& _A, const glm::vec2& _B, const glm::vec2& _C, const glm::vec2& _P ) const;
         };
 
         std::ostream& operator<< ( std::ostream &_output, const glm::vec2 &_vec2 );

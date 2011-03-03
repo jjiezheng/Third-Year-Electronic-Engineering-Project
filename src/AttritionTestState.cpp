@@ -68,7 +68,7 @@ unProject	(	detail::tvec3< T > const & 	win,
         rotation += (float)_deltaTicks/20.0f;
 
         hitbox.rotate( rotation );
-        hitbox2.rotate( -rotation/2.0 );
+        hitbox2.rotate( -rotation/2.0f );
         showHitbox.update( hitbox );
         showHitbox2.update( hitbox2 );
 
@@ -81,7 +81,7 @@ unProject	(	detail::tvec3< T > const & 	win,
             showHitbox.setUniform( "Colour", glm::vec3(0.16863,0.1451,0.1647) );
         }
 
-        if( hitbox2.containsPoint( position, proView ) )
+        if( hitbox2.containsPoint( position ) )
         {
             showHitbox2.setUniform( "Colour", glm::vec3(1.0,1.0,0.1647) );
         }
@@ -89,7 +89,6 @@ unProject	(	detail::tvec3< T > const & 	win,
         {
             showHitbox2.setUniform( "Colour", glm::vec3(0.16863,0.1451,0.1647) );
         }
-
 
         return false;
     }

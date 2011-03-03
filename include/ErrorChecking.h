@@ -2,7 +2,7 @@
 #define ERRORCHECKING_H
 
 int CheckGLError(const char *GLcall, const char *file, int line);
-
+/*
 #define CHECKGL( GLcall )                        \
 {                                                \
     GLcall;                                      \
@@ -14,8 +14,8 @@ int CheckGLError(const char *GLcall, const char *file, int line);
 {                                                \
     if(1)                                        \
     CheckGLError( #msg, __FILE__, __LINE__ );    \
-}
-/*
+}*/
+
 #define CHECKGL( GLcall )                        \
 {                                                \
     GLcall;                                      \
@@ -24,7 +24,5 @@ int CheckGLError(const char *GLcall, const char *file, int line);
 #define CHECKGL_MSG( msg )                       \
 {                                                \
 }
-
-*/
 
 #endif // ERRORCHECKING_H

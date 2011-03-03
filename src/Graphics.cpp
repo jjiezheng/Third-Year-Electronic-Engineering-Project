@@ -129,20 +129,8 @@ namespace de
             }
         }
 
-        void Graphics::setupFbos()
-        {
-            fboGame.setup( ( ( screenHeight/4 )*3 ), screenHeight );
-            fboUI.setup( screenWidth, screenHeight );
-        }
-
         void Graphics::freeAll()
         {
-            if( videoSettings.postFX )
-            {
-                fboGame.freeAll();
-                fboUI.freeAll();
-                fbosSetup = false;
-            }
         }
 
         const VideoInfo& Graphics::getVideoSettings()
@@ -155,10 +143,6 @@ namespace de
             videoSettings.fullScreen = !videoSettings.fullScreen;
 
             setGraphicsContext( videoSettings );
-
-            fboGame.needToLoadTextures();
-            fboUI.needToLoadTextures();
-
             events::pushEvent( de::enums::events::OPENGL_RELOAD );
         }
 
@@ -196,12 +180,6 @@ namespace de
 
         frameDetails Graphics::render()
         {
-            if( !fbosSetup && videoSettings.postFX )
-            {
-                setupFbos();
-                fbosSetup = true;
-            }
-
             if( multiSample ) CHECKGL( glEnable(GL_MULTISAMPLE) );
 
                 interalRender();
@@ -214,37 +192,18 @@ namespace de
 
         void Graphics::interalRender()
         {
-            getCentreVector( screenWidth, screenHeight );
+            CHECKGL( glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) );
 
-            if( videoSettings.postFX )
-            {
-                fboUI.activate( videoSettings );
-                    CHECKGL( glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) );
-                    std::vector<renderObject*>::iterator objectIter;
-                    for( objectIter = Objects.begin(); objectIter != Objects.end(); ++objectIter )
-                    {
-                        (*objectIter)->localRender();
-                    }
-                CHECKGL( glBindFramebuffer(GL_FRAMEBUFFER, 0) );
+            if( multiSample ) CHECKGL( glEnable(GL_MULTISAMPLE) );
 
-                CHECKGL( glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) );
-                fboUI.render( videoSettings );
-            }
-            else
-            {
-                CHECKGL( glDisable( GL_DEPTH_TEST ) );
-                CHECKGL( glBindFramebuffer(GL_FRAMEBUFFER, 0) );
-                CHECKGL( glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) );
+                std::vector<renderObject*>::iterator objectIter;
+                for( objectIter = Objects.begin(); objectIter != Objects.end(); ++objectIter )
+                {
+                    (*objectIter)->localRender();
+                }
 
+            if( multiSample ) CHECKGL( glDisable(GL_MULTISAMPLE) );
 
-                if( multiSample ) CHECKGL( glEnable(GL_MULTISAMPLE) );
-                    std::vector<renderObject*>::iterator objectIter;
-                    for( objectIter = Objects.begin(); objectIter != Objects.end(); ++objectIter )
-                    {
-                        (*objectIter)->localRender();
-                    }
-                if( multiSample ) CHECKGL( glDisable(GL_MULTISAMPLE) );
-            }
             Objects.clear();
         }
 
@@ -257,46 +216,6 @@ namespace de
                 return true;
             }
             return false;
-        }
-
-        void Graphics::getCentreVector( int _screenWidth, int _screenHeight )
-        {
-            CHECKGL( glMatrixMode(GL_MODELVIEW) );
-            CHECKGL( glLoadIdentity() );
-
-            CHECKGL( glMatrixMode( GL_PROJECTION ) );
-            CHECKGL( glLoadIdentity() );
-
-
-            CHECKGL( glViewport(0, 0, screenWidth, screenHeight) );
-
-
-
-            if( _screenWidth/16*10 > _screenHeight )
-            {
-                BasicSettings::globalScreenRatio = screenRatio = (1280.0f/screenWidth)/(800.0f/screenHeight);
-                BasicSettings::borderHorizontal = false;
-
-                int difference = ( _screenWidth - (_screenHeight/10*16) )/2;
-                centre = Vector( difference,0.0f );
-                BasicSettings::mouseOffset = centre;
-
-                CHECKGL( glOrtho( 0, 1280.0/screenRatio, 800.0, 0, -1, 1 ) );
-
-            }
-            else
-            {
-                screenRatio = (1280.0f/screenWidth)/(800.0f/screenHeight);
-                BasicSettings::globalScreenRatio = (1280.0f/screenWidth);
-                BasicSettings::borderHorizontal = true;
-
-                int difference = ( _screenHeight - (_screenWidth/16*10)  )/2;
-
-                centre = Vector( 0,difference );
-                BasicSettings::mouseOffset = centre;
-
-                CHECKGL( glOrtho( 0, 1280.0, 800.0*screenRatio, 0, -1, 1 ) );
-            }
         }
 
 
@@ -374,9 +293,6 @@ namespace de
             std::string renderer = (char*)glGetString(GL_RENDERER);
             std::string version = (char*)glGetString(GL_VERSION);
             CHECKGL_MSG( "glGetString" );
-
-
-            getCentreVector( screenWidth, screenHeight );
 
             CHECKGL( glClearDepth( 1 ) );
 

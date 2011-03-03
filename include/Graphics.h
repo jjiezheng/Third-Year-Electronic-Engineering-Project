@@ -2,7 +2,6 @@
 #define GRAPHICS_H_
 
 #include "Base.h"
-#include "FrameBufferObject.h"
 #include "frameDetails.h"
 #include "IGraphics.h"
 #include "Material.h"
@@ -67,23 +66,16 @@ namespace de
                 bool setGraphicsContext( const de::graphics::VideoInfo &_videoSettings );
                 void setOpenGLContext( int _width, int _height, int _aa, int _colourDepth, int _flags );
 
-                inline void setupFbos();
-                void getCentreVector( int _screenWidth, int _screenHeight );
-
 
             private:
-                bool multiSample, fbosSetup;
-                int screenWidth, screenHeight, spriteNumber;
-                float sizeRatio, screenRatio;
-                de::classes::Vector centre;
+                bool multiSample;
+                int screenWidth, screenHeight;
 
                 const SDL_VideoInfo* videoInfo;
                 de::graphics::VideoInfo videoSettings;
                 lua_State *luaState;
 
                 std::vector< renderObject* > Objects;
-                de::graphics::FboGame fboGame;
-                de::graphics::FboUI fboUI;
 
                 ShaderModule shaderModule;
                 TextureModule textureModule;

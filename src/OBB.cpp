@@ -64,14 +64,12 @@ namespace de
             centre = _position;
         }
 
-
         void OBB::rotate( const float &_rotation )
         {
             orientation[0][0] =  cos( _rotation * misc::piDegrees() );
             orientation[0][1] = -sin( _rotation * misc::piDegrees() );
             orientation[1][0] =  sin( _rotation * misc::piDegrees() );
             orientation[1][1] =  cos( _rotation * misc::piDegrees() );
-
         }
 
         void OBB::rotate( const float &_cos, const float &_sin )
@@ -82,35 +80,25 @@ namespace de
             orientation[1][1] =  _cos;
         }
 
-        bool OBB::containsPoint( const glm::vec3 &_point, const glm::mat4 &_mat )
+        bool OBB::containsPoint( const glm::vec3 &_point )
         {
-            if( _point.x < -half.x + centre.x || _point.x > half.x + centre.x  )
-            {
-                de::io::tests << "Failed at first test\n";
-                //de::io::tests << "-half.x + centre.x:" << -half.x + centre.x << "half.x + centre.:" <<  half.x + centre.x <<"\n";
-                return false;
-            }
+			glm::vec2 pointLocalSpace(_point);
+			pointLocalSpace -= centre;
+			pointLocalSpace = orientation*pointLocalSpace;
 
-            if( _point.y < -half.y + centre.y || _point.y > half.y + centre.y  )
-            {
-                de::io::tests << "Failed at second test\n";
+            if( pointLocalSpace.x < -half.x || pointLocalSpace.x > half.x )
                 return false;
-            }
+
+            if( pointLocalSpace.y < -half.y || pointLocalSpace.y > half.y )
+                return false;
 
             return true;
         }
-
-        bool OBB::isPointInTriangle( const glm::vec2& _A, const glm::vec2& _B, const glm::vec2& _C, const glm::vec2& _P ) const
-        {
-            return false;
-        }
-
 
         float GetProjectedRadius( const OBB &_o, const glm::vec2 &_d )
         {
             return _o.half[0]*glm::abs( glm::dot( _d,_o.orientation[0] ) ) + _o.half[1]*glm::abs( glm::dot( _d,_o.orientation[1] ) );
         }
-
 
         bool SeparatedOnAxis( const OBB &_a, const OBB &_b, const glm::vec2 &_d )
         {
