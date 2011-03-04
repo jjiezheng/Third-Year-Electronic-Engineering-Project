@@ -11,7 +11,6 @@
 
 #include "LuaInterface.h"
 #include "luaInterfaceAttrition.h"
-#include "vld.h"
 
 int main( int argc, char* args[] )
 {
