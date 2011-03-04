@@ -247,8 +247,16 @@ Object3D& Object3D::loadAssimp( const std::string &_name, const std::string &_sh
 
 		de::io::log << "Mesh has " << _mesh->GetNumUVChannels() << " UVs.\n";
 
+		if( _mesh->HasBones() )
+		{
+			de::io::log << "Mesh has bones\n";
+		}
 
+	}
 
+	if(  scene->HasAnimations() )
+	{
+		de::io::log << "It has animation\n";
 	}
     return *this;
 }
