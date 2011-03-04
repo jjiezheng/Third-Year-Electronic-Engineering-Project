@@ -1,0 +1,796 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{1b2d4dbf-7d7a-4503-a5ae-9ea76b89699e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{c1b417af-f0ae-4d4f-874b-c1e7ec0ec7aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\deprecated">
+      <UniqueIdentifier>{35e29ebc-2af5-4f64-b692-80967bc0a39b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Collision">
+      <UniqueIdentifier>{ba590c0a-f82a-470a-b2f2-8d5cb87a3b83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Lua">
+      <UniqueIdentifier>{d2bb7859-43bb-4945-8f73-3d50bf76eda4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\States">
+      <UniqueIdentifier>{554a211b-af95-4c99-8120-e0768178fd21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Services">
+      <UniqueIdentifier>{486a41aa-a441-49e4-aea0-16d16f1d1422}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\OpenGL">
+      <UniqueIdentifier>{c03a1dda-7d03-4f96-bc3e-0c52cfb887d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Timers and Logging">
+      <UniqueIdentifier>{20c8f33c-de8c-494f-ae93-2e436b29a0d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{c7586562-155d-490e-97c1-67f1dd8d8c09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{87736c8d-c354-40dd-b251-61c01b3b2782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Deprecated">
+      <UniqueIdentifier>{e0bb0a39-cdd2-4131-8f22-19bab5f978a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Collision">
+      <UniqueIdentifier>{0e88fbf6-e42d-4062-a568-6148bc34e5c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Lua">
+      <UniqueIdentifier>{d31fba10-53c7-4676-b072-7b8f38a9c8b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Timers and Logging">
+      <UniqueIdentifier>{9ddd02cd-8ad6-48c2-b9ca-7b57b6ee3c9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\OpenGL">
+      <UniqueIdentifier>{dcd13372-5591-4228-a314-ae73334f57c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Services">
+      <UniqueIdentifier>{f1999c41-2f67-41fb-805b-eae40ff82650}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\States">
+      <UniqueIdentifier>{9d90b98a-5dfc-4a7e-a0da-50c5c75192da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Base">
+      <UniqueIdentifier>{73e318d7-2a94-41d8-bc97-ca33955f1d68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\OpenGL\Renderables">
+      <UniqueIdentifier>{fbb6f558-90be-4aad-bfd3-c7a6be3d4a56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\OpenGL\Renderables">
+      <UniqueIdentifier>{a77c498e-196f-4802-92c8-a72ae73723a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Services\Modules">
+      <UniqueIdentifier>{d051f8d3-36c7-47a4-9076-86a92d032cb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Services\Loggers">
+      <UniqueIdentifier>{64b09c1e-a3b5-47f9-9ace-f755e182daaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Services\Interfaces">
+      <UniqueIdentifier>{7d84ce69-5187-4e49-81c4-55bcd700ddd7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Backround.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Bullet.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BulletFactory.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Bulletgenerator.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ComponentShip.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ControlComponent.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ControlMenu.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GraphicsComponent.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LevelBuilder.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LevelEditor.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Levelscontroller.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Menu.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MainMenu.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CoreEnumsAndClasses.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Functions.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Particle.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ParticleFactory.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Player.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PlayerControl.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Playerweapons.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Scrollingbackground.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShipBuilder.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShipFactory.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShipGraphics.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Ships.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShipSpawn.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpatialHash.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Title.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UI.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UIWaveInfo.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\VerticalShooter.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AnimatedSprite.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Animation.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BitmapFont.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ColourBlender.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FrameBufferObject.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Grapher.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Line.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LinedBox.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Loader.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Settings.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UIbaseData.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UIGunInfo.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UILevelInfo.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UIShipInfo.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UISlider.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UIspline.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Vector.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\version.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AABB.h">
+      <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Hitbox.h">
+      <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OBB.h">
+      <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="include\VisualHitbox.h">
+      <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luaCollision.h">
+      <Filter>Header Files\Engine\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LuaInterfaceState.h">
+      <Filter>Header Files\Engine\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LuaInterface.h">
+      <Filter>Header Files\Engine\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luaInterfaceAttrition.h">
+      <Filter>Header Files\Engine\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LuaState.h">
+      <Filter>Header Files\Engine\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Counter.h">
+      <Filter>Header Files\Engine\Timers and Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ErrorChecking.h">
+      <Filter>Header Files\Engine\Timers and Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Log.h">
+      <Filter>Header Files\Engine\Timers and Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PerfTimer.h">
+      <Filter>Header Files\Engine\Timers and Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TimeCounter.h">
+      <Filter>Header Files\Engine\Timers and Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BindShader.h">
+      <Filter>Header Files\Engine\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BinPacker.h">
+      <Filter>Header Files\Engine\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GLee\GLee.h">
+      <Filter>Header Files\Engine\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Material.h">
+      <Filter>Header Files\Engine\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Monitor.h">
+      <Filter>Header Files\Engine\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SkyBox.h">
+      <Filter>Header Files\Engine\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpriteBatching.h">
+      <Filter>Header Files\Engine\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpriteBuffer.h">
+      <Filter>Header Files\Engine\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpriteGroup.h">
+      <Filter>Header Files\Engine\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpriteSheet.h">
+      <Filter>Header Files\Engine\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ContextModule.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CoreGraphics.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameServices.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Graphics.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IAudio.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IGraphics.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IHaptics.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Input.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LoggedAudio.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LoggedGraphics.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OpenHaptics.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PostFX.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ResourceManager.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShaderModule.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Sound.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextureModule.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IResources.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Timer.h">
+      <Filter>Header Files\Engine\Timers and Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AttritionTestState.h">
+      <Filter>Header Files\Engine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Haptics.h">
+      <Filter>Header Files\Engine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Overlay.h">
+      <Filter>Header Files\Engine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RenderStressTest2D.h">
+      <Filter>Header Files\Engine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpriteSheetMaker.h">
+      <Filter>Header Files\Engine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pixelstorm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Coords.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CoreEngine.h">
+      <Filter>Header Files\Engine\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Entities.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\stdint.h">
+      <Filter>Header Files\Engine\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\inttypes.h">
+      <Filter>Header Files\Engine\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Base.h">
+      <Filter>Header Files\Engine\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\openGL.h">
+      <Filter>Header Files\Engine\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\State.h">
+      <Filter>Header Files\Engine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="include\frameDetails.h">
+      <Filter>Header Files\Engine\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luaGraphics.h">
+      <Filter>Header Files\Engine\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files\Engine\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>Header Files\Engine\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luaSystem.h">
+      <Filter>Header Files\Engine\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luaInput.h">
+      <Filter>Header Files\Engine\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HapticsOpject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TestState.h">
+      <Filter>Header Files\Engine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IFont.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Font.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="include\renderObject.h">
+      <Filter>Header Files\Engine\OpenGL\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpriteObject.h">
+      <Filter>Header Files\Engine\OpenGL\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StringObject.h">
+      <Filter>Header Files\Engine\OpenGL\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Object3D.h">
+      <Filter>Header Files\Engine\OpenGL\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpriteInstance.h">
+      <Filter>Header Files\Engine\OpenGL\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ImageResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\CoreEnumsAndClasses.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Functions.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backround.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bullet.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BulletFactory.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bulletgenerator.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ComponentShip.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ControlComponent.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ControlMenu.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LevelBuilder.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LevelEditor.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Levelscontroller.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Title.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpatialHash.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AnimatedSprite.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Animation.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapFont.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ColourBlender.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FrameBufferObject.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Line.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LinedBox.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Loader.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UIbaseData.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UIGunInfo.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UILevelInfo.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UIShipInfo.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UISlider.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UIspline.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VerticalShooter.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UIWaveInfo.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShipSpawn.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ships.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShipGraphics.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShipFactory.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShipBuilder.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\luaCollision.cpp">
+      <Filter>Source Files\Engine\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LuaInterface.cpp">
+      <Filter>Source Files\Engine\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\luaInterfaceAttrition.cpp">
+      <Filter>Source Files\Engine\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LuaInterfaceState.cpp">
+      <Filter>Source Files\Engine\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GraphicsComponent.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Particle.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ParticleFactory.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlayerControl.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Playerweapons.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AABB.cpp">
+      <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AttritionTestState.cpp">
+      <Filter>Source Files\Engine\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics.cpp">
+      <Filter>Source Files\Engine\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ResourceManager.cpp">
+      <Filter>Source Files\Engine\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sound.cpp">
+      <Filter>Source Files\Engine\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BindShader.cpp">
+      <Filter>Source Files\Engine\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteBatching.cpp">
+      <Filter>Source Files\Engine\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteBuffer.cpp">
+      <Filter>Source Files\Engine\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteGroup.cpp">
+      <Filter>Source Files\Engine\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scrollingbackground.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainMenu.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Menu.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VisualHitbox.cpp">
+      <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vector.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OBB.cpp">
+      <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BinPacker.cpp">
+      <Filter>Source Files\Engine\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameServices.cpp">
+      <Filter>Source Files\Engine\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Haptics.cpp">
+      <Filter>Source Files\Engine\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GLee\GLee.c">
+      <Filter>Source Files\Engine\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hitbox.cpp">
+      <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenHaptics.cpp">
+      <Filter>Source Files\Engine\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Timer.cpp">
+      <Filter>Source Files\Engine\Timers and Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PerfTimer.cpp">
+      <Filter>Source Files\Engine\Timers and Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Log.cpp">
+      <Filter>Source Files\Engine\Timers and Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TimeCounter.cpp">
+      <Filter>Source Files\Engine\Timers and Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ErrorChecking.cpp">
+      <Filter>Source Files\Engine\Timers and Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderStressTest2D.cpp">
+      <Filter>Source Files\Engine\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteSheetMaker.cpp">
+      <Filter>Source Files\Engine\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteSheet.cpp">
+      <Filter>Source Files\Engine\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SkyBox.cpp">
+      <Filter>Source Files\Engine\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Settings.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Counter.cpp">
+      <Filter>Source Files\Engine\Timers and Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Grapher.cpp">
+      <Filter>Source Files\Engine\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Material.cpp">
+      <Filter>Source Files\Engine\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Monitor.cpp">
+      <Filter>Source Files\Engine\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Overlay.cpp">
+      <Filter>Source Files\Engine\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pixelstorm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LuaState.cpp">
+      <Filter>Source Files\Engine\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\luaGraphics.cpp">
+      <Filter>Source Files\Engine\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\luaInput.cpp">
+      <Filter>Source Files\Engine\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\luaSystem.cpp">
+      <Filter>Source Files\Engine\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Font.cpp">
+      <Filter>Source Files\Engine\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Object3D.cpp">
+      <Filter>Source Files\Engine\OpenGL\Renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderObject.cpp">
+      <Filter>Source Files\Engine\OpenGL\Renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteObject.cpp">
+      <Filter>Source Files\Engine\OpenGL\Renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StringObject.cpp">
+      <Filter>Source Files\Engine\OpenGL\Renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteInstance.cpp">
+      <Filter>Source Files\Engine\OpenGL\Renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LoggedGraphics.cpp">
+      <Filter>Source Files\Engine\Services\Loggers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LoggedAudio.cpp">
+      <Filter>Source Files\Engine\Services\Loggers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ContextModule.cpp">
+      <Filter>Source Files\Engine\Services\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderModule.cpp">
+      <Filter>Source Files\Engine\Services\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureModule.cpp">
+      <Filter>Source Files\Engine\Services\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IAudio.cpp">
+      <Filter>Source Files\Engine\Services\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IResources.cpp">
+      <Filter>Source Files\Engine\Services\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IFont.cpp">
+      <Filter>Source Files\Engine\Services\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IGraphics.cpp">
+      <Filter>Source Files\Engine\Services\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IHaptics.cpp">
+      <Filter>Source Files\Engine\Services\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input.cpp">
+      <Filter>Source Files\Engine\Services\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PostFX.cpp">
+      <Filter>Source Files\Engine\Services\Loggers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TestState.cpp">
+      <Filter>Source Files\Engine\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CoreGraphics.cpp">
+      <Filter>Source Files\Engine\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HapticsOpject.cpp">
+      <Filter>Source Files\Engine\OpenGL\Renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImageResource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Attrition.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Release\Resources\Core\Images\Extra\Attrition.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

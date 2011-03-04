@@ -50,10 +50,10 @@ namespace de
                         std::string name( luabind::object_cast<std::string>(iter.key()) );
                         Frect coords, texcoords;
 
-                        coords.x = luabind::object_cast<int>((*iter)["X"]);
-                        coords.y = luabind::object_cast<int>((*iter)["Y"]);
-                        coords.w = luabind::object_cast<int>((*iter)["W"]);
-                        coords.h = luabind::object_cast<int>((*iter)["H"]);
+                        coords.x = luabind::object_cast<float>((*iter)["X"]);
+                        coords.y = luabind::object_cast<float>((*iter)["Y"]);
+                        coords.w = luabind::object_cast<float>((*iter)["W"]);
+                        coords.h = luabind::object_cast<float>((*iter)["H"]);
 
                         texcoords.x = luabind::object_cast<float>((*iter)["normX"]);
                         texcoords.y = luabind::object_cast<float>((*iter)["normY"]);
