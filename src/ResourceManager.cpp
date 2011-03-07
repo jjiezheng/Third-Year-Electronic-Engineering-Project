@@ -6,6 +6,13 @@
 #include <corona.h>
 
 
+#include "ImageResource.h"
+#include "ShaderResource.h"
+#include "MusicResource.h"
+#include "SoundEffectResource.h"
+#include "MeshResource.h"
+
+
 using namespace de::misc;
 using namespace de::enums;
 using namespace de::graphics;
@@ -101,7 +108,9 @@ namespace de
             }
         }
 
-
+		void ResourceManager::loadMeshes( std::map<std::string, MeshResource> &_meshes )
+		{
+		}
 
         void ResourceManager::loadShaders( std::map<std::string, ShaderResource> &_shaders )
         {
@@ -138,6 +147,9 @@ namespace de
             }
         }
 
+		void ResourceManager::loadMeshResources()
+		{
+		}
 
         void ResourceManager::textureFreeAll( std::map<std::string, ImageResource> &_textures )
         {
@@ -158,7 +170,7 @@ namespace de
             }
         }
 
-        inline void ResourceManager::musicFreeAll(  std::map<std::string, MusicResource> &_music )
+        void ResourceManager::musicFreeAll(  std::map<std::string, MusicResource> &_music )
         {
             for( musicIter = _music.begin(); musicIter != _music.end(); ++musicIter )
             {
@@ -166,7 +178,7 @@ namespace de
             }
         }
 
-        inline void ResourceManager::soundEffectFreeAll( std::map<std::string, SoundEffectResource> &_soundEffects )
+        void ResourceManager::soundEffectFreeAll( std::map<std::string, SoundEffectResource> &_soundEffects )
         {
             for( soundEffectIter = _soundEffects.begin(); soundEffectIter != _soundEffects.end(); ++soundEffectIter )
             {
@@ -174,12 +186,21 @@ namespace de
             }
         }
 
+		void ResourceManager::MeshesFreeAll( std::map<std::string, MeshResource> &_meshes )
+		{
+		}
+
         void ResourceManager::free( int _choice )
         {
             if ( (_choice & TEXTURES) == TEXTURES )
             {
                 textureFreeAll( textures );
                 textureFreeAll( texturesExtra );
+            }
+
+            if ( (_choice & MESHES) == MESHES )
+            {
+                MeshesFreeAll( meshes );
             }
 
             if ( (_choice & SHADERS) == SHADERS )
@@ -204,6 +225,11 @@ namespace de
             {
                 loadTextures( textures );
                 loadTextures( texturesExtra );
+            }
+
+			if ( (_choice & MESHES) == MESHES )
+            {
+                loadMeshes( meshes );
             }
 
             if ( (_choice & SHADERS) == SHADERS )
@@ -373,6 +399,10 @@ namespace de
             return empty;
         }
 
+		const VBO&  ResourceManager::getMesh( const std::string &_mesh )
+		{
+			return graphics::VBO();
+		}
         const int& ResourceManager::getMusic( const std::string& _music )
         {
             musicIter = musics.find( _music );
@@ -414,110 +444,5 @@ namespace de
             return true;
         }
 
-
-
-
-        ShaderResource::ShaderResource() {}
-
-        ShaderResource::ShaderResource( const std::string &_name )
-        {
-            name = _name;
-        }
-
-        ShaderResource::~ShaderResource()
-        {
-            unload();
-        }
-
-        const de::graphics::Shader& ShaderResource::getShaderObject( lua_State* L )
-        {
-            if( shader.get( graphics::Shader::PROGRAM ) == 0 )
-            {
-                loadUsing( L );
-            }
-            return shader;
-        }
-
-        bool ShaderResource::loadUsing( lua_State* L )
-        {
-            Engine::Graphics().loadShader( L, shader, name );
-            return true;
-        };
-
-        void ShaderResource::unload()
-        {
-            Engine::Graphics().unloadShader( shader );
-        }
-
-
-        MusicResource::MusicResource( const std::string &_name, const fs::path &_path ) : Music(0)
-        {
-            name = _name;
-            path = _path;
-        }
-
-        MusicResource::~MusicResource()
-        {
-            unload();
-        }
-
-        const int& MusicResource::getMusic()
-        {
-            if( Music == 0 )
-            {
-                load();
-            }
-            return Music;
-        }
-
-        void MusicResource::load()
-        {
-            if( Music == 0 )
-            {
-                Music = Engine::Audio().loadMusic( path.file_string() );
-            }
-        }
-
-        void MusicResource::unload()
-        {
-            Engine::Audio().deleteMusic( Music );
-            Music = 0;
-        }
-
-
-
-        SoundEffectResource::SoundEffectResource( const std::string &_name, const fs::path &_path ) : SoundEffect(0)
-        {
-            name = _name;
-            path = _path;
-        }
-
-        SoundEffectResource::~SoundEffectResource()
-        {
-            unload();
-        }
-
-        const int& SoundEffectResource::getSoundEffect()
-        {
-            if( SoundEffect == 0 )
-            {
-                load();
-            }
-            return SoundEffect;
-        }
-
-        void SoundEffectResource::load()
-        {
-            if( SoundEffect == 0 )
-            {
-                SoundEffect = Engine::Audio().loadSoundEffect( path.file_string() );
-            }
-        }
-
-        void SoundEffectResource::unload()
-        {
-            Engine::Audio().deleteSoundEffect( SoundEffect );
-            SoundEffect = 0;
-        }
     }
 }

@@ -193,8 +193,8 @@ function load_player_ship( _view, _modelMatrix )
 
 	local ship = mesh()
 	--ship:load( "HeadlessGiant", "CelShaded" )
-	ship:load( "CameraRollAnim.3ds", "CelShaded" )
-	--ship:load( "HeadlessGiant.lwo", "CelShaded" )
+	--ship:load( "CameraRollAnim.3ds", "CelShaded" )
+	ship:load( "HeadlessGiant.lwo", "CelShaded" )
 	ship.model = _modelMatrix
 
 	ship:uniform( "Model", _modelMatrix )

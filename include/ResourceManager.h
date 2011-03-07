@@ -3,93 +3,32 @@
 
 #include "Settings.h"
 #include "Base.h"
+#include "VBO.h"
 #include "frameDetails.h"
 #include "IResources.h"
 
-#include "ImageResource.h"
 
 
 namespace de
 {
     namespace resources
     {
+		class ImageResource;
+		class ShaderResource;
+		class MusicResource;
+		class SoundEffectResource;
+		class MeshResource;
+
         enum ResourceChoices
         {
             None = 0,
             TEXTURES = 1,
-            SHADERS = 1 << 1,
-            MATERIALS = 1 << 2,
-            MUSIC = 1 << 3,
-            SOUNDEFFECTS = 1 << 4
+			MESHES = 1 << 1,
+            SHADERS = 1 << 2,
+            MATERIALS = 1 << 3,
+            MUSIC = 1 << 4,
+            SOUNDEFFECTS = 1 << 5
         };
-
-        //! Struct used by Resources internally.
-        /*! Stores everything the engine wants to know about a Shader
-        */
-        class ShaderResource
-        {
-            public:
-                //! Constructor with FileName passed in.
-                ShaderResource();
-                ShaderResource( const std::string &_name );
-                ~ShaderResource();
-
-                //! Loads shader using the Lua Shader Factory
-                bool loadUsing( lua_State* L );
-                //! Unloads the Shader Program
-                void unload();
-
-                //! Get shader Object
-                const graphics::Shader& getShaderObject( lua_State* L );
-
-
-            private:
-                graphics::Shader shader;
-                std::string name;
-        };
-
-        //! Struct used by Resources internally.
-        /*! Stores everything the engine wants to know about a Music Track
-        */
-        class MusicResource
-        {
-            public:
-                //! Basic Constructor.
-                MusicResource() : Music(0) {}
-                //! Constructor with FileName passed in.
-                MusicResource( const std::string &_name, const boost::filesystem::path &_path );
-                ~MusicResource();
-
-                const int& getMusic();
-                void load();
-                void unload();
-            private:
-                int Music;
-                std::string name;
-                boost::filesystem::path path;
-        };
-
-        //! Struct used by Resources internally.
-        /*! Stores everything the engine wants to know about a Sound Effect.
-        */
-        class SoundEffectResource
-        {
-            public:
-                //! Basic Constructor.
-                SoundEffectResource() : SoundEffect(0) {}
-                //! Constructor with FileName passed in.
-                SoundEffectResource( const std::string &_name, const boost::filesystem::path &_path );
-                ~SoundEffectResource();
-
-                const int& getSoundEffect();
-                void load();
-                void unload();
-            private:
-                int SoundEffect;
-                std::string name;
-                boost::filesystem::path path, luaPath;
-        };
-
 
         //! Handles all Resources ( Textures, Shaders, Music and Sound ).
         /*! This class handles all Resources.
@@ -123,6 +62,7 @@ namespace de
                 std::map<std::string, de::classes::Frect>& getSpritesCoords( const std::string &_texture, bool tex = true );
                 std::vector<std::string>& getSpritesName( const std::string &_texture );
 
+
                 //! Loads the Texture "_texture" and returns an opaque handle.
                 const Uint32& getTexture( const std::string &_texture );
                 //! Loads the Shader "_shaderName" and returns a Shader Object.
@@ -132,6 +72,8 @@ namespace de
                 //! Loads the Music "_music" and returns an opaque handle.
                 const int& getMusic( const std::string &_music );
 
+				const graphics::VBO& getMesh( const std::string &_mesh );
+
                 //! Gets the Texture Size of "_texture" with "_width" and "_height". (Caches the result)
                 bool getTextureSize( const std::string &_texture, float &_width, float &_height );
 
@@ -140,18 +82,20 @@ namespace de
                 void loadTextures( std::map<std::string, ImageResource> &_textures );
                 void loadMusic( std::map<std::string, MusicResource> &_music );
                 void loadSoundEffects( std::map<std::string, SoundEffectResource> &_soundEffects );
-
+                void loadMeshes( std::map<std::string, MeshResource> &_meshes );
 
                 void shaderFreeAll( std::map<std::string, ShaderResource> &_shaders );
                 void textureFreeAll( std::map<std::string, ImageResource> &_textures );
                 void musicFreeAll( std::map<std::string, MusicResource> &_music );
                 void soundEffectFreeAll( std::map<std::string, SoundEffectResource> &_soundEffects );
+				void MeshesFreeAll( std::map<std::string, MeshResource> &_meshes );
 
 
                 void loadTextureResources( const boost::filesystem::path &_path, std::map<std::string, ImageResource> &_textures );
                 void loadShaderResources();
                 void loadMusicResources();
                 void loadSoundEffectResources();
+                void loadMeshResources();
 
             private:
                 std::map<std::string, ShaderResource> shaders, shadersExtra;
@@ -165,6 +109,9 @@ namespace de
 
                 std::map<std::string, SoundEffectResource> soundEffects, soundEffectsExtra;
                 std::map<std::string, SoundEffectResource>::iterator soundEffectIter;
+				
+                std::map<std::string, MeshResource> meshes, meshesExtra;
+                std::map<std::string, MeshResource>::iterator meshIter;
 
                 lua_State *luaShaderLoader, *luaTextureLoader;
 

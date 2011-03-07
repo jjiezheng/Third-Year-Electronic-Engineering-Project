@@ -1,5 +1,6 @@
 #include "SpriteSheet.h"
 
+#include "ImageResource.h"
 #include <luabind/luabind.hpp>
 #include "corona.h"
 #include <map>

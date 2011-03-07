@@ -365,4 +365,3 @@ void Object3D::localRender()
     //CHECKGL( glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0) );
     CHECKGL( glUseProgram( 0 ) );
 }
-

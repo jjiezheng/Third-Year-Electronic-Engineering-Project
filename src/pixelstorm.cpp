@@ -47,7 +47,7 @@ namespace Attrition
             de::Engine::Register( new ResourceManager( de::Engine::Graphics().getVideoSettings() ) );
 			de::Engine::Register( new FontManager() );
 
-            de::Engine::Resources().load( SHADERS | TEXTURES | MUSIC | SOUNDEFFECTS );
+            de::Engine::Resources().load( SHADERS | TEXTURES | MESHES | MUSIC | SOUNDEFFECTS );
 
 
             //Attrition::shipManager.parseShips();
@@ -56,7 +56,7 @@ namespace Attrition
 
             overlay = new de::state::Overlay;
 
-            SDL_WM_SetCaption( "ELX3 - Presentation", NULL );
+            SDL_WM_SetCaption( "Difference Engine", NULL );
         }
     }
 
@@ -195,14 +195,14 @@ namespace Attrition
 
             if( keystate[SDLK_LALT] && ( keystate[SDLK_RETURN] || keystate[SDLK_KP_ENTER] )  )
             {
-                de::Engine::Resources().free( TEXTURES | SHADERS );
+                de::Engine::Resources().free( TEXTURES | SHADERS | MESHES );
                 de::Engine::Graphics().toggleFullscreen();
                 de::Engine::Resources().load( TEXTURES | SHADERS );
             }
 
             if( keystate[SDLK_LALT] && ( keystate[SDLK_RETURN] || keystate[SDLK_BACKSPACE] )  )
             {
-                de::Engine::Resources().free( SHADERS | TEXTURES | MUSIC | SOUNDEFFECTS );
+                de::Engine::Resources().free( SHADERS | TEXTURES | MESHES | MUSIC | SOUNDEFFECTS );
 
                 de::Engine::clear();
 
@@ -211,7 +211,7 @@ namespace Attrition
                 de::Engine::Register( new de::haptics::OpenHaptics() );
                 de::Engine::Register( new ResourceManager( de::Engine::Graphics().getVideoSettings() ) );
 
-                de::Engine::Resources().load( SHADERS | TEXTURES | MUSIC | SOUNDEFFECTS );
+                de::Engine::Resources().load( SHADERS | TEXTURES | MESHES | MUSIC | SOUNDEFFECTS );
 
                 de::events::pushEvent( de::enums::events::OPENGL_RELOAD );
             }
@@ -225,7 +225,7 @@ namespace Attrition
                 screenWidth = _event.resize.w;
                 screenHeight = (int)(_event.resize.w/1.6);
 
-                de::Engine::Resources().free( TEXTURES | SHADERS );
+                de::Engine::Resources().free( TEXTURES | MESHES | SHADERS );
                 de::Engine::Graphics().resize( screenWidth, screenHeight );
             }
             else if( _event.resize.h )
@@ -233,11 +233,11 @@ namespace Attrition
                 screenWidth = (int)(_event.resize.w*1.6);
                 screenHeight = _event.resize.h;
 
-                de::Engine::Resources().free( TEXTURES | SHADERS );
+                de::Engine::Resources().free( TEXTURES | MESHES | SHADERS );
                 de::Engine::Graphics().resize( screenWidth, screenHeight );
             }
 
-            de::Engine::Resources().load( TEXTURES | SHADERS );
+            de::Engine::Resources().load( TEXTURES | MESHES | SHADERS );
         }
     }
 

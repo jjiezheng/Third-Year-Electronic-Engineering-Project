@@ -1,13 +1,14 @@
 #ifndef IMAGERESOURCE_H
 #define IMAGERESOURCE_H
 
-#include "Settings.h"
 #include "Base.h"
-#include "frameDetails.h"
-#include "IResources.h"
 
 namespace de
 {
+	namespace classes
+	{
+		class Frect;
+	}
     namespace resources
     {
 		class ImageResource

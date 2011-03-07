@@ -6,24 +6,16 @@
 #include <corona.h>
 
 
-using namespace de::misc;
-using namespace de::enums;
-using namespace de::graphics;
-using namespace de::filesystem;
-using namespace de::classes;
-
-namespace fs = boost::filesystem;
-
 namespace de
 {
     namespace resources
     {
-        ImageResource::ImageResource( const std::string &_name, const fs::path &_path ) : width(0), height(0), Texture(0)
+        ImageResource::ImageResource( const std::string &_name, const boost::filesystem::path &_path ) : width(0), height(0), Texture(0)
         {
             name = _name;
             path = _path;
 
-            luaPath = path.parent_path().file_string() + "/" + stripFileEnding( path.filename() ) + ".lua";
+            luaPath = path.parent_path().file_string() + "/" + filesystem::stripFileEnding( path.filename() ) + ".lua";
         }
 
         const Uint32& ImageResource::getTexture( lua_State* L )
@@ -41,14 +33,14 @@ namespace de
             {
                 Texture = Engine::Graphics().loadTexture( path.file_string(), width, height );
 
-                if( L != NULL && fs::is_regular( luaPath ) )
+                if( L != NULL && boost::filesystem::is_regular( luaPath ) )
                 {
                     luaL_dofile( L, luaPath.file_string().c_str() );
 
                     for( luabind::iterator iter(luabind::globals(L)[name]), end; iter != end; ++iter )
                     {
                         std::string name( luabind::object_cast<std::string>(iter.key()) );
-                        Frect coords, texcoords;
+                        classes::Frect coords, texcoords;
 
                         coords.x = luabind::object_cast<float>((*iter)["X"]);
                         coords.y = luabind::object_cast<float>((*iter)["Y"]);
@@ -82,7 +74,7 @@ namespace de
             if( frectIter == current->end() )
             {
                 de::io::error << "Failure to get sprite called " << _name << "\n";
-                return Frect();
+                return classes::Frect();
             }
             return frectIter->second;
         }

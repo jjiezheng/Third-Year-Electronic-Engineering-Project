@@ -75,7 +75,9 @@
     <ClInclude Include="include\MainMenu.h" />
     <ClInclude Include="include\Material.h" />
     <ClInclude Include="include\Menu.h" />
+    <ClInclude Include="include\MeshResource.h" />
     <ClInclude Include="include\Monitor.h" />
+    <ClInclude Include="include\MusicResource.h" />
     <ClInclude Include="include\OBB.h" />
     <ClInclude Include="include\Object3D.h" />
     <ClInclude Include="include\openGL.h" />
@@ -95,6 +97,7 @@
     <ClInclude Include="include\Scrollingbackground.h" />
     <ClInclude Include="include\Settings.h" />
     <ClInclude Include="include\ShaderModule.h" />
+    <ClInclude Include="include\ShaderResource.h" />
     <ClInclude Include="include\ShipBuilder.h" />
     <ClInclude Include="include\ShipFactory.h" />
     <ClInclude Include="include\ShipGraphics.h" />
@@ -102,6 +105,7 @@
     <ClInclude Include="include\ShipSpawn.h" />
     <ClInclude Include="include\SkyBox.h" />
     <ClInclude Include="include\Sound.h" />
+    <ClInclude Include="include\SoundEffectResource.h" />
     <ClInclude Include="include\SpatialHash.h" />
     <ClInclude Include="include\SpriteBatching.h" />
     <ClInclude Include="include\SpriteBuffer.h" />
@@ -126,6 +130,7 @@
     <ClInclude Include="include\UISlider.h" />
     <ClInclude Include="include\UIspline.h" />
     <ClInclude Include="include\UIWaveInfo.h" />
+    <ClInclude Include="include\VBO.h" />
     <ClInclude Include="include\Vector.h" />
     <ClInclude Include="include\version.h" />
     <ClInclude Include="include\VerticalShooter.h" />
@@ -193,7 +198,9 @@
     <ClCompile Include="src\MainMenu.cpp" />
     <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\Menu.cpp" />
+    <ClCompile Include="src\MeshResource.cpp" />
     <ClCompile Include="src\Monitor.cpp" />
+    <ClCompile Include="src\MusicResource.cpp" />
     <ClCompile Include="src\OBB.cpp" />
     <ClCompile Include="src\Object3D.cpp" />
     <ClCompile Include="src\OpenHaptics.cpp" />
@@ -212,6 +219,7 @@
     <ClCompile Include="src\Scrollingbackground.cpp" />
     <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\ShaderModule.cpp" />
+    <ClCompile Include="src\ShaderResource.cpp" />
     <ClCompile Include="src\ShipBuilder.cpp" />
     <ClCompile Include="src\ShipFactory.cpp" />
     <ClCompile Include="src\ShipGraphics.cpp" />
@@ -219,6 +227,7 @@
     <ClCompile Include="src\ShipSpawn.cpp" />
     <ClCompile Include="src\SkyBox.cpp" />
     <ClCompile Include="src\Sound.cpp" />
+    <ClCompile Include="src\SoundEffectResource.cpp" />
     <ClCompile Include="src\SpatialHash.cpp" />
     <ClCompile Include="src\SpriteBatching.cpp" />
     <ClCompile Include="src\SpriteBuffer.cpp" />
@@ -241,6 +250,7 @@
     <ClCompile Include="src\UISlider.cpp" />
     <ClCompile Include="src\UIspline.cpp" />
     <ClCompile Include="src\UIWaveInfo.cpp" />
+    <ClCompile Include="src\VBO.cpp" />
     <ClCompile Include="src\Vector.cpp" />
     <ClCompile Include="src\VerticalShooter.cpp" />
     <ClCompile Include="src\VisualHitbox.cpp" />
