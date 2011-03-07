@@ -82,10 +82,14 @@ namespace de
                 LUA = 1 << 5,
                 WAV = 1 << 6,
                 OGG = 1 << 7,
+				STUDIOMAX = 1 << 8,
+                LWO = 1 << 9,
+				OBJ = 1 << 10,
 
                 IMAGES = PNG | JPG | BMP | TGA,
                 MUSIC = WAV | OGG,
-                SOUNDEFFECTS = WAV | OGG
+                SOUNDEFFECTS = WAV | OGG,
+				MESHES = STUDIOMAX | LWO | OBJ
             };
         }
 

@@ -76,14 +76,20 @@
     <Filter Include="Source Files\Engine\OpenGL\Renderables">
       <UniqueIdentifier>{a77c498e-196f-4802-92c8-a72ae73723a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine\Services\Modules">
-      <UniqueIdentifier>{d051f8d3-36c7-47a4-9076-86a92d032cb2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine\Services\Loggers">
       <UniqueIdentifier>{64b09c1e-a3b5-47f9-9ace-f755e182daaf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Engine\Services\Interfaces">
       <UniqueIdentifier>{7d84ce69-5187-4e49-81c4-55bcd700ddd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Resources">
+      <UniqueIdentifier>{f516d0df-72c1-4928-9d22-5c40c375ebae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Services\Resources">
+      <UniqueIdentifier>{e34fc2d8-b04b-41e5-a893-3fe50e8198b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Services\Graphics">
+      <UniqueIdentifier>{d051f8d3-36c7-47a4-9076-86a92d032cb2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -420,9 +426,6 @@
     <ClInclude Include="include\luaInput.h">
       <Filter>Header Files\Engine\Lua</Filter>
     </ClInclude>
-    <ClInclude Include="include\HapticsOpject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\TestState.h">
       <Filter>Header Files\Engine\States</Filter>
     </ClInclude>
@@ -447,23 +450,26 @@
     <ClInclude Include="include\SpriteInstance.h">
       <Filter>Header Files\Engine\OpenGL\Renderables</Filter>
     </ClInclude>
+    <ClInclude Include="include\HapticsOpject.h">
+      <Filter>Header Files\Engine\OpenGL\Renderables</Filter>
+    </ClInclude>
     <ClInclude Include="include\ImageResource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ShaderResource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MusicResource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SoundEffectResource.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Resources</Filter>
     </ClInclude>
     <ClInclude Include="include\MeshResource.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MusicResource.h">
+      <Filter>Header Files\Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShaderResource.h">
+      <Filter>Header Files\Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SoundEffectResource.h">
+      <Filter>Header Files\Engine\Resources</Filter>
     </ClInclude>
     <ClInclude Include="include\VBO.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\OpenGL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -756,13 +762,13 @@
       <Filter>Source Files\Engine\Services\Loggers</Filter>
     </ClCompile>
     <ClCompile Include="src\ContextModule.cpp">
-      <Filter>Source Files\Engine\Services\Modules</Filter>
+      <Filter>Source Files\Engine\Services\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\ShaderModule.cpp">
-      <Filter>Source Files\Engine\Services\Modules</Filter>
+      <Filter>Source Files\Engine\Services\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\TextureModule.cpp">
-      <Filter>Source Files\Engine\Services\Modules</Filter>
+      <Filter>Source Files\Engine\Services\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\IAudio.cpp">
       <Filter>Source Files\Engine\Services\Interfaces</Filter>
@@ -782,9 +788,6 @@
     <ClCompile Include="src\Input.cpp">
       <Filter>Source Files\Engine\Services\Interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="src\PostFX.cpp">
-      <Filter>Source Files\Engine\Services\Loggers</Filter>
-    </ClCompile>
     <ClCompile Include="src\TestState.cpp">
       <Filter>Source Files\Engine\States</Filter>
     </ClCompile>
@@ -795,21 +798,24 @@
       <Filter>Source Files\Engine\OpenGL\Renderables</Filter>
     </ClCompile>
     <ClCompile Include="src\ImageResource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ShaderResource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MusicResource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SoundEffectResource.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\Services\Resources</Filter>
     </ClCompile>
     <ClCompile Include="src\MeshResource.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\Services\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MusicResource.cpp">
+      <Filter>Source Files\Engine\Services\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderResource.cpp">
+      <Filter>Source Files\Engine\Services\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoundEffectResource.cpp">
+      <Filter>Source Files\Engine\Services\Resources</Filter>
     </ClCompile>
     <ClCompile Include="src\VBO.cpp">
+      <Filter>Source Files\Engine\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PostFX.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

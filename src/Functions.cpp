@@ -36,8 +36,13 @@ namespace de
                     return filetypes::WAV;
                 else if( (*iter) == "ogg" )
                     return filetypes::OGG;
+                else if( (*iter) == "3ds" )
+                    return filetypes::STUDIOMAX;
+                else if( (*iter) == "lwo" )
+                    return filetypes::LWO;
+                else if( (*iter) == "obj" )
+                    return filetypes::OBJ;
             }
-
             return filetypes::NONE;
         }
 

@@ -294,8 +294,8 @@
     <OutDir>$(SolutionDir)$(Configuration)\exe\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>C:\Program Files %28x86%29\Visual Leak Detector\include;C:\Programming\Libraries\assimp\assimp--2.0.863-sdk\include;C:\Program Files (x86)\Lua\5.1\include;C:\Programming\Projects\Attrition\Attrition\include;C:\Programming\Libraries\Stlsoft\stlsoft-1.9.97\include;C:\Programming\Libraries\SDL-1.2.14\include;C:\Programming\Libraries\glm\glm-0.9.0.3;C:\Programming\Libraries\corona-1.0.2\include;C:\Programming\Libraries\Boost\boost_1_43_0;C:\Programming\Libraries\luabind-0.9.1;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Visual Leak Detector\lib;C:\Programming\Libraries\assimp\assimp--2.0.863-sdk\lib\assimp_release-dll_win32;C:\Programming\Projects\Attrition\Attrition\src;C:\Program Files (x86)\Lua\5.1\lib;C:\Programming\Libraries\SDL-1.2.14\lib;C:\Programming\Libraries\corona-1.0.2\lib;C:\Programming\Libraries\luabind-0.9.1\bin\msvc-10.0\release;C:\Programming\Libraries\Boost\boost_1_43_0\bin.v2\libs\filesystem\build\msvc-10.0\release\link-static\threading-multi;C:\Programming\Libraries\Boost\boost_1_43_0\bin.v2\libs\system\build\msvc-10.0\release\link-static\threading-multi;C:\Programming\Libraries\Boost\boost_1_43_0\bin.v2\libs\date_time\build\msvc-10.0\release\link-static\threading-multi;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Programming\Libraries\assimp\assimp--2.0.863-sdk\include;C:\Programming\Libraries\Lua\5.1\include;C:\Programming\EXL3 Haptics\Attrition\include;C:\Programming\Libraries\Stlsoft\stlsoft-1.9.97\include;C:\Programming\Libraries\SDL-1.2.14\include;C:\Programming\Libraries\glm\glm-0.9.0.3;C:\Programming\Libraries\corona-1.0.2\include;C:\Programming\Libraries\Boost\boost_1_43_0;C:\Programming\Libraries\luabind-0.9.1;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Programming\Libraries\assimp\assimp--2.0.863-sdk\lib\assimp_release-dll_win32;C:\Programming\EXL3 Haptics\Attrition\src;C:\Programming\Libraries\Lua\5.1\lib;C:\Programming\Libraries\SDL-1.2.14\lib;C:\Programming\Libraries\corona-1.0.2\lib;C:\Programming\Libraries\luabind-0.9.1\bin\msvc-10.0\release;C:\Programming\Libraries\Boost\boost_1_43_0\bin.v2\libs\filesystem\build\msvc-10.0\release\link-static\threading-multi;C:\Programming\Libraries\Boost\boost_1_43_0\bin.v2\libs\system\build\msvc-10.0\release\link-static\threading-multi;C:\Programming\Libraries\Boost\boost_1_43_0\bin.v2\libs\date_time\build\msvc-10.0\release\link-static\threading-multi;$(LibraryPath)</LibraryPath>
     <OutDir>.\bin\exe\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -330,7 +330,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>SDL.lib;SDLmain.lib;SDL_mixer.lib;opengl32.lib;corona.lib;lua5.1.lib;lua51.lib;luabind.lib;assimp.lib;vld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL.lib;SDLmain.lib;SDL_mixer.lib;opengl32.lib;corona.lib;lua5.1.lib;lua51.lib;luabind.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

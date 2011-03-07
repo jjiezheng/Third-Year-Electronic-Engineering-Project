@@ -17,6 +17,10 @@ namespace de
 		{
 		}
 
+		void VBO::bind()
+		{
+		}
+
 		void VBO::render()
 		{
 		}

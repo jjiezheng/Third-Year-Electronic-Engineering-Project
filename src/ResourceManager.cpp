@@ -25,7 +25,6 @@ namespace de
 {
     namespace resources
     {
-
         ResourceManager::ResourceManager( VideoInfo _videoInfo, int _choice )
         {
             GLSL = _videoInfo.GLSL;
@@ -36,17 +35,14 @@ namespace de
             loadShaderResources();
             loadMusicResources();
             loadSoundEffectResources();
+			loadMeshResources();
 
             load( _choice );
         }
-
         ResourceManager::~ResourceManager()
         {
             free( TEXTURES | SHADERS | MUSIC | SOUNDEFFECTS );
         }
-
-
-
 
         void ResourceManager::loadTextureResources( const boost::filesystem::path &_path, std::map<std::string, ImageResource> &_textures )
         {
@@ -65,7 +61,6 @@ namespace de
                 _textures[textureName] = ImageResource( textureName, (*iter) );
             }
         }
-
         void ResourceManager::loadShaderResources()
         {
             if( glslVersion::none < GLSL )
@@ -77,7 +72,6 @@ namespace de
                 luaL_dofile( luaShaderLoader, shaderLoader.c_str() );
             }
         }
-
         void ResourceManager::loadMusicResources()
         {
             std::vector<boost::filesystem::path> foundFiles;
@@ -92,7 +86,6 @@ namespace de
                 musics[musicName] = MusicResource( musicName, (*iter) );
             }
         }
-
         void ResourceManager::loadSoundEffectResources()
         {
             std::vector<boost::filesystem::path> foundFiles;
@@ -107,10 +100,22 @@ namespace de
                 soundEffects[soundEffectName] = SoundEffectResource( soundEffectName, (*iter) );
             }
         }
-
-		void ResourceManager::loadMeshes( std::map<std::string, MeshResource> &_meshes )
+		void ResourceManager::loadMeshResources()
 		{
+            std::vector<boost::filesystem::path> foundFiles;
+            std::vector<boost::filesystem::path>::iterator iter, end;
+
+            fs::path filepath( Roots->get( root::MESHES ) );
+            getFilesFrom( filepath, foundFiles, filetypes::MESHES );
+
+            for( iter = foundFiles.begin(); iter < foundFiles.end(); ++iter )
+            {
+				de::io::tests << "Found: " << iter->filename() << "\n";
+                //std::string soundEffectName( stripFileEnding( iter->filename() ) );
+                //soundEffects[soundEffectName] = SoundEffectResource( soundEffectName, (*iter) );
+            }
 		}
+
 
         void ResourceManager::loadShaders( std::map<std::string, ShaderResource> &_shaders )
         {
@@ -122,7 +127,6 @@ namespace de
                 }
             }
         }
-
         void ResourceManager::loadMusic( std::map<std::string, MusicResource> &_music )
         {
             for ( musicIter = _music.begin(); musicIter != _music.end(); ++musicIter )
@@ -130,7 +134,6 @@ namespace de
                 musicIter->second.load();
             }
         }
-
         void ResourceManager::loadSoundEffects( std::map<std::string, SoundEffectResource> &_soundEffects )
         {
             for ( soundEffectIter = _soundEffects.begin(); soundEffectIter != _soundEffects.end(); ++soundEffectIter )
@@ -138,7 +141,6 @@ namespace de
                 soundEffectIter->second.load();
             }
         }
-
         void ResourceManager::loadTextures( std::map<std::string, ImageResource> &_textures )
         {
             for( textureIter = _textures.begin(); textureIter != _textures.end(); ++textureIter )
@@ -146,10 +148,10 @@ namespace de
                 textureIter->second.load( luaTextureLoader );
             }
         }
-
-		void ResourceManager::loadMeshResources()
+		void ResourceManager::loadMeshes( std::map<std::string, MeshResource> &_meshes )
 		{
 		}
+
 
         void ResourceManager::textureFreeAll( std::map<std::string, ImageResource> &_textures )
         {
@@ -158,7 +160,6 @@ namespace de
                 textureIter->second.unload();
             }
         }
-
         void ResourceManager::shaderFreeAll( std::map<std::string, ShaderResource> &_shaders )
         {
             if( glslVersion::none < GLSL )
@@ -169,7 +170,6 @@ namespace de
                 }
             }
         }
-
         void ResourceManager::musicFreeAll(  std::map<std::string, MusicResource> &_music )
         {
             for( musicIter = _music.begin(); musicIter != _music.end(); ++musicIter )
@@ -177,7 +177,6 @@ namespace de
                 musicIter->second.unload();
             }
         }
-
         void ResourceManager::soundEffectFreeAll( std::map<std::string, SoundEffectResource> &_soundEffects )
         {
             for( soundEffectIter = _soundEffects.begin(); soundEffectIter != _soundEffects.end(); ++soundEffectIter )
@@ -185,10 +184,10 @@ namespace de
                 soundEffectIter->second.unload();
             }
         }
-
 		void ResourceManager::MeshesFreeAll( std::map<std::string, MeshResource> &_meshes )
 		{
 		}
+
 
         void ResourceManager::free( int _choice )
         {
@@ -218,7 +217,6 @@ namespace de
                 soundEffectFreeAll( soundEffects );
             }
         }
-
         void ResourceManager::load( int _choice )
         {
             if ( (_choice & TEXTURES) == TEXTURES )
@@ -247,11 +245,9 @@ namespace de
                 loadSoundEffects( soundEffects );
             }
         }
-
         void ResourceManager::free( const std::string &_choice )
         {
         }
-
         void ResourceManager::load( const std::string &_choice )
         {
             //de::io::log << "Loading extra resources with the command " << _choice << "\n";
@@ -272,12 +268,10 @@ namespace de
         }
 
 
-
         de::classes::Poly ResourceManager::getSprite( const std::string &_name )
         {
             return de::classes::Poly( getSpriteCoords( _name, true ), 0, true );
         }
-
         const std::vector<de::classes::Poly>& ResourceManager::getSprites( const std::vector<std::string> &_names )
         {
             static std::vector<de::classes::Poly> frames;
@@ -288,7 +282,6 @@ namespace de
 
             return frames;
         }
-
         de::classes::Frect ResourceManager::getSpriteCoords( const std::string &_name, bool tex )
         {
             std::vector<std::string> strs;
@@ -316,7 +309,6 @@ namespace de
             }
             return textureIter->second.getSpriteCoords( spriteName, tex );
         }
-
         std::map<std::string, de::classes::Frect>& ResourceManager::getSpritesCoords( const std::vector<std::string> &_names, bool tex )
         {
             static std::map<std::string, de::classes::Frect> frames;
@@ -327,7 +319,6 @@ namespace de
 
             return frames;
         }
-
         std::map<std::string, de::classes::Frect>& ResourceManager::getSpritesCoords( const std::string &_texture, bool tex )
         {
             static std::map<std::string, de::classes::Frect> frames;
@@ -344,7 +335,6 @@ namespace de
             frames = textureIter->second.getAllSprites( tex );
             return frames;
         }
-
         std::vector<std::string>& ResourceManager::getSpritesName( const std::string &_texture )
         {
             static std::vector<std::string> sprites;
@@ -363,8 +353,6 @@ namespace de
         }
 
 
-
-
         const Uint32& ResourceManager::getTexture( const std::string& _texture )
         {
             textureIter = textures.find( _texture );
@@ -380,7 +368,6 @@ namespace de
             }
             return textureIter->second.getTexture( luaTextureLoader );
         }
-
         const de::graphics::Shader& ResourceManager::getShader( const std::string &_shaderName )
         {
             if( glslVersion::none < GLSL )
@@ -398,7 +385,6 @@ namespace de
             de::io::error << "ResourceManager: Couldn't find shader - " << _shaderName << "\n";
             return empty;
         }
-
 		const VBO&  ResourceManager::getMesh( const std::string &_mesh )
 		{
 			return graphics::VBO();
@@ -415,7 +401,6 @@ namespace de
             }
             return musicIter->second.getMusic();
         }
-
         const int& ResourceManager::getSoundEffect( const std::string& _soundEffect )
         {
             soundEffectIter = soundEffects.find( _soundEffect );
@@ -428,6 +413,7 @@ namespace de
             }
             return soundEffectIter->second.getSoundEffect();
         }
+
 
         bool ResourceManager::getTextureSize( const std::string& _texture, float &_width, float &_height )
         {
@@ -443,6 +429,5 @@ namespace de
 
             return true;
         }
-
     }
 }

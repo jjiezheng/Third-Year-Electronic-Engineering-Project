@@ -19,9 +19,11 @@ namespace de
 				VBO();
 				~VBO();
 				bool setup();
+				void bind();
 				void render();
-			private:
-				int vboVerts, vboElems;
+			public:
+				Uint32 vertexBuffer, elementBuffer;
+				std::string meshName;
 				std::map< std::string, AttInfo >  Attribs;
 		};
 	}
