@@ -41,7 +41,7 @@ namespace de
         }
         ResourceManager::~ResourceManager()
         {
-            free( TEXTURES | SHADERS | MUSIC | SOUNDEFFECTS );
+            free( TEXTURES | MESHES | SHADERS | MUSIC | SOUNDEFFECTS );
         }
 
         void ResourceManager::loadTextureResources( const boost::filesystem::path &_path, std::map<std::string, ImageResource> &_textures )
@@ -111,6 +111,7 @@ namespace de
             for( iter = foundFiles.begin(); iter < foundFiles.end(); ++iter )
             {
 				de::io::tests << "Found: " << iter->filename() << "\n";
+				meshes[iter->filename()] = MeshResource( Roots->get( root::MESHES ), iter->filename() );
                 //std::string soundEffectName( stripFileEnding( iter->filename() ) );
                 //soundEffects[soundEffectName] = SoundEffectResource( soundEffectName, (*iter) );
             }
@@ -150,6 +151,10 @@ namespace de
         }
 		void ResourceManager::loadMeshes( std::map<std::string, MeshResource> &_meshes )
 		{
+            for( meshIter = _meshes.begin(); meshIter != _meshes.end(); ++meshIter )
+            {
+                meshIter->second.load();
+            }
 		}
 
 
@@ -186,6 +191,10 @@ namespace de
         }
 		void ResourceManager::MeshesFreeAll( std::map<std::string, MeshResource> &_meshes )
 		{
+            for( meshIter = _meshes.begin(); meshIter != _meshes.end(); ++meshIter )
+            {
+                meshIter->second.unload();
+            }
 		}
 
 
@@ -387,7 +396,14 @@ namespace de
         }
 		const VBO&  ResourceManager::getMesh( const std::string &_mesh )
 		{
-			return graphics::VBO();
+			meshIter = meshes.find(_mesh);
+            if( meshIter != meshes.end() )
+            {
+                return meshIter->second.get();
+            }
+          
+			static graphics::VBO empty;
+			return empty;
 		}
         const int& ResourceManager::getMusic( const std::string& _music )
         {

@@ -18,12 +18,10 @@ int main( int argc, char* args[] )
 	de::addLuaInterface( "Ships", &Attrition::luaInterface::exportShips );
 
     Attrition::Game = new Attrition::DifferenceEngine;
-    Attrition::Game->setNextState( new de::state::LuaState( "Bootstrap" ) );
-	//Attrition::Game->setNextState( new TestState() );
+    //Attrition::Game->setNextState( new de::state::LuaState( "Bootstrap" ) );
+	Attrition::Game->setNextState( new TestState() );
 	Attrition::Game->changeState();
-
-    //Attrition::Game->setNextState( new Attrition::AttritionTestState() );
-    
+   
 	
     try
     {

@@ -16,6 +16,7 @@ namespace de
     namespace graphics
     {
         class Shader;
+		class VBO;
     }
     namespace resources
     {
@@ -43,6 +44,7 @@ namespace de
 
                 virtual const unsigned int& getTexture( const std::string &_texture ) = 0;
                 virtual const de::graphics::Shader& getShader( const std::string &_shaderName ) = 0;
+				virtual const de::graphics::VBO& getMesh( const std::string &_mesh ) = 0;
                 virtual const int& getSoundEffect( const std::string &_soundEffect ) = 0;
                 virtual const int& getMusic( const std::string &_music ) = 0;
 
@@ -74,6 +76,7 @@ namespace de
 
                 const unsigned int& getTexture( const std::string &_texture );
                 const de::graphics::Shader& getShader( const std::string &_shaderName );
+				const de::graphics::VBO& getMesh( const std::string &_mesh );
                 const int& getSoundEffect( const std::string &_soundEffect );
                 const int& getMusic( const std::string &_music );
 

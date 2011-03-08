@@ -5,17 +5,29 @@ using namespace de::enums;
 
 TestState::TestState()
 {
-	de::Engine::Fonts().load( "GeoSansLight" );
 
-	otherText.set( "catcatcat", "GeoSansLight", de::classes::Vector( 50.0f, 75.0f ) );
-	otherText.setColour( de::classes::Colour( 0.67f, 0.16f, 0.16f,0.8f ) );
+	for(int i = 0; i!=100;++i)
+	{
+		mesh[i].load( "HeadlessGiant.lwo", "basicVBO" );
+		mesh[i].writeToDepth(true).depth(true);
+		mesh[i].setUniform( "Model", glm::mat4(1.0f) );
+		mesh[i].setUniform( "View", glm::translate( glm::mat4( 1.0f ), glm::vec3( (float)i*0.05f, (float)i*0.05f, -20.0f ) ) );
+		mesh[i].setUniform( "Projection", glm::perspective( 45.0f, 16.0f/10.0f, 0.1f, 100.0f ) );
 
-	textytext.font( "GeoSansLight" ).text( "Caturday" ).shader( "String" );
-	textytext.setUniform( "Projection", glm::perspective( 45.0f, 16.0f/10.0f, 0.1f, 1000.0f ) );
-	textytext.setUniform( "View", glm::rotate( glm::translate( glm::mat4(1.0f), glm::vec3( 0.0f, 0.0f, -900.0f ) ), 180.0f, glm::vec3( 1.0f, 0.0f, 0.0f) ) );
-	textytext.setUniform( "Model", glm::mat4(1.0f) );
+		mesh[i].setUniform( "AmbientMaterial", glm::vec3( 0.04f, 0.04f, 0.04f ) );
+		mesh[i].setUniform( "DiffuseMaterial", glm::vec3( 0.75f, 0.75f, 0.5f ) );
+		mesh[i].setUniform( "SpecularMaterial", glm::vec3( 0.5f, 0.5f, 0.5f ) );
+		mesh[i].setUniform( "Shininess", 100.0f );
 
+		mesh[i].setUniform( "NormalMatrix", glm::inverse( glm::transpose( glm::translate( glm::mat4( 1.0f ), glm::vec3( (float)i*0.05f, (float)i*0.05f, -20.0f ) ) ) ) );
+		mesh[i].setUniform( "LightPosition", glm::vec3(-20.0f) );
+	}
 
+	/*
+	vbo = de::Engine::Resources().getMesh( "HeadlessGiant.lwo" );
+
+	de::io::tests << "vertexBuffer:" << (int)vbo.vertexBuffer << " elementBuffer:" << (int)vbo.elementBuffer << " meshName:" << vbo.meshName << "\n";
+	*/
 	/*
 	deviceHandle = hdInitDevice(HD_DEFAULT_DEVICE);
 	if (HD_DEVICE_ERROR(hdGetError()))
@@ -57,19 +69,18 @@ bool TestState::handleEvents( const SDL_Event &_event )
 
 bool TestState::logic( const Uint32 &_deltaTicks, State* &_nextState, de::state::options &_options )
 {
-	static float rotate = 0;
-	rotate += 5;
-	textytext.setUniform( "Model", glm::translate( glm::rotate( glm::mat4(1.0f), -rotate, glm::vec3(1.0f) ), textytext.align() ) );
     return false;
 }
 
 void TestState::reLoadTextures()
 {
-	textytext.reload();
+
 }
 
 void TestState::render()
 {
-	textytext.render();
-	otherText.render( de::enums::FBO_AFTER );
+	for(int i = 0; i!=100;++i)
+	{
+		mesh[i].render();
+	}
 }

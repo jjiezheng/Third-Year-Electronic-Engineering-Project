@@ -2,7 +2,7 @@ Graphics =
 {
 	frameRate = 60, 
 	colorDepth = 32, 
-	fullScreen = false, 
+	fullScreen = true, 
 	Windowed = 
 {
 	screenWidth = 1280, 

@@ -2,9 +2,8 @@
 #define TESTSTATE_H
 
 #include "State.h"
-#include "Object3D.h"
-#include "StringObject.h"
 #include "Haptics.h"
+#include "modelObject.h"
 /*#include "HL\hl.h"
 #include "HD\hd.h"*/
 
@@ -23,16 +22,13 @@ class TestState : public de::state::State
 
     private:
         void reLoadTextures();
+		
+		modelObject mesh[100];
 		/*
 		HHD deviceHandle;
 		HHLRC hapticsContext;
 		HLuint hapticsShape;
 		*/
-		StringObject textytext;
-		de::classes::SpriteString otherText;
-
-        std::vector<std::string> shipNames;
-        std::vector<std::string> shaderNames;
 };
 
 #endif // TESTSTATE_H

@@ -2,9 +2,23 @@
 #include "GameServices.h"
 #include "CoreEnumsAndClasses.h"
 
+#include "openGL.h"
 #include <aiTypes.h>
 #include <aiScene.h> 
 #include <aiPostProcess.h>
+
+namespace
+{
+    static Uint32 make_buffer( GLenum target, const void *buffer_data, GLsizei buffer_size )
+    {
+        Uint32 buffer;
+        CHECKGL( glGenBuffers( 1, &buffer ) );
+        CHECKGL( glBindBuffer( target, buffer ) );
+        CHECKGL( glBufferData( target, buffer_size, buffer_data, GL_STATIC_DRAW ) );
+        return buffer;
+    }
+}
+
 
 namespace de
 {
@@ -14,12 +28,13 @@ namespace de
         MeshResource::MeshResource( const std::string &_path, const std::string &_name )
 		{
 			name = _name;
-			load( _path, _name );
+			path = _path;
+			//load();
 		}
 
 		MeshResource::~MeshResource()
 		{
-
+			unload();
 		}
 
 		graphics::VBO& MeshResource::get()
@@ -27,9 +42,21 @@ namespace de
 			return vbo;
 		}
 
-		bool MeshResource::load( const std::string &_path, const std::string &_name )
+		bool MeshResource::load()
 		{
-			return loadWithAssimp( _path, _name );
+			unload();
+			return loadWithAssimp( path, name );
+		}
+
+		bool MeshResource ::unload()
+		{
+			VertexBuffer.clear();
+			iter = VertexBuffer.begin();
+
+			ElementBuffer.clear();
+			iterElement = ElementBuffer.begin();
+
+			return true;
 		}
 
 		bool MeshResource::loadWithAssimp( const std::string &_path, const std::string &_name )
@@ -39,8 +66,8 @@ namespace de
 
 			Assimp::Importer importer;
 
-			//std::string path( Roots->get( root::MESHES )+_name );
 			std::string path( _path+_name );
+			de::io::log << "path:" << path << "\n";
 			const aiScene* scene = importer.ReadFile( path.c_str(),
 				aiProcess_CalcTangentSpace |
 				aiProcess_Triangulate |
@@ -61,15 +88,17 @@ namespace de
 			if( scene->HasMeshes() )
 			{
 				parseWithAssimp( scene );
-
+				makeVBO();
 			}
 
 			if(  scene->HasAnimations() )
 			{
 				de::io::log << "It has animation\n";
 			}
+
 			return true;
 		}
+
 
 		void MeshResource::parseWithAssimp( const aiScene* _scene )
 		{
@@ -83,11 +112,11 @@ namespace de
 				{
 					de::io::log << "Triangles\n";
 				}
-		/*
-				de::graphics::AttributeTypes attType;
-				shader.getAttribute( "Position", attType );
-				AttributeInfo["Position"] = bufferInfo( VertexBuffer.size()*sizeof(de::graphics::vertex), _mesh->mNumVertices, attType );
-				*/
+
+				vbo.Attribs["Position"] = graphics::AttInfo( _mesh->mNumVertices, 
+															 VertexBuffer.size()*sizeof(de::graphics::vertex), 
+															 sizeof(de::graphics::vertex) );
+
 				int i, num = _mesh->mNumVertices;
 				aiVector3D* verts = _mesh->mVertices;
 				for( i = 0; i!=num; ++i)
@@ -96,7 +125,6 @@ namespace de
 				}
 				de::io::log << "VertexBuffer.size() = " << VertexBuffer.size() << "\n";
 
-			
 				num = _mesh->mNumFaces;
 				aiFace* faces = _mesh->mFaces;
 				for( i = 0; i!=num; ++i)
@@ -111,11 +139,10 @@ namespace de
 			if( _mesh->HasNormals() )
 			{
 				de::io::log << "Mesh has normals\n";
-			
-		/*
-				de::graphics::AttributeTypes attTypeNormal;
-				AttributeInfo["Normal"] = bufferInfo( VertexBuffer.size()*sizeof(de::graphics::vertex), _mesh->mNumVertices, attTypeNormal );
-				*/
+				vbo.Attribs["Normal"] = graphics::AttInfo( _mesh->mNumVertices, 
+														   VertexBuffer.size()*sizeof(de::graphics::vertex), 
+														   sizeof(de::graphics::vertex) );
+
 				int i, num = _mesh->mNumVertices;
 				aiVector3D* verts = _mesh->mNormals;
 				for( i = 0; i!=num; ++i)
@@ -132,6 +159,14 @@ namespace de
 				de::io::log << "Mesh has bones\n";
 			}
 
+		}
+
+		void MeshResource::makeVBO()
+		{
+			vbo.meshName = name;
+			vbo.triangles = ElementBuffer.size();
+			vbo.vertexBuffer = make_buffer( GL_ARRAY_BUFFER, &(VertexBuffer[0]), VertexBuffer.size()*sizeof(de::graphics::vertex) );
+			vbo.elementBuffer = make_buffer( GL_ELEMENT_ARRAY_BUFFER, &(ElementBuffer[0]), ElementBuffer.size()*sizeof(int) );
 		}
 	}
 }

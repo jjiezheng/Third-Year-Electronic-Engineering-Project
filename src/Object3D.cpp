@@ -331,6 +331,7 @@ void Object3D::localRender()
         if( AttIter->second.isSet )
         {
             int size(AttIter->second.type);
+			de::io::tests << "size:" << size << " stride:" << sizeof(de::graphics::vertex) << " offset:" << AttributeInfo[AttIter->first].offset << "\n";
 
             CHECKGL( glVertexAttribPointer(
                 shader.getAttribute( AttIter->first ),        // attribute

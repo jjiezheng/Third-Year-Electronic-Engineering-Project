@@ -1,6 +1,7 @@
 #include "IResources.h"
 #include "CoreEnumsAndClasses.h"
 #include "Material.h"
+#include "VBO.h"
 
 
 namespace de
@@ -48,6 +49,12 @@ namespace de
             static de::graphics::Shader shader;
             return shader;
         }
+
+		const de::graphics::VBO& NullResources::getMesh( const std::string &_mesh )
+		{
+			static de::graphics::VBO vbo;
+            return vbo;
+		}
 
         const unsigned int& NullResources::getTexture( const std::string &_texture )
         {
