@@ -5,6 +5,8 @@ namespace de
 {
     namespace graphics
     {
+		class IGraphics;
+
         struct vertex
         {
             float r,g,b,a;
@@ -18,16 +20,14 @@ namespace de
         class renderObject
         {
             public:
-                /** Default constructor */
                 renderObject();
-                /** Default destructor */
                 virtual ~renderObject();
-
                 virtual void reload() = 0;
                 virtual void render() = 0;
-                virtual void localRender() = 0;
+				virtual void actualRender() = 0;
             protected:
             private:
+				
         };
     }
 }

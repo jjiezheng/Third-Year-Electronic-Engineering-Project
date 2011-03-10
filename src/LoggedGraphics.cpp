@@ -17,12 +17,6 @@ namespace de
             delete wrapped;
         }
 
-        void LoggedGraphics::freeAll()
-        {
-            de::io::log << "freeAll was called.\n";
-            wrapped->freeAll();
-        }
-
         frameDetails LoggedGraphics::render()
         {
             de::io::log << "render was called.\n";
@@ -45,13 +39,6 @@ namespace de
         {
             de::io::log << "resize was called with _screenWidth = " << _screenWidth << " and _screenHeight = " << _screenHeight << "\n";
             wrapped->resize( _screenWidth, _screenHeight );
-        }
-
-
-        bool LoggedGraphics::videoModeOk( const int &_width, const int &_height )
-        {
-            de::io::log << "checkGraphicsContext was called with _width = " << _width << " and _height = " << _height << "\n";
-            return wrapped->videoModeOk( _width, _height );
         }
 
         const de::graphics::VideoInfo& LoggedGraphics::getVideoSettings()

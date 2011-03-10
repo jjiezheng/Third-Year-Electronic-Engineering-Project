@@ -70,6 +70,7 @@ namespace de
                 case( root::LUA )          : return lua;
             }
             de::io::error << "No root with that name. :(\n";
+			assert(!"In Root::get()  No root with that name. :(");
             return "";
         }
 

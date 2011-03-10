@@ -2,12 +2,12 @@ Graphics =
 {
 	frameRate = 60, 
 	colorDepth = 32, 
-	fullScreen = true, 
+	fullScreen = false, 
 	Windowed = 
 {
 	screenWidth = 1280, 
 	screenHeight = 800, 
-	antiAliasing = 0
+	antiAliasing = 4
 }, 
 	FullScreen = 
 {

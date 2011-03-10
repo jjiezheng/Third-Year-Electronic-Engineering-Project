@@ -9,7 +9,7 @@ function Bootstrap.HandleEvents( self, _events )
 end
 
 function Bootstrap.Logic( self, _deltaTime )
-	setState( "LuaBoy" )
+	setState( "Game" )
 end
 
 function Bootstrap.Render(self)

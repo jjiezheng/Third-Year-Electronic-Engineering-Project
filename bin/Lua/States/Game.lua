@@ -43,6 +43,24 @@ function Game.Start( self )
 
 	self.player = make_player(self.View)
 
+	self.angle = 0
+	self.world = model()
+	self.world:load( "world.obj", "TexturedVbo" )
+	self.world:texture( "Texture0", "world" )
+	self.world:uniform( "Model", scale( translate( rotate( mat4(1), self.angle, vec3(0,0,1) ), vec3(0,0,-100) ), vec3(100) ) )
+	self.world:uniform( "View", rotate( self.View, 180, vec3(0,0,1 ) ) )
+	self.world:uniform( "Projection", Projection )
+	self.world:uniform( "NormalMatrix", normalSpace(mat4(1)) )
+
+	self.world:uniform( "LightPosition", vec3(0,0,500) )
+	self.world:uniform( "AmbientMaterial", vec3( 0.04, 0.04, 0.04 ) )
+	self.world:uniform( "DiffuseMaterial", vec3( 0.75, 0.75, 0.5 ) )
+	self.world:uniform( "SpecularMaterial", vec3( 0.5, 0.5, 0.5 ) )
+	self.world:uniform( "Shininess", 100 )
+	self.world:depth( true )
+	self.world:writeToDepth( true )
+
+
 	--aButton = make_button( {640-0, 400-0}, 80, 35, "UI", "UIButton", { "UI.button1", "UI.button2", "UI.button3" } )
 end
 
@@ -70,17 +88,21 @@ function Game.Logic( self, _deltaTime )
 
 	self.player:logic( _deltaTime, self.View )
 	self.borders:logic( _deltaTime, self.View )
+
+	self.angle = self.angle + 1
+	self.world:uniform( "Model", scale( rotate( translate( mat4(1), vec3(0,0,-100) ), self.angle, vec3(0,1,1) ), vec3(100) ) )
 end
 
 function Game.Render( self )
 	self.borders:render()
 	self.player:render()
-	self.player.render_hitbox:render()
+	self.world:render()
 end
 
 function Game.Reload( self )
 	self.borders:reload()
 	self.ship:reload()
+	self.world:reload()
 end
 
 
@@ -94,6 +116,7 @@ function turningClosure()
 	local current_direction = 1
 	local direction = 1
 	local starting_angle = 1
+	local turning_angle = 20
 	local angle = 1
 
 	--Behaviour which banks the ship in the direction it is turning
@@ -111,9 +134,9 @@ function turningClosure()
 
 			time = time + _deltaTime
 			if time > animationTime then time = animationTime end
-			angle = mix( starting_angle, 15*direction, smoothstep( 0, animationTime, time ) )
+			angle = mix( starting_angle, turning_angle*direction, smoothstep( 0, animationTime, time ) )
 
-			return rotate( _player.ship.model, angle, vec3(0,0,-1) )
+			return rotate( _player.ship.model, angle, vec3(0,1,0) )
 		else
 
 			moving = false
@@ -122,7 +145,7 @@ function turningClosure()
 			angle = mix( 0, 15*direction, smoothstep( 0, animationTime, time ) )
 			starting_angle = angle
 
-			return  rotate( _player.ship.model, angle, vec3(0,0,-1) )
+			return  rotate( _player.ship.model, angle, vec3(0,1,0) )
 		end
 	end
 end
@@ -191,11 +214,12 @@ end
 
 function load_player_ship( _view, _modelMatrix )
 
-	local ship = mesh()
+	local ship = model()
 	--ship:load( "HeadlessGiant", "CelShaded" )
 	--ship:load( "CameraRollAnim.3ds", "CelShaded" )
-	ship:load( "HeadlessGiant.lwo", "CelShaded" )
+	ship:load( "ship.3ds", "CelShaded" )
 	ship.model = _modelMatrix
+
 
 	ship:uniform( "Model", _modelMatrix )
 	ship:uniform( "View", _view )
@@ -208,6 +232,7 @@ function load_player_ship( _view, _modelMatrix )
 	ship:uniform( "SpecularMaterial", vec3( 0.5, 0.5, 0.5 ) )
 	ship:uniform( "Shininess", 100 )
 	ship:depth( true )
+	ship:writeToDepth( true )
 
 	return ship
 end
@@ -220,7 +245,17 @@ function make_player( _view )
 	player.vel = vec3(0)
 	player.dir = vec3(0)
 	player.pos = vec3(0)
-	player.modelMatrix = scale( translate( rotate( rotate( mat4(1.0), 90,  vec3( 1,0,0) ), 180, vec3( 0,1,0) ), vec3(0,0,-0) ), vec3(2.5) )
+	player.modelMatrix = scale(
+							translate(
+								rotate(
+									rotate(
+										mat4(1.0),
+										180,
+										vec3( 1,0,0) ),
+									180,
+									vec3( 0,1,0) ),
+								vec3(0,0,-0) ),
+							vec3(5) )
 
 	player.hitbox = collision.obb(5,5)
 	player.render_hitbox = collision.visualHitbox( player.hitbox )
@@ -258,7 +293,8 @@ function make_player( _view )
 		self.ship:uniform( "Model", _model )
 		self.ship:uniform( "View", view )
 		self.ship:uniform( "NormalMatrix", normalSpace(view) )
-		self.ship:uniform( "LightPosition", vec3(0,0,-500)*normalSpace(_view*_model) )
+		--self.ship:uniform( "NormalMatrix", normalSpace(ship.model) )
+		self.ship:uniform( "LightPosition", vec3(0,0,500)*normalSpace(_view*_model) )
 
 	end
 
@@ -270,6 +306,7 @@ function make_player( _view )
 	--Render
 	function player.render(self)
 		self.ship:render()
+		--self.render_hitbox:render()
 	end
 
 	return player

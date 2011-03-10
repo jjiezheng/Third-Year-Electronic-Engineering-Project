@@ -15,8 +15,6 @@ namespace de
                 /** Default destructor */
                 virtual ~LoggedGraphics();
 
-                //!Frees all Textures, Shaders and FBO's
-                void freeAll();
                 //! Renders everything that has been passed into the class since the last time this function was call and then swade the buffers
                 frameDetails render();
 
@@ -32,8 +30,6 @@ namespace de
 
                 void toggleFullscreen();
                 void resize( int _screenWidth, int _screenHeight );
-
-                bool videoModeOk( const int &_width, const int &_height );
 
                 const de::graphics::VideoInfo& getVideoSettings();
 

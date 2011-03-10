@@ -23,7 +23,7 @@ class TestState : public de::state::State
     private:
         void reLoadTextures();
 		
-		modelObject mesh[100];
+		modelObject mesh;
 		/*
 		HHD deviceHandle;
 		HHLRC hapticsContext;

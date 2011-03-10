@@ -5,6 +5,7 @@
 #include "SpriteInstance.h"
 #include "SpriteObject.h"
 #include "StringObject.h"
+#include "modelObject.h"
 
 
 #include <luabind/operator.hpp>
@@ -181,6 +182,29 @@ namespace de
                     .def( "reload",   (void(Object3D::*)()) &Object3D::reload )
                     .def( "render",   (void(Object3D::*)()) &Object3D::render ),
 
+
+					
+                luabind::class_<modelObject>( "model" )
+                    .def( luabind::constructor<>() )
+                    .def( "uniform",	(modelObject&(modelObject::*)( std::string const&, float const& )) &modelObject::setUniform, luabind::return_reference_to(_1) )
+                    //.def( "uniform",	(modelObject&(modelObject::*)( std::string const&, int const& )) &modelObject::setUniform, luabind::return_reference_to(_1) )
+                    .def( "uniform",	(modelObject&(modelObject::*)( std::string const&, glm::vec2 const& )) &modelObject::setUniform, luabind::return_reference_to(_1) )
+                    .def( "uniform",	(modelObject&(modelObject::*)( std::string const&, glm::vec3 const& )) &modelObject::setUniform, luabind::return_reference_to(_1) )
+                    .def( "uniform",	(modelObject&(modelObject::*)( std::string const&, glm::vec4 const& )) &modelObject::setUniform, luabind::return_reference_to(_1) )
+                    .def( "uniform",	(modelObject&(modelObject::*)( std::string const&, glm::mat3 const& )) &modelObject::setUniform, luabind::return_reference_to(_1) )
+                    .def( "uniform",	(modelObject&(modelObject::*)( std::string const&, glm::mat4 const& )) &modelObject::setUniform, luabind::return_reference_to(_1) )
+					.def( "texture",	(modelObject&(modelObject::*)( std::string const&, std::string const&)) &modelObject::setTexture, luabind::return_reference_to(_1) )
+
+                    .def( "depth",		(modelObject&(modelObject::*)( bool )) &modelObject::depth, luabind::return_reference_to(_1) )
+					.def( "writeToDepth",(modelObject&(modelObject::*)( bool ))&modelObject::writeToDepth, luabind::return_reference_to(_1) )
+					.def( "alpha",		(modelObject&(modelObject::*)( bool )) &modelObject::alpha, luabind::return_reference_to(_1) )
+					.def( "blend",		(modelObject&(modelObject::*)( bool )) &modelObject::blend, luabind::return_reference_to(_1) )
+					
+                    .def( "type",		(modelObject&(modelObject::*)( std::string const&)) &modelObject::setType, luabind::return_reference_to(_1) )
+                    .def( "load",		(void(modelObject::*)( std::string const&, std::string const&)) &modelObject::load )
+                    .def( "reload",		(void(modelObject::*)()) &modelObject::reload )
+                    .def( "render",		(void(modelObject::*)()) &modelObject::render ),
+					
 
                 luabind::class_<StringObject>( "stringObject" )
                     .def( luabind::constructor<>() )

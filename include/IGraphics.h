@@ -26,8 +26,6 @@ namespace de
 
                 IGraphics() {}
                 virtual ~IGraphics() {}
-                //!Frees all Textures, Shaders and FBO's
-                virtual void freeAll() = 0;
                 //! Renders everything that has been passed into the class since the last time this function was call and then swade the buffers
                 virtual frameDetails render() = 0;
 
@@ -35,8 +33,6 @@ namespace de
 
                 virtual void toggleFullscreen() = 0;
                 virtual void resize( int _screenWidth, int _screenHeight ) = 0;
-
-                virtual bool videoModeOk( const int &_width, const int &_height ) = 0;
 
                 virtual const de::graphics::VideoInfo& getVideoSettings() = 0;
 
@@ -58,18 +54,13 @@ namespace de
                 /** Default destructor */
                 virtual ~NullGraphics() {}
 
-                //!Frees all Textures, Shaders and FBO's
-                void freeAll() {}
                 //! Renders everything that has been passed into the class since the last time this function was call and then swade the buffers
                 frameDetails render();
 
-                
                 bool add( renderObject *_Object ) { return true; }
 
                 void toggleFullscreen() {}
                 void resize( int _screenWidth, int _screenHeight ) {}
-
-                bool videoModeOk( const int &_width, const int &_height ) { return true; }
 
                 const de::graphics::VideoInfo& getVideoSettings()
                 {

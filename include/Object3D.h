@@ -48,10 +48,10 @@ class Object3D : public de::graphics::renderObject
 
         void reload();
         void render();
-        void localRender();
 		void clear();
-
+		void actualRender();
     private:
+		
         void makeBuffers();
         Object3D& loadAssimp( const std::string &_name, const std::string &_shader );
 

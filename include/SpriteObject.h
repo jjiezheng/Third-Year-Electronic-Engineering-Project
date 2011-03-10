@@ -35,13 +35,13 @@ class SpriteObject : public de::graphics::renderObject
 
         void reload();
         void render();
-        void localRender();
         void start();
         void end();
         void groupRender();
-
+		void actualRender();
     protected:
     private:
+		
         void setFBO( de::classes::Frect _tex, de::classes::Frect _coords );
         void makeBuffers();
 

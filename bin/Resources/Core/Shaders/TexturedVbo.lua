@@ -7,12 +7,12 @@ uniform mat4 View;
 uniform mat4 Projection;
 
 attribute vec4 Position;
-attribute vec4 Tex;
-varying vec4 TexCoord;
+attribute vec2 UV_0;
+varying vec2 TexCoord;
 
 void main()
 {
-	TexCoord = Tex;
+	TexCoord = UV_0;
 	gl_Position = Projection*View*Model*Position;
 
 }
@@ -26,12 +26,13 @@ uniform mat4 View;
 uniform mat4 Projection;
 
 in vec4 Position;
-in vec4 Tex;
-out vec4 TexCoord;
+in vec2 UV_0;
+out vec2 TexCoord;
 
 void main()
 {
-	TexCoord = Tex;
+	TexCoord = UV_0;
+	//TexCoord = UV_0;
 	gl_Position = Projection*View*Model*Position;
 
 }
@@ -56,11 +57,11 @@ ogl_21_Frag = [[
 
 uniform sampler2D Texture0;
 
-varying vec4 TexCoord;
+varying vec2 TexCoord;
 
 void main()
 {
-    gl_FragColor = texture2D( Texture0, TexCoord.xy);
+    gl_FragColor = texture2D( Texture0, TexCoord);
 }
 
 
@@ -71,12 +72,12 @@ oglFrag = [[
 
 uniform sampler2D Texture0;
 
-in vec4 TexCoord;
+in vec2 TexCoord;
 out vec4 FragColor;
 
 void main()
 {
-	FragColor = texture2D( Texture0, TexCoord.xy);
+	FragColor = texture2D( Texture0, TexCoord);
 }
 
 

@@ -143,7 +143,7 @@ void SpriteInstance::render()
     de::Engine::Graphics().add( this );
 }
 
-void SpriteInstance::localRender()
+void SpriteInstance::actualRender()
 {
     std::map<int, std::vector<OpaqueSprite*> >::iterator fboIter = Sprites.begin();
     std::map<int, std::vector<OpaqueSprite*> >::iterator fboEnd = Sprites.end();

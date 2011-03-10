@@ -30,8 +30,6 @@ namespace de
 
                 virtual ~Graphics();
 
-                //!Frees all Textures, Shaders and FBO's
-                void freeAll();
                 //! Renders everything that has been passed into the class since the last time this function was called and then swaps the framebuffer.
                 frameDetails render();
 
@@ -43,8 +41,7 @@ namespace de
                 //!Resizes screen size.
                 void resize( int _screenWidth, int _screenHeight );
 
-                bool videoModeOk( const int &_width, const int &_height );
-                const de::graphics::VideoInfo& getVideoSettings();
+				const de::graphics::VideoInfo& getVideoSettings();
 
 
                 //!Load the texture with the name "_fileName" in the texture folder.
@@ -63,13 +60,8 @@ namespace de
                 frameDetails getFrameInfo();
                 de::graphics::VideoInfo getSettings();
                 void saveSettings();
-                bool setGraphicsContext( const de::graphics::VideoInfo &_videoSettings );
-                void setOpenGLContext( int _width, int _height, int _aa, int _colourDepth, int _flags );
-
 
             private:
-                bool multiSample;
-                int screenWidth, screenHeight;
 
                 const SDL_VideoInfo* videoInfo;
                 de::graphics::VideoInfo videoSettings;

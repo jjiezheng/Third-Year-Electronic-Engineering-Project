@@ -6,22 +6,21 @@ using namespace de::enums;
 TestState::TestState()
 {
 
-	for(int i = 0; i!=100;++i)
-	{
-		mesh[i].load( "HeadlessGiant.lwo", "basicVBO" );
-		mesh[i].writeToDepth(true).depth(true);
-		mesh[i].setUniform( "Model", glm::mat4(1.0f) );
-		mesh[i].setUniform( "View", glm::translate( glm::mat4( 1.0f ), glm::vec3( (float)i*0.05f, (float)i*0.05f, -20.0f ) ) );
-		mesh[i].setUniform( "Projection", glm::perspective( 45.0f, 16.0f/10.0f, 0.1f, 100.0f ) );
 
-		mesh[i].setUniform( "AmbientMaterial", glm::vec3( 0.04f, 0.04f, 0.04f ) );
-		mesh[i].setUniform( "DiffuseMaterial", glm::vec3( 0.75f, 0.75f, 0.5f ) );
-		mesh[i].setUniform( "SpecularMaterial", glm::vec3( 0.5f, 0.5f, 0.5f ) );
-		mesh[i].setUniform( "Shininess", 100.0f );
+		mesh.load( "ship.3ds", "basicVBO" );
+		mesh.writeToDepth(true).depth(true);
+		mesh.setUniform( "Model", glm::mat4(1.0f) );
+		mesh.setUniform( "View", glm::translate( glm::mat4( 1.0f ), glm::vec3( 0.0f, 0.0f, -10.0f ) ) );
+		mesh.setUniform( "Projection", glm::perspective( 45.0f, 16.0f/10.0f, 0.1f, 100.0f ) );
 
-		mesh[i].setUniform( "NormalMatrix", glm::inverse( glm::transpose( glm::translate( glm::mat4( 1.0f ), glm::vec3( (float)i*0.05f, (float)i*0.05f, -20.0f ) ) ) ) );
-		mesh[i].setUniform( "LightPosition", glm::vec3(-20.0f) );
-	}
+		mesh.setUniform( "AmbientMaterial", glm::vec3( 0.04f, 0.04f, 0.04f ) );
+		mesh.setUniform( "DiffuseMaterial", glm::vec3( 0.75f, 0.75f, 0.5f ) );
+		mesh.setUniform( "SpecularMaterial", glm::vec3( 0.5f, 0.5f, 0.5f ) );
+		mesh.setUniform( "Shininess", 100.0f );
+
+		mesh.setUniform( "NormalMatrix", glm::inverse( glm::transpose( glm::translate( glm::mat4( 1.0f ), glm::vec3( 0.0f, 0.0f, -10.0f ) ) ) ) );
+		mesh.setUniform( "LightPosition", glm::vec3(10.0f) );
+
 
 	/*
 	vbo = de::Engine::Resources().getMesh( "HeadlessGiant.lwo" );
@@ -79,8 +78,6 @@ void TestState::reLoadTextures()
 
 void TestState::render()
 {
-	for(int i = 0; i!=100;++i)
-	{
-		mesh[i].render();
-	}
+
+	mesh.render();
 }

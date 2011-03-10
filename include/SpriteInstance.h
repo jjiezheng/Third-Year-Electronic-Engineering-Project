@@ -30,11 +30,10 @@ class SpriteInstance : public de::graphics::renderObject
 
         void reload();
         void render();
-        void localRender();
-
+		void actualRender();
     protected:
     private:
-        int current;
+		int current;
         glm::mat4 ProjectionView, ProjectionViewReset;
 
         std::map<int, SpriteObject> FBOS;

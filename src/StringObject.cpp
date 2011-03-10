@@ -130,8 +130,8 @@ void StringObject::render()
 {
 	de::Engine::Graphics().add( this );
 }
-void StringObject::localRender()
+void StringObject::actualRender()
 {
 	if( refresh) rebuild();
-	renderableText.localRender();
+	renderableText.actualRender();
 }

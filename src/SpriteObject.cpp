@@ -143,7 +143,7 @@ void SpriteObject::render()
     de::Engine::Graphics().add( this );
 }
 
-void SpriteObject::localRender()
+void SpriteObject::actualRender()
 {
     start();
     groupRender();

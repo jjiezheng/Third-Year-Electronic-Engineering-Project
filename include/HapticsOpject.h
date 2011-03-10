@@ -14,9 +14,10 @@ namespace de
 
             void reload();
             void render();
-            void localRender();
+            void actualRender();
         protected:
         private:
+			
 			//HLuint hapticsShape;
     };
 }

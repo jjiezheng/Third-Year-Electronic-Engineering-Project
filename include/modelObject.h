@@ -30,13 +30,13 @@ class modelObject : public de::graphics::renderObject
 
         modelObject& setType( const std::string &_type );
         modelObject& load( const std::string &_mesh, const std::string &_shader );
+		modelObject& setTexture( const std::string &_texture, const std::string &_value );
 
         void reload();
         void render();
-        void localRender();
-		void clear();
-
+		void actualRender();
     private:
+		
 
         bool usingTexture, writingToDepth, depthTest, alphaTest, blending, active;
         int type, texture;

@@ -472,7 +472,7 @@
       <Filter>Header Files\Engine\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="include\modelObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\OpenGL\Renderables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -822,7 +822,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\modelObject.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\OpenGL\Renderables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

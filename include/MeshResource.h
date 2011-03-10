@@ -23,7 +23,13 @@ namespace de
 				graphics::VBO& get();
 			private:
 				bool loadWithAssimp( const std::string &_path, const std::string &_name );
-				void parseWithAssimp( const aiScene* _scene );
+				void parseVertices( const aiScene* _scene );
+				void parsePositions( const aiScene* _scene );
+				void parseNormals( const aiScene* _scene );
+				void parseUVs( const aiScene* _scene );
+				void parseBones( const aiScene* _scene );
+
+				void parseAnimations( const aiScene* _scene );
 				void makeVBO();
 
 				std::vector<de::graphics::vertex> VertexBuffer;

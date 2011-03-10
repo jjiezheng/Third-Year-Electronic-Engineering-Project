@@ -38,8 +38,9 @@ class StringObject : public de::graphics::renderObject
 
 		void reload();
         void render();
-        void localRender();
+		void actualRender();
 	private:
+		
 		void rebuild();
 
 		std::map<std::string, ShaderVariant> Uniforms;
