@@ -39,6 +39,11 @@ namespace de
 
         bool ShaderModule::compileShader( const std::string &_name, const char *_shaderText, unsigned int &_shader, const int &_type )
         {
+			if( _shaderText == NULL )
+			{
+				de::io::error << "Bad shader file: Not valid Lua syntax or shader not found\n";
+				return false;
+			}
             _shader = glCreateShader(_type);
             CHECKGL_MSG( "glCreateShader(_type)" );
 

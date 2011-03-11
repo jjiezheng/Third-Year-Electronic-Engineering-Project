@@ -213,7 +213,7 @@ namespace de
 																 1 );
 
 				int j, num = _mesh->mNumVertices;
-				aiVector3D* verts = _mesh->mNormals;
+				aiVector3D* verts = _mesh->mTextureCoords[i];
 				for( j = 0; j!=num; ++j)
 				{
 					VertexBuffer.push_back( graphics::vertex( verts[j].x, verts[j].y, 0.0f, 0.0f ) );

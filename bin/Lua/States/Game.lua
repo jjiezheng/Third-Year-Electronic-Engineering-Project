@@ -1,6 +1,7 @@
 dofile( include( "math" ) )
 
-Projection = perspective( 45.0, 16.0/10.0, 0.1, 1000.0 )
+Projection = perspective( 45.0, 16.0/10.0, 10, 1000.0 )
+farProjection = perspective( 45.0, 16.0/10.0, 100, 100000.0 )
 
 function normalSpace( _matrix )
 	return inverseTranspose( mat3(_matrix) )
@@ -49,7 +50,7 @@ function Game.Start( self )
 	self.world:texture( "Texture0", "world" )
 	self.world:uniform( "Model", scale( translate( rotate( mat4(1), self.angle, vec3(0,0,1) ), vec3(0,0,-100) ), vec3(100) ) )
 	self.world:uniform( "View", rotate( self.View, 180, vec3(0,0,1 ) ) )
-	self.world:uniform( "Projection", Projection )
+	self.world:uniform( "Projection", farProjection )
 	self.world:uniform( "NormalMatrix", normalSpace(mat4(1)) )
 
 	self.world:uniform( "LightPosition", vec3(0,0,500) )
@@ -89,8 +90,10 @@ function Game.Logic( self, _deltaTime )
 	self.player:logic( _deltaTime, self.View )
 	self.borders:logic( _deltaTime, self.View )
 
-	self.angle = self.angle + 1
-	self.world:uniform( "Model", scale( rotate( translate( mat4(1), vec3(0,0,-100) ), self.angle, vec3(0,1,1) ), vec3(100) ) )
+	self.angle = self.angle + 0.0005*_deltaTime
+	self.world:uniform( "Model",
+		scale( rotate( translate( mat4(1), vec3(0,0,-5000) ), self.angle, vec3(0,1,0) ), vec3(2000) ) )
+	self.world:uniform( "View", rotate( self.View, 180, vec3(0,0,1 ) ) )
 end
 
 function Game.Render( self )
@@ -370,7 +373,7 @@ function make_level_borders( _view )
 	function border.render(self)
 		self.right:render()
 		self.left:render()
-		self.back:render()
+		--self.back:render()
 	end
 
 	return border
