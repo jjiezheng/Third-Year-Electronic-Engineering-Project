@@ -6,13 +6,13 @@ using namespace de::enums;
 TestState::TestState()
 {
 
-
+	/*
 		mesh.load( "world.obj", "GroundFromSpace" );
 		mesh.writeToDepth(false).depth(false);
 		mesh.setUniform( "Model", glm::mat4(1.0f) );
 		mesh.setUniform( "View", glm::translate( glm::mat4( 1.0f ), glm::vec3( 0.0f, 0.0f, -10.0f ) ) );
 		mesh.setUniform( "Projection", glm::perspective( 45.0f, 16.0f/10.0f, 0.1f, 100.0f ) );
-		/*
+		
 		mesh.setUniform( "AmbientMaterial", glm::vec3( 0.04f, 0.04f, 0.04f ) );
 		mesh.setUniform( "DiffuseMaterial", glm::vec3( 0.75f, 0.75f, 0.5f ) );
 		mesh.setUniform( "SpecularMaterial", glm::vec3( 0.5f, 0.5f, 0.5f ) );
@@ -21,7 +21,7 @@ TestState::TestState()
 		mesh.setUniform( "NormalMatrix", glm::inverse( glm::transpose( glm::translate( glm::mat4( 1.0f ), glm::vec3( 0.0f, 0.0f, -10.0f ) ) ) ) );
 		mesh.setUniform( "LightPosition", glm::vec3(10.0f) );
 
-		*/
+		
 
 		glm::vec3 waveLength( powf(0.650f,4.0f), powf(0.570f,4.0f),powf(0.475f,4.0f) );
 		float RayleighConst = 0.0025f;
@@ -52,18 +52,16 @@ TestState::TestState()
 		mesh.setUniform( "fSamples", 2.0f );
 		mesh.setUniform( "g", 0.95f );
 		mesh.setUniform( "g2", 0.95f*0.95f );
-	
+	*/
 
 		/*
 		de::Engine::Resources().getShader( "SkyFromSpace" );
 		de::Engine::Resources().getShader( "GroundFromSpace" );
 		*/
-	/*
-	vbo = de::Engine::Resources().getMesh( "HeadlessGiant.lwo" );
 
-	de::io::tests << "vertexBuffer:" << (int)vbo.vertexBuffer << " elementBuffer:" << (int)vbo.elementBuffer << " meshName:" << vbo.meshName << "\n";
-	*/
-	/*
+	
+
+
 	deviceHandle = hdInitDevice(HD_DEFAULT_DEVICE);
 	if (HD_DEVICE_ERROR(hdGetError()))
 	{
@@ -78,15 +76,47 @@ TestState::TestState()
 	hlLoadIdentity();
 	hlWorkspace (-80, -80, -70, 80, 80, 20);
 	hlOrtho (0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
-
 	hlDisable(HL_USE_GL_MODELVIEW);
-	
 
-	hapticsShape = hlGenShapes(1);*/
+	HLuint viscous = hlGenEffects(1);
+	hlBeginFrame();
+	hlEffectd(HL_EFFECT_PROPERTY_GAIN, 0.8);
+	hlEffectd(HL_EFFECT_PROPERTY_MAGNITUDE, 0.9);
+	hlStartEffect(HL_EFFECT_VISCOUS, viscous);
+	hlEndFrame();
+
+
+
+	vender.font( "visitor" ).shader( "String" ).text( (char*)hlGetString( HL_VENDOR ) );
+	vender.setUniform( "Projection", glm::perspective( 45.0f, 16.0f/10.0f, 0.1f, 1000.0f ) );
+	vender.setUniform( "View", glm::rotate( glm::translate( glm::mat4(1.0f), glm::vec3( 0.0f, 345.0f, -950.0f) ), 180.0f, glm::vec3( 1.0f,0.0f,0.0f) ) );
+	vender.setUniform( "Colour", glm::vec4( 0.67f, 0.16f, 0.16f, 0.8f ));
+
+	version.font( "visitor" ).shader( "String" ).text( (char*)hlGetString( HL_VERSION ) );
+	version.setUniform( "Projection", glm::perspective( 45.0f, 16.0f/10.0f, 0.1f, 1000.0f ) );
+	version.setUniform( "View", glm::rotate( glm::translate( glm::mat4(1.0f), glm::vec3( 0.0f, 325.0f, -950.0f) ), 180.0f, glm::vec3( 1.0f,0.0f,0.0f) ) );
+	version.setUniform( "Colour", glm::vec4( 0.67f, 0.16f, 0.16f, 0.8f ));
+
+
+	using namespace de::misc;
+	double pos[3];
+    hlGetDoublev(HL_DEVICE_POSITION, pos);
+	posText.font( "visitor" ).shader( "String" ).text( "Pos: x:" + toString(pos[0]) + " y:" + toString(pos[1]) + " z:" + toString(pos[2]) );
+	posText.setUniform( "Projection", glm::perspective( 45.0f, 16.0f/10.0f, 0.1f, 1000.0f ) );
+	posText.setUniform( "View", glm::rotate( glm::translate( glm::mat4(1.0f), glm::vec3( 0.0f, 305.0f, -950.0f) ), 180.0f, glm::vec3( 1.0f,0.0f,0.0f) ) );
+	posText.setUniform( "Colour", glm::vec4( 0.67f, 0.16f, 0.16f, 0.8f ));
+
+
+	hlGetString( HL_VERSION );
+	hapticsShape = hlGenShapes(1);
 }
 
 TestState::~TestState()
 {
+	hlBeginFrame();
+	hlStopEffect(viscous);
+	hlEndFrame();
+	hlDeleteEffects(viscous, 1);
 }
 
 bool TestState::handleEvents( const SDL_Event &_event )
@@ -104,6 +134,13 @@ bool TestState::handleEvents( const SDL_Event &_event )
 
 bool TestState::logic( const Uint32 &_deltaTicks, State* &_nextState, de::state::options &_options )
 {
+	using namespace de::misc;
+	double pos[3];
+    hlGetDoublev(HL_DEVICE_POSITION, pos);
+
+	posText.text( "Pos: x:" + toString(pos[0]) + " y:" + toString(pos[1]) + " z:" + toString(pos[2]) );
+	vender.text( (char*)hlGetString( HL_VENDOR ) );
+	version.text( (char*)hlGetString( HL_VERSION ) );
     return false;
 }
 
@@ -114,6 +151,10 @@ void TestState::reLoadTextures()
 
 void TestState::render()
 {
-
+	hlBeginFrame();
+	hlEndFrame();
+	posText.render();
+	vender.render();
+	version.render();
 	mesh.render();
 }

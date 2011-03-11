@@ -4,8 +4,9 @@
 #include "State.h"
 #include "Haptics.h"
 #include "modelObject.h"
-/*#include "HL\hl.h"
-#include "HD\hd.h"*/
+#include "stringObject.h"
+#include "HL\hl.h"
+#include "HD\hd.h"
 
 class TestState : public de::state::State
 {
@@ -24,11 +25,12 @@ class TestState : public de::state::State
         void reLoadTextures();
 		
 		modelObject mesh;
-		/*
+		StringObject vender, version, posText;
 		HHD deviceHandle;
 		HHLRC hapticsContext;
 		HLuint hapticsShape;
-		*/
+		HLuint viscous;
+		
 };
 
 #endif // TESTSTATE_H
