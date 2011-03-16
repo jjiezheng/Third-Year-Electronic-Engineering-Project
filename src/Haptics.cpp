@@ -1,43 +1,114 @@
 #include "Haptics.h"
+#include "HLU/hlu.h"
+#include "HDU/hdu.h"
+#include <glm/gtc/type_ptr.hpp>
 
-
-/*
-
-Haptics::Haptics()
+namespace de
 {
-    hHD = hdInitDevice(HD_DEFAULT_DEVICE);
-    if (HD_DEVICE_ERROR(error = hdGetError()))
-    {
-        hduPrintError(stderr, &error, "Failed to initialize haptic device");
-        fprintf(stderr, "\nPress any key to quit.\n");
-        getch();
-    }
-    hdMakeCurrentDevice(hHD);
+	namespace haptics
+	{
+		bool init()
+		{
+			deviceHandle = hdInitDevice(HD_DEFAULT_DEVICE);
+			if (HD_DEVICE_ERROR(hdGetError()))
+			{
+				de::io::error << "No haptics Device found\n";
+				assert(!"No haptics Device found, Continue?");
+				return false;
+			}
+
+			hapticsContext = hlCreateContext(deviceHandle);
+			hlMakeCurrent(hapticsContext);
+
+			de::io::tests << "Starting Haptics\n";
+			return true;
+		}
+
+		void workspace( const glm::mat4 &_projection, const glm::mat4 &_modelView )
+		{
+			hlMatrixMode(HL_TOUCHWORKSPACE);
+			hlLoadIdentity();
+			hlWorkspace (-80, -80, -70, 80, 80, 20);
+			hlOrtho (0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
+			hlDisable(HL_USE_GL_MODELVIEW);
+			
+			/*
+			float _modelview[16] = glm::value_ptr(_modelView);
+			float _projection[16] = glm::value_ptr(_projection);
+			double modelview[16];
+			double projection[16];
+
+			for( int i = 0; i != 16; ++i )
+			{
+				modelview[i] = _modelview[i];
+				projection[i] = _projection[i];
+			}
+			*/
+			/*GLint viewport[4];
+    
+			glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+			glGetDoublev(GL_PROJECTION_MATRIX, projection);
+			glGetIntegerv(GL_VIEWPORT, viewport);
+    */
+			/*
+			hlMatrixMode(HL_TOUCHWORKSPACE);
+			hlLoadIdentity();
+    */
+			// Fit haptic workspace to view volume.
+			//hluFitWorkspace(projection);
+			
+			de::io::tests << "Reseting workspace\n";
+		}
+
+		void runFrame()
+		{
+			hlBeginFrame();
+			hlEndFrame();
+		}
+
+		int startEffect( const std::string &_type, const glm::vec3 &_position, const glm::vec3 &_direction, const double &_gain, const double &_magnitude )
+		{
+			HLenum Enumtype = HL_EFFECT_VISCOUS;
+
+			if( _type == "viscous" ) Enumtype = HL_EFFECT_VISCOUS;
+			else if( _type == "constant" ) Enumtype = HL_EFFECT_CONSTANT;
+			else if( _type == "spring" ) Enumtype = HL_EFFECT_SPRING;
+			else if( _type == "friction" ) Enumtype = HL_EFFECT_FRICTION;
+
+			HLdouble pos[3], dir[3];
+			pos[0] = _position.x;
+			pos[1] = _position.y;
+			pos[2] = _position.z;
+
+			dir[0] = _direction.x;
+			dir[1] = _direction.y;
+			dir[2] = _direction.z;
+
+
+
+			HLuint effect = hlGenEffects(1);
+			hlBeginFrame();
+			hlEffectdv(HL_EFFECT_PROPERTY_POSITION, pos );
+			hlEffectdv(HL_EFFECT_PROPERTY_DIRECTION, dir );/*
+			hlEffectdv(HL_EFFECT_PROPERTY_POSITION, glm::value_ptr( glm::dvec3(_position ) ) );
+			hlEffectdv(HL_EFFECT_PROPERTY_DIRECTION, glm::value_ptr( glm::dvec3(_direction ) ) );*/
+			hlEffectd(HL_EFFECT_PROPERTY_GAIN, _gain);
+			hlEffectd(HL_EFFECT_PROPERTY_MAGNITUDE, _magnitude);
+			hlStartEffect(Enumtype, effect);
+			hlEndFrame();
+
+			de::io::tests << "Starting Effect: " << _type << "\n";
+			return effect;
+		}
+
+		void stopEffect( const int &_effect )
+		{
+			hlBeginFrame();
+			hlStopEffect(_effect);
+			hlEndFrame();
+			hlDeleteEffects(_effect, 1);
+
+			de::io::tests << "Stopping Effect\n";
+		}
+	}
 }
-
-Haptics::~Haptics()
-{
-    //dtor
-}
-
-
-
-bool Haptics::handleEvents( const SDL_Event &_event )
-{
-    return false;
-}
-bool Haptics::logic( const Uint32 &_deltaTicks, int &nextState, bool &changingState )
-{
-    return false;
-}
-
-void Haptics::render()
-{
-
-}
-
-void Haptics::reLoadTextures()
-{
-
-}
-*/

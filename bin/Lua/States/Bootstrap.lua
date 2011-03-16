@@ -1,7 +1,6 @@
 Bootstrap = {}
 
 function Bootstrap.Start(self)
-
 end
 
 function Bootstrap.HandleEvents( self, _events )
@@ -9,7 +8,7 @@ function Bootstrap.HandleEvents( self, _events )
 end
 
 function Bootstrap.Logic( self, _deltaTime )
-	setState( "Game" )
+	setState( "HapticsDemo1" )
 end
 
 function Bootstrap.Render(self)

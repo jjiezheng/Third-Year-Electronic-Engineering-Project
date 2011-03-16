@@ -1,30 +1,27 @@
 #ifndef HAPTICS_H
 #define HAPTICS_H
+#include "CoreEngine.h"
+#include "HL\hl.h"
+#include "HD\hd.h"
 
-/*
-#include <HD/hd.h>
-#include <HL/hl.h>
-#include <State.h>
 
-class Haptics : public State
+namespace de
 {
-    public:
-        Haptics();
-        virtual ~Haptics();
+	namespace haptics
+	{
+		static HHD deviceHandle;
+		static HHLRC hapticsContext;
 
-        bool handleEvents( const SDL_Event &_event );
-        bool logic( const Uint32 &_deltaTicks, int &nextState, bool &changingState );
+		bool init();
+		void workspace( const glm::mat4 &_projection, const glm::mat4 &_modelView );
+		void runFrame();
+		int startEffect( const std::string &_type, 
+					     const glm::vec3 &_position, 
+						 const glm::vec3 &_direction, 
+						 const double &_gain, 
+						 const double &_magnitude );
+		void stopEffect( const int &_effect );
+	}
+}
 
-        void render();
-
-    private:
-        void reLoadTextures();
-    private:
-        HHD hHD;
-        HHLRC hHLRC;
-        HDErrorInfo error;
-        HLuint friction, spring;
-        HLerror frameError;
-};
-*/
 #endif // HAPTICS_H

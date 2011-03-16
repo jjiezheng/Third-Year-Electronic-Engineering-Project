@@ -369,9 +369,6 @@
     <ClInclude Include="include\AttritionTestState.h">
       <Filter>Header Files\Engine\States</Filter>
     </ClInclude>
-    <ClInclude Include="include\Haptics.h">
-      <Filter>Header Files\Engine\States</Filter>
-    </ClInclude>
     <ClInclude Include="include\Overlay.h">
       <Filter>Header Files\Engine\States</Filter>
     </ClInclude>
@@ -473,6 +470,12 @@
     </ClInclude>
     <ClInclude Include="include\modelObject.h">
       <Filter>Header Files\Engine\OpenGL\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luaHaptics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Haptics.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -668,9 +671,6 @@
     <ClCompile Include="src\GameServices.cpp">
       <Filter>Source Files\Engine\Services</Filter>
     </ClCompile>
-    <ClCompile Include="src\Haptics.cpp">
-      <Filter>Source Files\Engine\States</Filter>
-    </ClCompile>
     <ClCompile Include="src\GLee\GLee.c">
       <Filter>Source Files\Engine\OpenGL</Filter>
     </ClCompile>
@@ -823,6 +823,12 @@
     </ClCompile>
     <ClCompile Include="src\modelObject.cpp">
       <Filter>Source Files\Engine\OpenGL\Renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Haptics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\luaHaptics.cpp">
+      <Filter>Source Files\Engine\Lua</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
