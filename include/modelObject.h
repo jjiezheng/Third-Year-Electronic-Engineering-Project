@@ -7,11 +7,13 @@
 #include "VBO.h"
 #include "Material.h"
 
-
+class hapticsOpject;
 
 class modelObject : public de::graphics::renderObject
 {
     public:
+		friend class hapticsOpject;
+
         /** Default constructor */
         modelObject();
         /** Default destructor */

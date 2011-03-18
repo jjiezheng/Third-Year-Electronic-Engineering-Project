@@ -6,6 +6,7 @@
 #include "SpriteObject.h"
 #include "StringObject.h"
 #include "modelObject.h"
+#include "HapticsOpject.h"
 
 
 #include <luabind/operator.hpp>
@@ -204,7 +205,27 @@ namespace de
                     .def( "load",		(void(modelObject::*)( std::string const&, std::string const&)) &modelObject::load )
                     .def( "reload",		(void(modelObject::*)()) &modelObject::reload )
                     .def( "render",		(void(modelObject::*)()) &modelObject::render ),
+										
+                luabind::class_<hapticsOpject>( "haptics_model" )
+                    .def( luabind::constructor<>() )
+                    .def( "uniform",	(hapticsOpject&(hapticsOpject::*)( std::string const&, float const& )) &hapticsOpject::setUniform, luabind::return_reference_to(_1) )
+                    //.def( "uniform",	(modelObject&(modelObject::*)( std::string const&, int const& )) &modelObject::setUniform, luabind::return_reference_to(_1) )
+                    .def( "uniform",	(hapticsOpject&(hapticsOpject::*)( std::string const&, glm::vec2 const& )) &hapticsOpject::setUniform, luabind::return_reference_to(_1) )
+                    .def( "uniform",	(hapticsOpject&(hapticsOpject::*)( std::string const&, glm::vec3 const& )) &hapticsOpject::setUniform, luabind::return_reference_to(_1) )
+                    .def( "uniform",	(hapticsOpject&(hapticsOpject::*)( std::string const&, glm::vec4 const& )) &hapticsOpject::setUniform, luabind::return_reference_to(_1) )
+                    .def( "uniform",	(hapticsOpject&(hapticsOpject::*)( std::string const&, glm::mat3 const& )) &hapticsOpject::setUniform, luabind::return_reference_to(_1) )
+                    .def( "uniform",	(hapticsOpject&(hapticsOpject::*)( std::string const&, glm::mat4 const& )) &hapticsOpject::setUniform, luabind::return_reference_to(_1) )
+					.def( "texture",	(hapticsOpject&(hapticsOpject::*)( std::string const&, std::string const&)) &hapticsOpject::setTexture, luabind::return_reference_to(_1) )
+
+                    .def( "depth",		(hapticsOpject&(hapticsOpject::*)( bool )) &hapticsOpject::depth, luabind::return_reference_to(_1) )
+					.def( "writeToDepth",(hapticsOpject&(hapticsOpject::*)( bool ))&hapticsOpject::writeToDepth, luabind::return_reference_to(_1) )
+					.def( "alpha",		(hapticsOpject&(hapticsOpject::*)( bool )) &hapticsOpject::alpha, luabind::return_reference_to(_1) )
+					.def( "blend",		(hapticsOpject&(hapticsOpject::*)( bool )) &hapticsOpject::blend, luabind::return_reference_to(_1) )
 					
+                    .def( "type",		(hapticsOpject&(hapticsOpject::*)( std::string const&)) &hapticsOpject::setType, luabind::return_reference_to(_1) )
+                    .def( "load",		(void(hapticsOpject::*)( std::string const&, std::string const&)) &hapticsOpject::load )
+                    .def( "reload",		(void(hapticsOpject::*)()) &hapticsOpject::reload )
+                    .def( "render",		(void(hapticsOpject::*)()) &hapticsOpject::render ),
 
                 luabind::class_<StringObject>( "stringObject" )
                     .def( luabind::constructor<>() )
