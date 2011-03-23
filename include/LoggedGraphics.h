@@ -28,10 +28,11 @@ namespace de
                 //! Add a Coloured Poly with a de::enums::fboTypes for rendering this frame.
                 bool add( const de::classes::Poly &_poly, const de::classes::Colour &_colour, const int &_priority, const int &_type );
 
-                void toggleFullscreen();
+                void fullscreen( bool _fullscreen );
                 void resize( int _screenWidth, int _screenHeight );
 
                 const de::graphics::VideoInfo& getVideoSettings();
+				void setVideoSettings( const de::graphics::VideoInfo &_info );
 
                 Uint32 loadTexture( const std::string& _fileName, int &_width, int &_height );
                 void unloadTexture( Uint32 &_texture );

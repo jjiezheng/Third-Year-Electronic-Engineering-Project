@@ -7,10 +7,10 @@ TestState::TestState()
 {
 
 
-		mesh.load( "world.obj", "GroundFromSpace" );
+		mesh.load( "sphere.3ds", "GroundFromSpace" );
 		mesh.writeToDepth(false).depth(false);
-		mesh.setUniform( "Model", glm::mat4(1.0f) );
-		mesh.setUniform( "View", glm::translate( glm::mat4( 1.0f ), glm::vec3( 0.0f, 0.0f, -10.0f ) ) );
+		mesh.setUniform( "Model", glm::translate( glm::mat4( 1.0f ), glm::vec3( 0.0f, 1.0f, -5.0f ) ) );
+		mesh.setUniform( "View", glm::mat4(1.0f) );
 		mesh.setUniform( "Projection", glm::perspective( 45.0f, 16.0f/10.0f, 0.1f, 100.0f ) );
 		/*
 		mesh.setUniform( "AmbientMaterial", glm::vec3( 0.04f, 0.04f, 0.04f ) );
@@ -29,24 +29,25 @@ TestState::TestState()
 		float OuterRadius(10.25f), InnerRadius(10.0f);
 		float RayleighScaleDepth = 0.25f;
 		float MieScaleDepth = 0.1f;
-
-		mesh.setUniform( "v3CameraPos", glm::vec3(0.0f,0.0f,25.0f) );
-		mesh.setUniform( "v3LightPos", glm::vec3(10.0f) );
+		glm::vec3 light(1000.0f);
+		glm::normalize( light );
+		mesh.setUniform( "v3CameraPos", glm::vec3(0.0f,0.0f,0.0f) );
+		mesh.setUniform( "v3LightPos", light );
 		mesh.setUniform( "v3InvWavelength", 1.0f/waveLength );
 
-		mesh.setUniform( "fCameraHeight", 25.0f );
-		mesh.setUniform( "fCameraHeight2", powf(25.0f, 2.0f) );
+		mesh.setUniform( "fCameraHeight", 5.0f );
+		mesh.setUniform( "fCameraHeight2", powf(5.0f, 2.0f) );
 		mesh.setUniform( "fOuterRadius", OuterRadius );
 		mesh.setUniform( "fOuterRadius2", OuterRadius*OuterRadius );
 		mesh.setUniform( "fInnerRadius", InnerRadius );
 		mesh.setUniform( "fInnerRadius2", InnerRadius*InnerRadius );
 		mesh.setUniform( "fKrESun", RayleighConst*15.0f );
 		mesh.setUniform( "fKmESun", MieConst*15.0f );
-		mesh.setUniform( "fKr4PI", RayleighConst*de::misc::pi() );
-		mesh.setUniform( "fKm4PI", MieConst*de::misc::pi() );
+		mesh.setUniform( "fKr4PI", RayleighConst*de::misc::pi()*4.0f );
+		mesh.setUniform( "fKm4PI", MieConst*de::misc::pi()*4.0f );
 		mesh.setUniform( "fScale", 1.0f / (OuterRadius - InnerRadius) );
 		mesh.setUniform( "fScaleDepth", RayleighScaleDepth );
-		mesh.setUniform( "fScaleOverScaleDepth", ( 1.0f/(OuterRadius-InnerRadius) )/ RayleighScaleDepth );
+		mesh.setUniform( "fScaleOverScaleDepth",  (1.0f/ (OuterRadius-InnerRadius))/ RayleighScaleDepth );
 
 		mesh.setUniform( "nSamples", 2 );
 		mesh.setUniform( "fSamples", 2.0f );
@@ -104,6 +105,11 @@ bool TestState::handleEvents( const SDL_Event &_event )
 
 bool TestState::logic( const Uint32 &_deltaTicks, State* &_nextState, de::state::options &_options )
 {
+	static float angle = 0;
+	angle += _deltaTicks*0.1;
+	glm::vec3 light(1000.0f*sin( angle ) );
+	glm::normalize( light );
+	mesh.setUniform( "v3LightPos", light );
     return false;
 }
 

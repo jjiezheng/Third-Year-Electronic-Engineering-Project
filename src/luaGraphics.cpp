@@ -118,8 +118,13 @@ namespace de
                 luabind::def( "normalise", (glm::vec3(*)( const glm::vec3&)) &::glm::normalize ),
                 luabind::def( "normalise", (glm::vec4(*)( const glm::vec4&)) &::glm::normalize ),
 
-                luabind::def( "mix", (glm::vec3(*)( const glm::vec3&,const glm::vec3&,const float&)) &::glm::mix ),
+				luabind::def( "length", (float(*)( const glm::vec2&)) &::glm::length ),
+                luabind::def( "length", (float(*)( const glm::vec3&)) &::glm::length ),
+                luabind::def( "length", (float(*)( const glm::vec4&)) &::glm::length ),
+
                 luabind::def( "mix", (float(*)( const float&,const float&,const float&)) &::glm::mix ),
+                luabind::def( "mix", (glm::vec3(*)( const glm::vec3&,const glm::vec3&,const float&)) &::glm::mix ),
+                luabind::def( "mix", (glm::vec4(*)( const glm::vec4&,const glm::vec4&,const float&)) &::glm::mix ),
                 luabind::def( "smoothstep", (glm::vec3(*)( const glm::vec3&,const glm::vec3&,const glm::vec3&)) &::glm::smoothstep ),
                 luabind::def( "smoothstep", (float(*)( const float&,const float&,const float&)) &::glm::smoothstep ),
 
@@ -193,13 +198,14 @@ namespace de
                     .def( "uniform",	(modelObject&(modelObject::*)( std::string const&, glm::vec4 const& )) &modelObject::setUniform, luabind::return_reference_to(_1) )
                     .def( "uniform",	(modelObject&(modelObject::*)( std::string const&, glm::mat3 const& )) &modelObject::setUniform, luabind::return_reference_to(_1) )
                     .def( "uniform",	(modelObject&(modelObject::*)( std::string const&, glm::mat4 const& )) &modelObject::setUniform, luabind::return_reference_to(_1) )
-					.def( "texture",	(modelObject&(modelObject::*)( std::string const&, std::string const&)) &modelObject::setTexture, luabind::return_reference_to(_1) )
+					.def( "texture",	(modelObject&(modelObject::*)( std::string const&, std::string const&, int )) &modelObject::setTexture, luabind::return_reference_to(_1) )
 
                     .def( "depth",		(modelObject&(modelObject::*)( bool )) &modelObject::depth, luabind::return_reference_to(_1) )
 					.def( "writeToDepth",(modelObject&(modelObject::*)( bool ))&modelObject::writeToDepth, luabind::return_reference_to(_1) )
 					.def( "alpha",		(modelObject&(modelObject::*)( bool )) &modelObject::alpha, luabind::return_reference_to(_1) )
 					.def( "blend",		(modelObject&(modelObject::*)( bool )) &modelObject::blend, luabind::return_reference_to(_1) )
-					
+					.def( "ccw",		(modelObject&(modelObject::*)( bool )) &modelObject::ccw, luabind::return_reference_to(_1) )
+
                     .def( "type",		(modelObject&(modelObject::*)( std::string const&)) &modelObject::setType, luabind::return_reference_to(_1) )
                     .def( "load",		(void(modelObject::*)( std::string const&, std::string const&)) &modelObject::load )
                     .def( "reload",		(void(modelObject::*)()) &modelObject::reload )

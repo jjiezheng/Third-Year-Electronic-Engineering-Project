@@ -37,12 +37,12 @@ namespace de
                 bool add( renderObject *_Object );
 
                 //!Toggles Fullscreen mode
-                void toggleFullscreen();
+                void fullscreen( bool _fullscreen );
                 //!Resizes screen size.
                 void resize( int _screenWidth, int _screenHeight );
 
 				const de::graphics::VideoInfo& getVideoSettings();
-
+				void setVideoSettings( const de::graphics::VideoInfo &_info );
 
                 //!Load the texture with the name "_fileName" in the texture folder.
                 Uint32 loadTexture( const std::string& _fileName, int &_width, int &_height );

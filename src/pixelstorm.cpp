@@ -1,4 +1,5 @@
 #include "pixelstorm.h"
+#include "Font.h"
 
 #include "Monitor.h"
 
@@ -49,6 +50,17 @@ namespace Attrition
 
             de::Engine::Resources().load( SHADERS | TEXTURES | MESHES | MUSIC | SOUNDEFFECTS );
 
+			boost::filesystem::path _path( Roots->get( root::TEXTURES ) );
+			std::vector<boost::filesystem::path> foundFiles;
+            std::vector<boost::filesystem::path>::iterator iter, end;
+
+            getFilesFrom( _path, foundFiles, filetypes::FONT );
+
+            for( iter = foundFiles.begin(); iter < foundFiles.end(); ++iter )
+            {
+                std::string fontName( stripFileEnding( iter->filename() ) );
+				de::Engine::Fonts().load( fontName );
+            }
 
             //Attrition::shipManager.parseShips();
             //Attrition::particleManager.parseParticles();
@@ -195,8 +207,10 @@ namespace Attrition
 
             if( keystate[SDLK_LALT] && ( keystate[SDLK_RETURN] || keystate[SDLK_KP_ENTER] )  )
             {
+				
+				bool fullscreen = de::Engine::Graphics().getVideoSettings().fullScreen;
                 de::Engine::Resources().free( TEXTURES | SHADERS | MESHES );
-                de::Engine::Graphics().toggleFullscreen();
+                de::Engine::Graphics().fullscreen( !fullscreen );
                 de::Engine::Resources().load( TEXTURES | SHADERS );
             }
 

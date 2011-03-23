@@ -1,6 +1,6 @@
 dofile( include( "math" ) )
 
-function firstPersonCamera()
+function FreeFormCamera()
 
 	local camera = {}
 
@@ -23,12 +23,12 @@ function firstPersonCamera()
 	camera.rotationYdiff = 0
 
 	camera.mouseInput = true
-	camera.canMove = true
+	camera.canMove = false
 
 
 
 	camera.handleEvents = function( self, _events )
-		local moveZ, moveY
+		local moveZ, moveY, moveX
 		local scale = 1.5
 
 		if events.isKeyDown( _events, key.w ) and events.isKeyDown( _events, key.s ) then
@@ -41,21 +41,32 @@ function firstPersonCamera()
 			moveZ = 0.0
 		end
 
-		if events.isKeyDown( _events, key.a ) and events.isKeyDown( _events, key.d ) then
+		if events.isKeyDown( _events, key.q ) and events.isKeyDown( _events, key.e ) then
 			moveY = 0.0
-		elseif events.isKeyDown( _events, key.a ) then
-			moveY = 0.5
-		elseif events.isKeyDown( _events, key.d ) then
-			moveY = -0.5
+		elseif events.isKeyDown( _events, key.q ) then
+			moveY= 1.0
+		elseif events.isKeyDown( _events, key.e ) then
+			moveY= -1.0
 		else
-			moveY = 0.0
+			moveY= 0.0
+		end
+
+		if events.isKeyDown( _events, key.a ) and events.isKeyDown( _events, key.d ) then
+			moveX = 0.0
+		elseif events.isKeyDown( _events, key.a ) then
+			moveX = 0.5
+		elseif events.isKeyDown( _events, key.d ) then
+			moveX = -0.5
+		else
+			moveX = 0.0
 		end
 
 		if self.canMove then
 			if self.mouseInput then
-				local x = math.sin( self.rotationY )*moveZ + math.sin( self.rotationY + 90 )*moveY
-				local z = math.cos( self.rotationY )*moveZ + math.cos( self.rotationY + 90 )*moveY
-				self.translationVector = vec3( x, 0.0, -z )
+				local x = math.sin( self.rotationY )*moveZ + math.sin( self.rotationY + 90 )*moveX
+				local y = math.sin( -self.rotationX )*moveZ + moveY
+				local z = math.cos( self.rotationY )*moveZ + math.cos( self.rotationY + 90 )*moveX
+				self.translationVector = vec3( x, y, -z )
 				self.rotationYdiff = ( events.relativeMouseAngle( _events, 0 )*scale / 150.0 )
 				self.rotationXdiff = ( events.relativeMouseAngle( _events, 1 )*scale / 150.0 )
 			end
@@ -65,7 +76,7 @@ function firstPersonCamera()
 			self.translationVector = vec3(0.0)
 		end
 
-		if events.wasKeyPressed( _events, key.q ) then
+		if events.wasKeyPressed( _events, key.x ) then
 			events.showMouse( self.canMove )
 			if self.canMove then
 				self.canMove = false

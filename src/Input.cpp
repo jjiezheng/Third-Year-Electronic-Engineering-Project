@@ -417,5 +417,14 @@ namespace de
             }
             return out;
         }
+
+		float getkey( const SDL_Event &_event )
+		{
+			if( _event.type == SDL_KEYDOWN )
+            {
+				return (float)_event.key.keysym.sym;
+			}
+			return 0;
+		}
     }
 }

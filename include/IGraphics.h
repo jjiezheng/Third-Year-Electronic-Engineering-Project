@@ -31,10 +31,11 @@ namespace de
 
                 virtual bool add( renderObject *_Object ) = 0;
 
-                virtual void toggleFullscreen() = 0;
+                virtual void fullscreen( bool _fullscreen ) = 0;
                 virtual void resize( int _screenWidth, int _screenHeight ) = 0;
 
                 virtual const de::graphics::VideoInfo& getVideoSettings() = 0;
+				virtual void setVideoSettings( const de::graphics::VideoInfo &_info ) = 0;
 
                 virtual Uint32 loadTexture( const std::string &_fileName, int &_width, int &_height ) = 0;
                 virtual void unloadTexture( Uint32 &_texture ) = 0;
@@ -59,7 +60,7 @@ namespace de
 
                 bool add( renderObject *_Object ) { return true; }
 
-                void toggleFullscreen() {}
+                void fullscreen( bool _fullscreen ) {}
                 void resize( int _screenWidth, int _screenHeight ) {}
 
                 const de::graphics::VideoInfo& getVideoSettings()
@@ -67,6 +68,8 @@ namespace de
                     static VideoInfo videoInfo;
                     return videoInfo;
                 }
+
+				void setVideoSettings( const de::graphics::VideoInfo &_info ) {}
 
                 Uint32 loadTexture( const std::string& _fileName, int &_width, int &_height ) { return 0; }
                 void unloadTexture( Uint32 &_texture ) {}

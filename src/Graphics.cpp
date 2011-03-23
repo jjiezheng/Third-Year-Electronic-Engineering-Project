@@ -31,7 +31,7 @@ namespace de
             videoInfo = SDL_GetVideoInfo();
             videoSettings = getSettings();
 
-             context.create( videoSettings );
+            context.create( videoSettings );
         }
         Graphics::~Graphics()
         {
@@ -123,16 +123,24 @@ namespace de
         {
             return videoSettings;
         }
+
+		void Graphics::setVideoSettings( const de::graphics::VideoInfo &_info )
+		{
+			videoSettings = _info;
+			context.create( videoSettings );
+            events::pushEvent( de::enums::events::OPENGL_RELOAD );
+		}
+
         frameDetails Graphics::getFrameInfo()
         {
             return frameDetails( context.width(), context.height() );
         }
 
-		void Graphics::toggleFullscreen()
+		void Graphics::fullscreen( bool _fullscreen )
         {
-            videoSettings.fullScreen = !videoSettings.fullScreen;
+            videoSettings.fullScreen = _fullscreen;
 
-             context.create( videoSettings );
+            context.create( videoSettings );
             events::pushEvent( de::enums::events::OPENGL_RELOAD );
         }
         void Graphics::resize( int _screenWidth, int _screenHeight )
@@ -147,8 +155,7 @@ namespace de
                 videoSettings.screenWidth = _screenWidth;
                 videoSettings.screenHeight = _screenHeight;
             }
-             context.create( videoSettings );
-
+            context.create( videoSettings );
             events::pushEvent( de::enums::events::OPENGL_RELOAD );
         }
 
@@ -172,6 +179,7 @@ namespace de
         }
         void Graphics::interalRender()
         {
+			CHECKGL( glClearColor( 0.0f, 0.0f, 0.0f, 0.0f ) );
             CHECKGL( glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) );
 
                 std::vector<renderObject*>::iterator objectIter;
