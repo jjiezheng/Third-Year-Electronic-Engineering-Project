@@ -29,9 +29,10 @@ namespace de
 
 			hlMatrixMode(HL_TOUCHWORKSPACE);
 			//hlLoadIdentity();
-			hlWorkspace (-80, -80, -70, 80, 80, 20);
+			//hlWorkspace (-80, -80, -70, 80, 80, 20);
 			hluFitWorkspace(glm::value_ptr(glm::dmat4(_projection)));
-			hlDisable(HL_USE_GL_MODELVIEW);
+			//hlEnable(HL_HAPTIC_CAMERA_VIEW);
+			hlTouchableFace(HL_FRONT);
 			
 
 			/*

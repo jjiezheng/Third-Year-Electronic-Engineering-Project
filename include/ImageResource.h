@@ -20,10 +20,9 @@ namespace de
                 //! A handle to the actual Texture.
                 Uint32 Texture;
 
-                //! Basic Constructor
                 ImageResource() : width(0), height(0) {}
-                //! Basic Constructor
                 ImageResource( const std::string &_name, const boost::filesystem::path &_path );
+				~ImageResource();
 
                 //! Get the textures handle
                 const Uint32& getTexture( lua_State* L = NULL );

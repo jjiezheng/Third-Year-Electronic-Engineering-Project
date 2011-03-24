@@ -18,6 +18,12 @@ namespace de
             luaPath = path.parent_path().file_string() + "/" + filesystem::stripFileEnding( path.filename() ) + ".lua";
         }
 
+		ImageResource::~ImageResource()
+		{
+			spriteNames.clear();
+			spriteTexs.clear();
+			spriteRects.clear();
+		}
         const Uint32& ImageResource::getTexture( lua_State* L )
         {
             if( Texture == 0 )

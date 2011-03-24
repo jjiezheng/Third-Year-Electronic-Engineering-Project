@@ -53,7 +53,7 @@ function Haptics_Demo_Globals.Start(self)
 		vec3(1) )
 
 	self.Model = mesh()
-	self.Model:load( "world.3ds", "CelShaded" )
+	self.Model:load( "bunny.lwo", "CelShaded" )
 	--self.Model:load( "bunny", "TestVbo" )
 	self.Model:uniform( "Model", mat4(1) );
 	self.Model:uniform( "Projection", Projection )
@@ -82,7 +82,7 @@ function Haptics_Demo_Globals.Start(self)
 
 	self.haptics_ball:uniform( "NormalMatrix", 
 		normalSpace(View*self.modelMatrix) )
-	self.haptics_ball:uniform( "View", View )
+	self.haptics_ball:uniform( "View", mat4(1) )
 	self.haptics_ball:uniform( "LightPosition", vec3( -10, 10, 10 ) )
 	self.haptics_ball:depth( true )
 	self.haptics_ball:writeToDepth( true )
@@ -133,15 +133,15 @@ function Haptics_Demo_Globals.Logic( self, _deltaTime )
 		normalSpace(self.camera.view*trans) )
 
 	self.haptics_ball:uniform( "Model", mat4(1) )
-	self.haptics_ball:uniform( "View", self.camera.view )
+	self.haptics_ball:uniform( "View", self.camera.view)
 	self.haptics_ball:uniform( "NormalMatrix", 
 		normalSpace(self.camera.view*trans) )
 end
 
 function Haptics_Demo_Globals.Render(self)
-	if self.running then
+	--[[if self.running then
 		haptics.run()
-	end
+	end--]]
 
 	self.haptics_ball:render()
 	self.Model:render()

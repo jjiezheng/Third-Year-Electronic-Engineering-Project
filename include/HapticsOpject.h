@@ -18,6 +18,7 @@ class hapticsOpject : public de::graphics::renderObject
 			mesh.setUniform( _name, _value );
 			return *this;
 		}
+		hapticsOpject& setUniform( const std::string &_name, const glm::mat4 &_value );
 		hapticsOpject& writeToDepth( bool _writeToDepth );
 		hapticsOpject& depth( bool _depth );
 		hapticsOpject& alpha( bool _alpha );
@@ -33,10 +34,12 @@ class hapticsOpject : public de::graphics::renderObject
 	private:
 			
 		modelObject mesh;
+		glm::mat4 projection, view, model;
 		int hapticShape;
+		bool loaded;
 
-		std::vector<de::graphics::vertex> VertexBuffer;
-		std::vector<de::graphics::vertex>::iterator iter;
+		std::vector<float> VertexBuffer;
+		std::vector<float>::iterator iter;
 
 		std::vector<int> ElementBuffer;
 		std::vector<int>::iterator iterElement;
