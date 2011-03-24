@@ -4,7 +4,7 @@
 #include "modelObject.h"
 
 
-class hapticsOpject
+class hapticsOpject : public de::graphics::renderObject
 {
     public:
         /** Default constructor */
@@ -34,6 +34,12 @@ class hapticsOpject
 			
 		modelObject mesh;
 		int hapticShape;
+
+		std::vector<de::graphics::vertex> VertexBuffer;
+		std::vector<de::graphics::vertex>::iterator iter;
+
+		std::vector<int> ElementBuffer;
+		std::vector<int>::iterator iterElement;
         
 };
 

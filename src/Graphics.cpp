@@ -6,7 +6,7 @@
 
 #include "openGL.h"
 #include <corona.h>
-
+#include "Haptics.h"
 
 using namespace de::filesystem;
 namespace fs = boost::filesystem;
@@ -159,6 +159,14 @@ namespace de
             return true;
         }
 
+		bool Graphics::add( renderObject *_Object, int _type )
+        {
+            HapticsObjects.push_back( _Object );
+            return true;
+        }
+
+
+
         frameDetails Graphics::render()
         {
             if( context.AA() ) CHECKGL( glEnable(GL_MULTISAMPLE) );
@@ -172,9 +180,18 @@ namespace de
         }
         void Graphics::interalRender()
         {
+			CHECKGL( glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) );
+				hlBeginFrame();
+				std::vector<renderObject*>::iterator objectIter;
+                for( objectIter = HapticsObjects.begin(); objectIter != HapticsObjects.end(); ++objectIter )
+                {
+                    (*objectIter)->actualRender();
+                }
+				hlEndFrame();
+            HapticsObjects.clear();
+
             CHECKGL( glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) );
 
-                std::vector<renderObject*>::iterator objectIter;
                 for( objectIter = Objects.begin(); objectIter != Objects.end(); ++objectIter )
                 {
                     (*objectIter)->actualRender();

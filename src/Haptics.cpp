@@ -26,15 +26,17 @@ namespace de
 
 		void workspace( const glm::mat4 &_projection, const glm::mat4 &_modelView )
 		{
+
 			hlMatrixMode(HL_TOUCHWORKSPACE);
-			hlLoadIdentity();
+			//hlLoadIdentity();
 			hlWorkspace (-80, -80, -70, 80, 80, 20);
-			hlOrtho (0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
+			hluFitWorkspace(glm::value_ptr(glm::dmat4(_projection)));
 			hlDisable(HL_USE_GL_MODELVIEW);
 			
+
 			/*
 			float _modelview[16] = glm::value_ptr(_modelView);
-			float _projection[16] = glm::value_ptr(_projection);
+			f
 			double modelview[16];
 			double projection[16];
 
@@ -110,5 +112,24 @@ namespace de
 
 			de::io::tests << "Stopping Effect\n";
 		}
+
+		glm::vec3 getProxy()
+		{
+			double proxyPosition[3];
+			hlGetDoublev(HL_PROXY_POSITION, proxyPosition);
+
+			return glm::vec3(proxyPosition[0], proxyPosition[1], proxyPosition[2]);
+		}
+
+		glm::mat4 getProxyTransform()
+		{
+			double proxyTransform[16];
+			hlGetDoublev(HL_PROXY_TRANSFORM, proxyTransform);
+
+			return glm::mat4(glm::dmat4( proxyTransform[0], proxyTransform[1], proxyTransform[2], proxyTransform[3],
+										 proxyTransform[4], proxyTransform[5], proxyTransform[6], proxyTransform[7], 
+										 proxyTransform[8], proxyTransform[9], proxyTransform[10], proxyTransform[11],
+										 proxyTransform[12], proxyTransform[13], proxyTransform[14], proxyTransform[15] ) );
+		}				 
 	}
 }

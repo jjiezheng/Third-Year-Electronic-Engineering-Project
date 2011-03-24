@@ -8,7 +8,7 @@ function Bootstrap.HandleEvents( self, _events )
 end
 
 function Bootstrap.Logic( self, _deltaTime )
-	setState( "HapticsDemo1" )
+	setState( "Haptics_Demo_Globals" )
 end
 
 function Bootstrap.Render(self)

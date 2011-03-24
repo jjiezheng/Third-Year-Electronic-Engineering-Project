@@ -30,6 +30,7 @@ namespace de
                 virtual frameDetails render() = 0;
 
                 virtual bool add( renderObject *_Object ) = 0;
+                virtual bool add( renderObject *_Object, int _type ) = 0;
 
                 virtual void toggleFullscreen() = 0;
                 virtual void resize( int _screenWidth, int _screenHeight ) = 0;
@@ -58,6 +59,7 @@ namespace de
                 frameDetails render();
 
                 bool add( renderObject *_Object ) { return true; }
+				bool add( renderObject *_Object, int _type ) { return true; }
 
                 void toggleFullscreen() {}
                 void resize( int _screenWidth, int _screenHeight ) {}

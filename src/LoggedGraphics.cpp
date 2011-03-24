@@ -29,6 +29,12 @@ namespace de
             return wrapped->add( _Object );
         }
 
+		bool LoggedGraphics::add( renderObject *_Object, int _type )
+		{
+
+			return wrapped->add( _Object, _type );
+		}
+
         void LoggedGraphics::toggleFullscreen()
         {
             de::io::log << "toggleFullscreen was called.\n";

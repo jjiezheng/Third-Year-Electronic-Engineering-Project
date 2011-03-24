@@ -35,6 +35,7 @@ namespace de
 
                 //! Add a 3D mesh for rendering this frame.
                 bool add( renderObject *_Object );
+				bool add( renderObject *_Object, int _type );
 
                 //!Toggles Fullscreen mode
                 void toggleFullscreen();
@@ -67,6 +68,7 @@ namespace de
                 de::graphics::VideoInfo videoSettings;
                 lua_State *luaState;
 
+				std::vector< renderObject* > HapticsObjects;
                 std::vector< renderObject* > Objects;
 
                 ShaderModule shaderModule;
