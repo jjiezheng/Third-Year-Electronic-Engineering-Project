@@ -1,4 +1,6 @@
 dofile( include( "math" ) )
+dofile( include( "FreeFormCamera" ) )
+dofile( include( "make_earth" ) )
 
 Projection = perspective( 45.0, 16.0/10.0, 10, 1000.0 )
 farProjection = perspective( 45.0, 16.0/10.0, 100, 100000.0 )
@@ -37,29 +39,21 @@ function Game.Start( self )
 	sys.title( "A Game" )
 
 	self.rotateAngle = 0
-	self.modelMatrix = scale( translate( rotate( mat4(1.0), 180,  vec3( 0,0,1) ), vec3(0,0,-0) ), vec3(2.5) )
+	self.modelMatrix = scale( 
+		translate( 
+			rotate( mat4(1.0), 180,  vec3( 0,0,1) ), 
+			vec3(0,0,-0) ), 
+		vec3(2.5) )
+
 	zDepth = 241
 	self.View = translate( mat4(1.0), vec3(0,0,-zDepth) )
 	self.borders = make_level_borders( self.View )
 
 	self.player = make_player(self.View)
-
+	self.world = make_earth( 100 )
+	self.camera = FreeFormCamera()
 	self.angle = 0
-	self.world = model()
-	self.world:load( "world.obj", "TexturedVbo" )
-	self.world:texture( "Texture0", "world" )
-	self.world:uniform( "Model", scale( translate( rotate( mat4(1), self.angle, vec3(0,0,1) ), vec3(0,0,-100) ), vec3(100) ) )
-	self.world:uniform( "View", rotate( self.View, 180, vec3(0,0,1 ) ) )
-	self.world:uniform( "Projection", farProjection )
-	self.world:uniform( "NormalMatrix", normalSpace(mat4(1)) )
 
-	self.world:uniform( "LightPosition", vec3(0,0,500) )
-	self.world:uniform( "AmbientMaterial", vec3( 0.04, 0.04, 0.04 ) )
-	self.world:uniform( "DiffuseMaterial", vec3( 0.75, 0.75, 0.5 ) )
-	self.world:uniform( "SpecularMaterial", vec3( 0.5, 0.5, 0.5 ) )
-	self.world:uniform( "Shininess", 100 )
-	self.world:depth( true )
-	self.world:writeToDepth( true )
 
 
 	--aButton = make_button( {640-0, 400-0}, 80, 35, "UI", "UIButton", { "UI.button1", "UI.button2", "UI.button3" } )
@@ -90,22 +84,41 @@ function Game.Logic( self, _deltaTime )
 	self.player:logic( _deltaTime, self.View )
 	self.borders:logic( _deltaTime, self.View )
 
-	self.angle = self.angle + 0.0005*_deltaTime
-	self.world:uniform( "Model",
-		scale( rotate( translate( mat4(1), vec3(0,0,-5000) ), self.angle, vec3(0,1,0) ), vec3(2000) ) )
-	self.world:uniform( "View", rotate( self.View, 180, vec3(0,0,1 ) ) )
+	self.world.angle = self.world.angle + 0.0005*_deltaTime
+
+
+
+	self.camera:logic( _deltaTime )
+	--local cameraPos = vec3(0,0,35) - self.camera.currentPosition
+	local cameraPos = vec3(0,0,3500) - self.camera.currentPosition
+
+	self.world:model_logic()
+	self.world:uniform( "pos",vec4(vec3(0)-cameraPos,0) )
+	--[[
+	self.world:uniform( "Model", 
+		rotate( rotate( 
+			scale( mat4(1.0), vec3(100) ), 23.44, vec3(0,0,-1) ), 
+			self.world.angle,vec3(0,1,0) ) )--]]
+
+	self.world:uniform( "View", self.camera.view )
+	self.world:uniform( "Projection", 
+		perspective( 45.0, 16.0/10.0, 10, 10000.0 ) )
+	self.world:uniform( "v3CameraPos", cameraPos )
+	self.world:uniform( "fCameraHeight", length(cameraPos) )
+	self.world:uniform( "fCameraHeight2", length(cameraPos)^2 )
+
 end
 
 function Game.Render( self )
+	self.world:render()
 	self.borders:render()
 	self.player:render()
-	self.world:render()
 end
 
 function Game.Reload( self )
+	self.world:reload()
 	self.borders:reload()
 	self.ship:reload()
-	self.world:reload()
 end
 
 
@@ -249,16 +262,15 @@ function make_player( _view )
 	player.dir = vec3(0)
 	player.pos = vec3(0)
 	player.modelMatrix = scale(
-							translate(
-								rotate(
-									rotate(
-										mat4(1.0),
-										180,
-										vec3( 1,0,0) ),
-									180,
-									vec3( 0,1,0) ),
-								vec3(0,0,-0) ),
-							vec3(5) )
+		translate( rotate(
+			rotate(
+				mat4(1.0),
+				180,
+				vec3( 1,0,0) ),
+			180,
+			vec3( 0,1,0) ),
+			vec3(0,0,-0) ),
+		vec3(5) )
 
 	player.hitbox = collision.obb(5,5)
 	player.render_hitbox = collision.visualHitbox( player.hitbox )

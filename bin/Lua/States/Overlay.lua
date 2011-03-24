@@ -154,9 +154,6 @@ function Overlay.Reload(self)
 
 	self.preAlpha:reload()
 	self.title:reload()
-
-	self.hint:reload()
-	--self.fade:reload()
 end
 
 function Overlay.ToggleActive(self)

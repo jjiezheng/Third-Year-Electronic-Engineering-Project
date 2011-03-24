@@ -12,7 +12,7 @@ function make_earth()
 	earth:uniform( "Model", mat4(1) )
 	earth:uniform( "Lighting", mat4(1) )
 	earth:uniform( "View", mat4(1) )
-	earth:uniform( "Projection", Projection )
+	earth:uniform( "Projection", perspective( 45.0, 16.0/10.0, 1, 10000.0 ) )
 
 
 	local waveLength = vec3( 1/(0.650^4), 1/(0.570^4), 1/( 0.475^4) )

@@ -125,6 +125,7 @@ void StringObject::rebuild()
 void StringObject::reload()
 {
 	renderableText.reload();
+	refresh = true;
 }
 void StringObject::render()
 {
@@ -132,6 +133,6 @@ void StringObject::render()
 }
 void StringObject::actualRender()
 {
-	if( refresh) rebuild();
+	if( refresh ) rebuild();
 	renderableText.actualRender();
 }

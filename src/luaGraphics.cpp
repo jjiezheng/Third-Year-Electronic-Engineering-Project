@@ -125,6 +125,7 @@ namespace de
                 luabind::def( "mix", (float(*)( const float&,const float&,const float&)) &::glm::mix ),
                 luabind::def( "mix", (glm::vec3(*)( const glm::vec3&,const glm::vec3&,const float&)) &::glm::mix ),
                 luabind::def( "mix", (glm::vec4(*)( const glm::vec4&,const glm::vec4&,const float&)) &::glm::mix ),
+                luabind::def( "mix", (glm::quat(*)( const glm::quat&,const glm::quat&,const float&)) &::glm::mix ),
                 luabind::def( "smoothstep", (glm::vec3(*)( const glm::vec3&,const glm::vec3&,const glm::vec3&)) &::glm::smoothstep ),
                 luabind::def( "smoothstep", (float(*)( const float&,const float&,const float&)) &::glm::smoothstep ),
 
