@@ -1,7 +1,6 @@
 #ifndef RESOURCE_MANAGER_H_
 #define RESOURCE_MANAGER_H_
 
-#include "Settings.h"
 #include "Base.h"
 #include "VBO.h"
 #include "frameDetails.h"

@@ -33,7 +33,8 @@ namespace de
             if ( Timer > 1000 )
             {
                 currentFrameRate =  frame / ( Timer / 1000.f );
-                Timer = frame = 0;
+                Timer = 0.0f;
+				frame = 0;
             }
         }
 

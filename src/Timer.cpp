@@ -89,12 +89,12 @@ namespace de
         void MainTimer::frame_cap()
         {
             float timePerFrame( 1000.0f / framesPerSecond );
-            float sinceLastFrame = timer.stopstartAndSample() / 1000.0;
+            float sinceLastFrame = timer.stopstartAndSample() / 1000.0f;
             float delay = timePerFrame - sinceLastFrame;
 
             if( delay > 0.0 )
             {
-                SDL_Delay( delay );
+                SDL_Delay( (Uint32)delay );
             }
 
             timer.start();

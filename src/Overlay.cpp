@@ -5,10 +5,8 @@
 #include <boost/ref.hpp>
 
 using namespace de::classes;
-using namespace de::core;
 using namespace de::enums;
 using namespace de::filesystem;
-using namespace de::coords;
 
 namespace fs = boost::filesystem;
 
@@ -19,10 +17,6 @@ namespace de
 
 		Overlay::Overlay() :
 			active(false),
-			frameRateGraph("frameRate"),
-			spriteGraph("sprites"),
-			batchGraph("batches"),
-			timeGraph("time"),
 			totalTime(0)
 		{
 			benchmarkFile.open ("../benchmark.csv");
@@ -76,7 +70,6 @@ namespace de
 
 		void Overlay::reLoadTextures()
 		{
-			Font::freeAll();
 		}
 
 		void Overlay::graph( unsigned int _time/*, de_GraphItems _itemType*/ )

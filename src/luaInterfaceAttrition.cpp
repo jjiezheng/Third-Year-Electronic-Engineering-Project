@@ -1,6 +1,4 @@
 #include "luaInterfaceAttrition.h"
-#include "ShipFactory.h"
-#include "Ships.h"
 
 namespace Attrition
 {
@@ -8,7 +6,7 @@ namespace Attrition
     {
         void exportShips( lua_State *_luaState )
         {
-
+			/*
             luabind::module(_luaState, "Att" )
             [
                 luabind::class_<ShipFactory>( "ShipFactory" )
@@ -25,8 +23,8 @@ namespace Attrition
                     .def( "id", (int(Ship::*)()) &Ship::getId )
                            /*
             const Ship& get( const std::string &_shipName );
-            const std::vector<std::string>& shipNames();*/
-            ];
+            const std::vector<std::string>& shipNames();
+            ];*/
         }
     }
 }

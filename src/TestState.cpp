@@ -106,7 +106,7 @@ bool TestState::handleEvents( const SDL_Event &_event )
 bool TestState::logic( const Uint32 &_deltaTicks, State* &_nextState, de::state::options &_options )
 {
 	static float angle = 0;
-	angle += _deltaTicks*0.1;
+	angle += _deltaTicks*0.1f;
 	glm::vec3 light(1000.0f*sin( angle ) );
 	glm::normalize( light );
 	mesh.setUniform( "v3LightPos", light );

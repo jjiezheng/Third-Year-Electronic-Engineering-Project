@@ -2,7 +2,6 @@
 #define FRAMEBUFFEROBJECTS_H_
 
 #include "CoreEnumsAndClasses.h"
-#include "Settings.h"
 #include "Coords.h"
 #include "frameDetails.h"
 

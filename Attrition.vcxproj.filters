@@ -16,9 +16,6 @@
     <Filter Include="Source Files\Engine">
       <UniqueIdentifier>{1b2d4dbf-7d7a-4503-a5ae-9ea76b89699e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game">
-      <UniqueIdentifier>{c1b417af-f0ae-4d4f-874b-c1e7ec0ec7aa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine\deprecated">
       <UniqueIdentifier>{35e29ebc-2af5-4f64-b692-80967bc0a39b}</UniqueIdentifier>
     </Filter>
@@ -42,9 +39,6 @@
     </Filter>
     <Filter Include="Header Files\Engine">
       <UniqueIdentifier>{c7586562-155d-490e-97c1-67f1dd8d8c09}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game">
-      <UniqueIdentifier>{87736c8d-c354-40dd-b251-61c01b3b2782}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Engine\Deprecated">
       <UniqueIdentifier>{e0bb0a39-cdd2-4131-8f22-19bab5f978a5}</UniqueIdentifier>
@@ -93,157 +87,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Backround.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Bullet.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\BulletFactory.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Bulletgenerator.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ComponentShip.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ControlComponent.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ControlMenu.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GraphicsComponent.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\LevelBuilder.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\LevelEditor.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Levelscontroller.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Menu.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MainMenu.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
     <ClInclude Include="include\CoreEnumsAndClasses.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="include\Functions.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\Particle.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ParticleFactory.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Player.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PlayerControl.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Playerweapons.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Scrollingbackground.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ShipBuilder.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ShipFactory.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ShipGraphics.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Ships.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ShipSpawn.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SpatialHash.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Title.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UI.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UIWaveInfo.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\VerticalShooter.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AnimatedSprite.h">
-      <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Animation.h">
-      <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="include\BitmapFont.h">
-      <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ColourBlender.h">
-      <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
     <ClInclude Include="include\FrameBufferObject.h">
-      <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Grapher.h">
-      <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Line.h">
-      <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="include\LinedBox.h">
-      <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Loader.h">
-      <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Settings.h">
-      <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UIbaseData.h">
-      <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UIGunInfo.h">
-      <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UILevelInfo.h">
-      <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UIShipInfo.h">
-      <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UISlider.h">
-      <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UIspline.h">
       <Filter>Header Files\Engine\Deprecated</Filter>
     </ClInclude>
     <ClInclude Include="include\Vector.h">
       <Filter>Header Files\Engine\Deprecated</Filter>
     </ClInclude>
-    <ClInclude Include="include\version.h">
-      <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
     <ClInclude Include="include\AABB.h">
-      <Filter>Header Files\Engine\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Hitbox.h">
       <Filter>Header Files\Engine\Collision</Filter>
     </ClInclude>
     <ClInclude Include="include\OBB.h">
@@ -298,18 +154,6 @@
       <Filter>Header Files\Engine\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="include\SkyBox.h">
-      <Filter>Header Files\Engine\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SpriteBatching.h">
-      <Filter>Header Files\Engine\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SpriteBuffer.h">
-      <Filter>Header Files\Engine\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SpriteGroup.h">
-      <Filter>Header Files\Engine\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SpriteSheet.h">
       <Filter>Header Files\Engine\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="include\ContextModule.h">
@@ -378,9 +222,6 @@
     <ClInclude Include="include\RenderStressTest2D.h">
       <Filter>Header Files\Engine\States</Filter>
     </ClInclude>
-    <ClInclude Include="include\SpriteSheetMaker.h">
-      <Filter>Header Files\Engine\States</Filter>
-    </ClInclude>
     <ClInclude Include="include\pixelstorm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -389,9 +230,6 @@
     </ClInclude>
     <ClInclude Include="include\CoreEngine.h">
       <Filter>Header Files\Engine\Deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Entities.h">
-      <Filter>Header Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="include\stdint.h">
       <Filter>Header Files\Engine\Base</Filter>
@@ -415,9 +253,6 @@
       <Filter>Header Files\Engine\Lua</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>Header Files\Engine\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="resource1.h">
       <Filter>Header Files\Engine\Base</Filter>
     </ClInclude>
     <ClInclude Include="include\luaSystem.h">
@@ -482,110 +317,11 @@
     <ClCompile Include="src\Functions.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Backround.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Bullet.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BulletFactory.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Bulletgenerator.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ComponentShip.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ControlComponent.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ControlMenu.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LevelBuilder.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LevelEditor.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Levelscontroller.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UI.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Title.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SpatialHash.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AnimatedSprite.cpp">
-      <Filter>Source Files\Engine\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Animation.cpp">
-      <Filter>Source Files\Engine\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BitmapFont.cpp">
-      <Filter>Source Files\Engine\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ColourBlender.cpp">
-      <Filter>Source Files\Engine\deprecated</Filter>
-    </ClCompile>
     <ClCompile Include="src\FrameBufferObject.cpp">
       <Filter>Source Files\Engine\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Line.cpp">
-      <Filter>Source Files\Engine\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LinedBox.cpp">
-      <Filter>Source Files\Engine\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Loader.cpp">
-      <Filter>Source Files\Engine\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UIbaseData.cpp">
-      <Filter>Source Files\Engine\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UIGunInfo.cpp">
-      <Filter>Source Files\Engine\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UILevelInfo.cpp">
-      <Filter>Source Files\Engine\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UIShipInfo.cpp">
-      <Filter>Source Files\Engine\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UISlider.cpp">
-      <Filter>Source Files\Engine\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UIspline.cpp">
-      <Filter>Source Files\Engine\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VerticalShooter.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UIWaveInfo.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ShipSpawn.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ships.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ShipGraphics.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ShipFactory.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ShipBuilder.cpp">
-      <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="src\luaCollision.cpp">
       <Filter>Source Files\Engine\Lua</Filter>
@@ -598,24 +334,6 @@
     </ClCompile>
     <ClCompile Include="src\LuaInterfaceState.cpp">
       <Filter>Source Files\Engine\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GraphicsComponent.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Particle.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ParticleFactory.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Player.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PlayerControl.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Playerweapons.cpp">
-      <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="src\AABB.cpp">
       <Filter>Source Files\Engine\Collision</Filter>
@@ -634,24 +352,6 @@
     </ClCompile>
     <ClCompile Include="src\BindShader.cpp">
       <Filter>Source Files\Engine\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SpriteBatching.cpp">
-      <Filter>Source Files\Engine\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SpriteBuffer.cpp">
-      <Filter>Source Files\Engine\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SpriteGroup.cpp">
-      <Filter>Source Files\Engine\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scrollingbackground.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MainMenu.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Menu.cpp">
-      <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="src\VisualHitbox.cpp">
       <Filter>Source Files\Engine\Collision</Filter>
@@ -674,9 +374,6 @@
     <ClCompile Include="src\GLee\GLee.c">
       <Filter>Source Files\Engine\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="src\Hitbox.cpp">
-      <Filter>Source Files\Engine\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="src\OpenHaptics.cpp">
       <Filter>Source Files\Engine\Services</Filter>
     </ClCompile>
@@ -695,26 +392,11 @@
     <ClCompile Include="src\ErrorChecking.cpp">
       <Filter>Source Files\Engine\Timers and Logging</Filter>
     </ClCompile>
-    <ClCompile Include="src\RenderStressTest2D.cpp">
-      <Filter>Source Files\Engine\States</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SpriteSheetMaker.cpp">
-      <Filter>Source Files\Engine\States</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SpriteSheet.cpp">
-      <Filter>Source Files\Engine\OpenGL</Filter>
-    </ClCompile>
     <ClCompile Include="src\SkyBox.cpp">
       <Filter>Source Files\Engine\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="src\Settings.cpp">
-      <Filter>Source Files\Engine\deprecated</Filter>
-    </ClCompile>
     <ClCompile Include="src\Counter.cpp">
       <Filter>Source Files\Engine\Timers and Logging</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Grapher.cpp">
-      <Filter>Source Files\Engine\deprecated</Filter>
     </ClCompile>
     <ClCompile Include="src\Material.cpp">
       <Filter>Source Files\Engine\OpenGL</Filter>

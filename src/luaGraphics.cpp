@@ -1,6 +1,5 @@
 #include "luaGraphics.h"
 
-#include "SpriteSheet.h"
 #include "Object3D.h"
 #include "SpriteInstance.h"
 #include "SpriteObject.h"
@@ -14,7 +13,6 @@
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtx/inverse_transpose.hpp>
 
-using namespace de::core;
 
 namespace
 {
@@ -38,15 +36,6 @@ namespace de
     {
         void export2D( lua_State *_luaState )
         {
-            using namespace de::classes;
-
-            luabind::module(_luaState)
-            [
-                luabind::class_<de::graphics::SpriteSheet>("SpriteSheet")
-                    .def(luabind::constructor<const std::string&, const std::string&, int, int>())
-                    .def( "generate",(bool(de::graphics::SpriteSheet::*)()) &de::graphics::SpriteSheet::generateSpriteSheet )
-            ];
-
         }
 
         void export3D( lua_State *_luaState )

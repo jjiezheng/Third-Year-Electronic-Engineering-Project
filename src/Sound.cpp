@@ -221,7 +221,7 @@ namespace de
 
         void SDLSound::setMusicVolume( const float &_volumeLevel )
         {
-            Mix_VolumeMusic( MIX_MAX_VOLUME*_volumeLevel );
+            Mix_VolumeMusic( MIX_MAX_VOLUME*(int)_volumeLevel );
         }
 
         bool SDLSound::stopMusic()

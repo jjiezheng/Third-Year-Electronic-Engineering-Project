@@ -5,8 +5,6 @@
 
 
 #include "CoreEngine.h"
-#include "Grapher.h"
-
 
 #include <iostream>
 #include <fstream>
@@ -35,8 +33,6 @@ namespace de
 
 				bool active;
 				State *state;
-
-				Grapher frameRateGraph, spriteGraph, batchGraph, timeGraph;
 
 				unsigned int totalTime;
 
