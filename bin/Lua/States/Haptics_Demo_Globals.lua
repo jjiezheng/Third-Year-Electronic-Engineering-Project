@@ -21,7 +21,7 @@ function normalSpace( _matrix )
 	return inverseTranspose( mat3(_matrix) )
 end
 
-Projection = perspective( 45.0, 16.0/10.0, 0.1, 10000.0 )
+Projection = perspective( 45.0, 16.0/10.0, 0.1, 500.0 )
 View = mat4(1.0)
 
 Haptics_Demo_Globals = {}
@@ -29,7 +29,7 @@ function Haptics_Demo_Globals.Start(self)
 	sys.title( "Haptics" )
 
 	haptics.init()
-	haptics.workspace( mat4(1), mat4(1) )
+	haptics.workspace( Projection, mat4(1) )
 
 	self.camera = ExamineCamera()
 
@@ -45,16 +45,33 @@ function Haptics_Demo_Globals.Start(self)
 	self.effect.mag = 0.6
 	self.effect.handle = haptics.start_effect{}
 
+	self.balls = {}
 
-	self.modelMatrix = scale( 
-		translate( 
-			rotate( mat4(1.0), 90, vec3( -1,0,20) ), 
-			vec3(0,0,-0) ), 
-		vec3(1) )
+	local max_num = 30
+	for i = 1,max_num do
+		self.balls[i] = mesh()
+	end
+--	
+	for i,v in ipairs(self.balls) do
+		v:load( "world.3ds", "CelShaded" )
+		v:uniform( "Projection", Projection )
+		v:uniform( "AmbientMaterial", vec3( 0.04, 0.04, 0.04 ) )
+		v:uniform( "DiffuseMaterial", vec3( 0.75, 0.75, 0.5 ) )
+		v:uniform( "SpecularMaterial", vec3( 0.5, 0.5, 0.5 ) )
+		v:uniform( "Shininess", 100 )
+
+		v:uniform( "Projection", Projection )
+		v:uniform( "View", mat4(1) )
+		v:uniform( "Model", mat4(1))
+		v:uniform( "LightPosition", vec3( 0, 0, 1000 ) )
+		v:depth( true )
+		v:writeToDepth( true )
+
+	end
+
 
 	self.Model = mesh()
-	self.Model:load( "bunny.lwo", "CelShaded" )
-	--self.Model:load( "bunny", "TestVbo" )
+	self.Model:load( "ship2.3ds", "CelShaded" )
 	self.Model:uniform( "Model", mat4(1) );
 	self.Model:uniform( "Projection", Projection )
 	self.Model:uniform( "AmbientMaterial", vec3( 0.04, 0.04, 0.04 ) )
@@ -63,7 +80,7 @@ function Haptics_Demo_Globals.Start(self)
 	self.Model:uniform( "Shininess", 100 )
 
 	self.Model:uniform( "NormalMatrix", 
-		normalSpace(View*self.modelMatrix) )
+		normalSpace(View) )
 	self.Model:uniform( "View", View )
 	self.Model:uniform( "LightPosition", vec3( -10, 10, 10 ) )
 	self.Model:depth( true )
@@ -72,18 +89,24 @@ function Haptics_Demo_Globals.Start(self)
 
 	self.haptics_ball = haptics_model()
 	self.haptics_ball:load( "world.3ds", "CelShaded" )
-	--self.Model:load( "bunny", "TestVbo" )
-	self.haptics_ball:uniform( "Model", mat4(1) );
 	self.haptics_ball:uniform( "Projection", Projection )
 	self.haptics_ball:uniform( "AmbientMaterial", vec3( 0.04, 0.04, 0.04 ) )
 	self.haptics_ball:uniform( "DiffuseMaterial", vec3( 0.75, 0.75, 0.5 ) )
 	self.haptics_ball:uniform( "SpecularMaterial", vec3( 0.5, 0.5, 0.5 ) )
 	self.haptics_ball:uniform( "Shininess", 100 )
 
+
+	local model_view = lookAt( vec3(0, 0, 0.1 + 1.0),
+				              vec3(0, 0, 0),
+				              vec3(0, 1, 0))
+
 	self.haptics_ball:uniform( "NormalMatrix", 
-		normalSpace(View*self.modelMatrix) )
+		normalSpace(View) )
+
+	self.haptics_ball:uniform( "Projection", Projection )
 	self.haptics_ball:uniform( "View", mat4(1) )
-	self.haptics_ball:uniform( "LightPosition", vec3( -10, 10, 10 ) )
+	self.haptics_ball:uniform( "Model", model_view )
+	self.haptics_ball:uniform( "LightPosition", vec3( 0, 0, 10 ) )
 	self.haptics_ball:depth( true )
 	self.haptics_ball:writeToDepth( true )
 
@@ -125,25 +148,36 @@ function Haptics_Demo_Globals.Logic( self, _deltaTime )
 	self.camera:logic( _deltaTime )
 	local position = haptics.proxy_position()
 	local trans = haptics.proxy_transform()
-	self.Model:uniform( "Model", translate( mat4(1), position ) );
+
+	local _model = rotate( rotate( scale(trans, vec3(2)), 90, vec3(1,0,0)), 180,vec3(0,1,0))
+	self.Model:uniform( "Model", _model );
 
 	--self.Model:uniform( "Model", mat4(1) )
 	self.Model:uniform( "View", self.camera.view )
 	self.Model:uniform( "NormalMatrix", 
-		normalSpace(self.camera.view*trans) )
+		normalSpace(trans*_model) )
 
-	self.haptics_ball:uniform( "Model", mat4(1) )
-	self.haptics_ball:uniform( "View", self.camera.view)
-	self.haptics_ball:uniform( "NormalMatrix", 
-		normalSpace(self.camera.view*trans) )
+	self.haptics_ball:uniform( "Model", translate( mat4(1), vec3(0,0,-15) ) )
+	self.haptics_ball:uniform( "View", mat4(1))
+	self.haptics_ball:uniform( "NormalMatrix", normalSpace(trans) )
+
+	self.haptics_ball:uniform( "LightPosition", position )
+
+
+	for i,v in ipairs(self.balls) do
+		_rand_x = math.random( -10, 10 )
+		_rand_y = math.random( -10, 10 )
+		_rand_z = math.random( -10, 10 )
+		v:uniform( "Model", translate( mat4(1), vec3((0.5*_rand_x),0.5*_rand_y,-30+_rand_z) ) )
+	end
 end
 
 function Haptics_Demo_Globals.Render(self)
-	--[[if self.running then
-		haptics.run()
-	end--]]
 
-	self.haptics_ball:render()
+	for i,v in ipairs(self.balls) do
+		v:render()
+	end--]]
+	--self.haptics_ball:render()
 	self.Model:render()
 end
 

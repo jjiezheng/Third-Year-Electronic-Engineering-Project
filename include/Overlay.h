@@ -5,7 +5,6 @@
 
 
 #include "CoreEngine.h"
-#include "Grapher.h"
 
 
 #include <iostream>
@@ -35,11 +34,7 @@ namespace de
 
 				bool active;
 				State *state;
-
-				Grapher frameRateGraph, spriteGraph, batchGraph, timeGraph;
-
 				unsigned int totalTime;
-
 				std::ofstream benchmarkFile;
 		};
 	}

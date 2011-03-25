@@ -2,13 +2,7 @@
 #define STATE_H
 
 #include "CoreEngine.h"
-#include "Coords.h"
-#include "Entities.h"
-#include "UI.h"
 
-
-#include "Menu.h"
-#include "ControlMenu.h"
 
 namespace de
 {

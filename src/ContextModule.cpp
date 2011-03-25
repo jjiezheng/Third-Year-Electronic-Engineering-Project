@@ -114,6 +114,7 @@ namespace de
             CHECKGL_MSG( "glGetString" );
 
             CHECKGL( glClearDepth( 1 ) );
+			CHECKGL( glClearColor( 1.0, 1.0, 1.0, 0.0 ) );
 
 
             CHECKGL( glEnable( GL_TEXTURE_2D ) );

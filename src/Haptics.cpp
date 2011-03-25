@@ -28,12 +28,13 @@ namespace de
 		{
 
 			hlMatrixMode(HL_TOUCHWORKSPACE);
-			//hlLoadIdentity();
+			hlLoadIdentity();
 			//hlWorkspace (-80, -80, -70, 80, 80, 20);
 			hluFitWorkspace(glm::value_ptr(glm::dmat4(_projection)));
-			//hlEnable(HL_HAPTIC_CAMERA_VIEW);
+
+			hlEnable(HL_HAPTIC_CAMERA_VIEW);
 			hlTouchableFace(HL_FRONT);
-			
+
 
 			/*
 			float _modelview[16] = glm::value_ptr(_modelView);

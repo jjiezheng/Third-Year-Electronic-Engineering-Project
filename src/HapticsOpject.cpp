@@ -178,11 +178,9 @@ void hapticsOpject::actualRender()
 	{
 
 		glClear(GL_DEPTH_BUFFER_BIT);
-		de::io::log << "VertexBuffer.size()  = " << VertexBuffer.size() << "\n";
-
-		float *ptr = (&VertexBuffer[0]);
-		de::io::log << "1:" << (*ptr) << " 2:" << (*(ptr + sizeof(float))) << " 3:" << (*(ptr + sizeof(float)*2)) << "\n"; 
-		
+		// Cull back faces.
+		glCullFace(GL_BACK);
+		glEnable(GL_CULL_FACE);
 
 		glMatrixMode(GL_PROJECTION);
 		glLoadMatrixf( glm::value_ptr(projection) );
@@ -196,22 +194,13 @@ void hapticsOpject::actualRender()
 		hlMaterialf(HL_FRONT_AND_BACK, HL_DYNAMIC_FRICTION, 0.3f);
 		hlHinti(HL_SHAPE_FEEDBACK_BUFFER_VERTICES, 7200);
 
+		//hlBeginShape(HL_SHAPE_FEEDBACK_BUFFER, hapticShape);
 		hlBeginShape(HL_SHAPE_DEPTH_BUFFER, hapticShape);
-		//hlBeginShape(HL_SHAPE_DEPTH_BUFFER, hapticShape);
 			glEnableClientState(GL_VERTEX_ARRAY);
 			glVertexPointer( 3, GL_FLOAT, 0, vertices_new );
 			glDrawArrays(GL_TRIANGLES, 0, 7200);
 			glDisableClientState(GL_VERTEX_ARRAY);  
 		hlEndShape();
-		
-		/*
-			glEnableClientState(GL_VERTEX_ARRAY);
-				glVertexPointer( 3, GL_FLOAT, 0, &VertexBuffer[0] );
-				//glDrawArrays(GL_TRIANGLES, 0, VertexBuffer.size()/3);
-				glDrawElements(GL_TRIANGLES, ElementBuffer.size(), GL_UNSIGNED_INT, &ElementBuffer[0]);
-				//mesh.actualRender();
-			glDisableClientState(GL_VERTEX_ARRAY);
-		//;*/
 	}
 }
 
