@@ -21,53 +21,131 @@ function normalSpace( _matrix )
 	return inverseTranspose( mat3(_matrix) )
 end
 
-Projection = perspective( 45.0, 16.0/10.0, 0.1, 500.0 )
+
+
+
+
+
+function make_rect( _width, _height )
+
+	local width = _width or 1
+	local height = _height or 1
+
+	local _vertexBuffer = vertexArray()
+	local _elementBuffer = intArray()
+
+	_vertexBuffer:add( vertex(  height/2, -width/2, -0, 1 ) )
+    _vertexBuffer:add( vertex(  height/2,  width/2, -0, 1 ) )
+    _vertexBuffer:add( vertex( -height/2, -width/2, -0, 1 ) )
+    _vertexBuffer:add( vertex( -height/2,  width/2, -0, 1 ) )
+
+    _elementBuffer:add( 0 )
+    _elementBuffer:add( 1 )
+    _elementBuffer:add( 2 )
+    _elementBuffer:add( 3 )
+
+	return _vertexBuffer, _elementBuffer
+end
+
+
+
+
+
+
+
+
+
+
+
+Projection = perspective( 65.0, 16.0/10.0, 1, 500.0 )
 View = mat4(1.0)
 
 Haptics_Demo_Globals = {}
 function Haptics_Demo_Globals.Start(self)
+
+
 	sys.title( "Haptics" )
-
 	haptics.init()
-	haptics.workspace( Projection, mat4(1) )
-
+	haptics.workspace( perspective( 65.0, 16.0/10.0, 1, 10.0 ), mat4(1) )
 	self.camera = ExamineCamera()
+
+
+	local borderVertBuff, borderElemBuff = make_rect(500, 500)
+	local _vertexBuffer = vertexArray()
+
+	_vertexBuffer:add( vertex( 1, 0, -0, 1 ) )
+    _vertexBuffer:add( vertex( 1, 1, -0, 1 ) )
+    _vertexBuffer:add( vertex( 0, 0, -0, 1 ) )
+    _vertexBuffer:add( vertex( 0, 1, -0, 1 ) )
+
+	self.background = {}
+
+	self.background = mesh()
+	self.background:shader("TexturedVbo"):vert_type("TriangleStrip")
+	self.background:add("Position",borderVertBuff,borderElemBuff)
+	self.background:add("UV_0",_vertexBuffer)
+	self.background:texture( "Texture0", "Earth" )
+
+	self.background:uniform( "Model", mat4(1.0) )
+	self.background:uniform( "View", translate( mat4(1), vec3(0,0,-200) ) )
+	self.background:uniform( "Projection", Projection )
+	self.background:uniform( "NormalMatrix", mat4(1.0) )
+	self.background:depth( true )
+
+
+
+
+
+
+
+
 
 	self.running = false
 	self.running = true
 	self.effectType = "constant"
-
 	self.effect = {}
 	self.effect.name = "constant"
 	self.effect.pos = vec3(0.5)
 	self.effect.dir = vec3(0.5)
-	self.effect.gain = 0.6
-	self.effect.mag = 0.6
-	self.effect.handle = haptics.start_effect{}
+	self.effect.gain = 0.3
+	self.effect.mag = 0.3
+	self.effect.handle = haptics.start_effect{self.effect}
 
-	self.balls = {}
 
-	local max_num = 30
-	for i = 1,max_num do
-		self.balls[i] = mesh()
+
+
+
+
+
+
+
+	self.wind = new_effect
+	self.wind = {}
+	self.wind.reload = true
+	self.wind.name = "constant"
+	self.wind.handle = haptics.start_effect{self.wind}
+
+	self.wind.logic = function(self)
+		local x = math.random( -1, 1 )
+		local y = math.random( -1, 1 )
+		local z = math.random( -1, 1 )
+		self.gain = 0.1
+		self.mag = 0.05
+		self.dir = vec3( x, y, z )
+		self.reload = true
+
+		if self.reload then
+			self.reload = false
+			haptics.stop_effect( self.handle )
+			self.handle = haptics.start_effect(self)
+		end
 	end
---	
-	for i,v in ipairs(self.balls) do
-		v:load( "world.3ds", "CelShaded" )
-		v:uniform( "Projection", Projection )
-		v:uniform( "AmbientMaterial", vec3( 0.04, 0.04, 0.04 ) )
-		v:uniform( "DiffuseMaterial", vec3( 0.75, 0.75, 0.5 ) )
-		v:uniform( "SpecularMaterial", vec3( 0.5, 0.5, 0.5 ) )
-		v:uniform( "Shininess", 100 )
 
-		v:uniform( "Projection", Projection )
-		v:uniform( "View", mat4(1) )
-		v:uniform( "Model", mat4(1))
-		v:uniform( "LightPosition", vec3( 0, 0, 1000 ) )
-		v:depth( true )
-		v:writeToDepth( true )
 
-	end
+
+
+
+
 
 
 	self.Model = mesh()
@@ -79,12 +157,43 @@ function Haptics_Demo_Globals.Start(self)
 	self.Model:uniform( "SpecularMaterial", vec3( 0.5, 0.5, 0.5 ) )
 	self.Model:uniform( "Shininess", 100 )
 
-	self.Model:uniform( "NormalMatrix", 
-		normalSpace(View) )
+	self.Model:uniform( "NormalMatrix", normalSpace(View) )
 	self.Model:uniform( "View", View )
 	self.Model:uniform( "LightPosition", vec3( -10, 10, 10 ) )
 	self.Model:depth( true )
 	self.Model:writeToDepth( true )
+
+
+
+
+
+
+
+
+
+
+
+	self.earth = model()
+	self.earth:load( "world.3ds", "TexturedVbo" )
+	self.earth:texture( "Texture0", "plutomap1k" )
+	self.earth:depth( true )
+	self.earth:writeToDepth( true )
+
+	self.earth.model_matrix = rotate( scale( mat4(1), vec3(30) ), 90, vec3(1,0,0))
+	self.earth:uniform( "Model", self.earth.model_matrix )
+	self.earth:uniform( "View", translate( mat4(1), vec3(0,0,-200) ) )
+	self.earth:uniform( "Projection", Projection )
+	self.time_passed = 0
+
+
+
+
+
+
+
+
+
+
 
 
 	self.haptics_ball = haptics_model()
@@ -112,6 +221,18 @@ function Haptics_Demo_Globals.Start(self)
 
 end
 
+
+
+
+
+
+
+
+
+
+
+
+
 function Haptics_Demo_Globals.HandleEvents( self, _events )
 	if events.wasKeyPressed( _events, key.space ) then
 		if self.running then
@@ -138,12 +259,33 @@ function Haptics_Demo_Globals.HandleEvents( self, _events )
 	return false
 end
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function Haptics_Demo_Globals.Logic( self, _deltaTime )
+	self.time_passed = self.time_passed + _deltaTime
+
 	if self.reload then
 		self.reload = false
 		haptics.stop_effect( self.effect.handle )
 		self.effect.handle = haptics.start_effect( self.effect )
 	end
+	self.wind:logic()
+
+
+	self.earth:uniform( "Model", rotate( self.earth.model_matrix, 0.01*self.time_passed, vec3(0,0,1)) )
+
 
 	self.camera:logic( _deltaTime )
 	local position = haptics.proxy_position()
@@ -154,8 +296,8 @@ function Haptics_Demo_Globals.Logic( self, _deltaTime )
 
 	--self.Model:uniform( "Model", mat4(1) )
 	self.Model:uniform( "View", self.camera.view )
-	self.Model:uniform( "NormalMatrix", 
-		normalSpace(trans*_model) )
+	self.Model:uniform( "NormalMatrix", normalSpace(self.camera.view*_model) )
+
 
 	self.haptics_ball:uniform( "Model", translate( mat4(1), vec3(0,0,-15) ) )
 	self.haptics_ball:uniform( "View", mat4(1))
@@ -164,24 +306,49 @@ function Haptics_Demo_Globals.Logic( self, _deltaTime )
 	self.haptics_ball:uniform( "LightPosition", position )
 
 
-	for i,v in ipairs(self.balls) do
-		_rand_x = math.random( -10, 10 )
-		_rand_y = math.random( -10, 10 )
-		_rand_z = math.random( -10, 10 )
-		v:uniform( "Model", translate( mat4(1), vec3((0.5*_rand_x),0.5*_rand_y,-30+_rand_z) ) )
-	end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function Haptics_Demo_Globals.Render(self)
-
-	for i,v in ipairs(self.balls) do
-		v:render()
-	end--]]
 	--self.haptics_ball:render()
 	self.Model:render()
+	self.earth:render()
+	self.background:render()
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function Haptics_Demo_Globals.Reload(self)
 	Haptics_Demo_Globals:Start()
 	self.Model:reload()
+	self.earth:reload()
 end

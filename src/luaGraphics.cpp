@@ -156,7 +156,8 @@ namespace de
                     .def( "uniform",  (Object3D&(Object3D::*)( std::string const&, glm::vec4 const& )) &Object3D::setUniform, luabind::return_reference_to(_1) )
                     .def( "uniform",  (Object3D&(Object3D::*)( std::string const&, glm::mat3 const& )) &Object3D::setUniform, luabind::return_reference_to(_1) )
                     .def( "uniform",  (Object3D&(Object3D::*)( std::string const&, glm::mat4 const& )) &Object3D::setUniform, luabind::return_reference_to(_1) )
-                    .def( "uniform",  (Object3D&(Object3D::*)( std::string const&, std::string const& )) &Object3D::setUniform, luabind::return_reference_to(_1) )
+                    .def( "uniform",  (Object3D&(Object3D::*)( std::string const&, std::string const& ))&Object3D::setUniform, luabind::return_reference_to(_1) )
+					.def( "texture",  (Object3D&(Object3D::*)( std::string const&, std::string const&)) &Object3D::setTexture, luabind::return_reference_to(_1) )
 
                     .def( "depth",    (Object3D&(Object3D::*)( bool )) &Object3D::depth, luabind::return_reference_to(_1) )
 					.def( "writeToDepth",(Object3D&(Object3D::*)( bool )) &Object3D::writeToDepth, luabind::return_reference_to(_1) )

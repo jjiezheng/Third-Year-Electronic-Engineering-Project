@@ -3,17 +3,17 @@ Graphics =
 	frameRate = 60, 
 	colorDepth = 32, 
 	fullScreen = true, 
-	Windowed = 
-{
-	screenWidth = 1024, 
-	screenHeight = 768, 
-	antiAliasing = 4
-}, 
+	postFX = false, 
 	FullScreen = 
 {
 	screenWidth = 1366, 
 	screenHeight = 768, 
 	antiAliasing = 0
 }, 
-	postFX = false
+	Windowed = 
+{
+	screenWidth = 1024, 
+	screenHeight = 768, 
+	antiAliasing = 4
+}
 }
