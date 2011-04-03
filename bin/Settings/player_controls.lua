@@ -1,4 +1,4 @@
-controls = 
+player_controls = 
 {
 	fire2 = 115, 
 	up = 273, 

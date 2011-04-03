@@ -1,4 +1,4 @@
-Sound =
+Sound = 
 {
-	channels = 64
+	channels = 100
 }

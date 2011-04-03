@@ -52,7 +52,7 @@ namespace de
                 paused = false;
 
                 //Reset the starting ticks
-                started = SDL_GetTicks() - pausedTime;
+                startTime = SDL_GetTicks() - pausedTime;
 
                 //Reset the paused ticks
                 pausedTime = 0;

@@ -20,7 +20,7 @@ namespace de
 			{
                 std::ofstream file;
                 file.open( Roots->get( root::SETTINGS ) + _fileName + ".lua" );
-                file << _fileName << _text << "\n";
+                file << _fileName << " = " << _text << "\n";
                 file.close();
 				de::io::log << "Saving to file: " << Roots->get( root::SETTINGS ) + _fileName + ".lua"  << "\n";
             }
@@ -32,6 +32,15 @@ namespace de
 				return false;
             }
 			return true;
+		}
+
+		std::string loadLuaTextPath( const std::string &_file )
+		{
+			using namespace de::filesystem;
+			boost::filesystem::path dir( Roots->get( root::SETTINGS ) + _file + ".lua" );
+			std::string chunks = dir.file_string();
+
+			return chunks;
 		}
 	}
 }
@@ -48,7 +57,8 @@ namespace de
                 luabind::def( "getResolution",   (std::string(*)()) &::de::sys::getResolution ),
                 luabind::def( "title",           (void(*)(const std::string &)) &::de::sys::titleBar ),
 				luabind::def( "exit",            (void(*)()) &::de::sys::exit ),
-				luabind::def( "save_setting",    (bool(*)(const std::string &,const std::string &)) &::de::sys::saveLuaText )
+				luabind::def( "save_setting",    (bool(*)(const std::string &,const std::string &)) &::de::sys::saveLuaText ),
+				luabind::def( "load_settings",   (std::string(*)(const std::string &)) &::de::sys::loadLuaTextPath )
             ];
 		}
     }
