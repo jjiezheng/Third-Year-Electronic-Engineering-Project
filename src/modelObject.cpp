@@ -2,7 +2,7 @@
 #include "GameServices.h"
 #include "openGL.h"
 
-modelObject::modelObject() : usingTexture(false), writingToDepth(false), depthTest(false), alphaTest(false), blending(false), active(false), type(GL_TRIANGLES)
+modelObject::modelObject() : refresh(false), usingTexture(false), writingToDepth(false), depthTest(false), alphaTest(false), blending(false), active(false), type(GL_TRIANGLES)
 {
 	bindTexture.push_back( GL_TEXTURE0 );
 	bindTexture.push_back( GL_TEXTURE1 );
@@ -98,6 +98,7 @@ modelObject& modelObject::load( const std::string &_mesh, const std::string &_sh
 
 void modelObject::reload()
 {
+	refresh = true;
 
 }
 void modelObject::render()
@@ -107,6 +108,12 @@ void modelObject::render()
 
 void modelObject::actualRender()
 {
+	if( refresh)
+	{
+		refresh = false;
+		load( meshName, shaderName );
+	}
+
 	if( active )
 	{
 
@@ -122,7 +129,7 @@ void modelObject::actualRender()
 				CHECKGL( glActiveTexture( (*bindIter) ) );
 				CHECKGL( glBindTexture( GL_TEXTURE_2D, textureIter->second.texture ) );
 
-				de::io::tests << "Binding texture: " << textureIter->second.textureName << " : " << textureIter->first << " : " << textureIter->second.texture << "\n";
+				//de::io::tests << "Binding texture: " << textureIter->second.textureName << " : " << textureIter->first << " : " << textureIter->second.texture << "\n";
 			}			
 		}
 		else

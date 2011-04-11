@@ -72,6 +72,11 @@ bool LoggedAudio::stopMusic()
     return wrapped->stopMusic();
 }
 
+void LoggedAudio::pushSettings( const std::string &_serialisedText )
+{
+	 de::io::log << "pushSettings called.\n";
+	return wrapped->pushSettings(_serialisedText);
+}
 
 bool LoggedAudio::isOk()
 {

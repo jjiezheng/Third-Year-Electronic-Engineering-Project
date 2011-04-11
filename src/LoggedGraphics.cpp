@@ -77,5 +77,11 @@ namespace de
             return wrapped->unloadShader( _shader );
         }
 
+		void LoggedGraphics::pushSettings( const std::string &_serialisedText )
+		{
+			de::io::log << "pushSettings\n";
+            return wrapped->pushSettings( _serialisedText );
+		}
+
     }
 }

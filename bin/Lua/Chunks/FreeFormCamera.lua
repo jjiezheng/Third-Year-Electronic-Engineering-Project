@@ -4,9 +4,7 @@ function FreeFormCamera()
 
 	local camera = {}
 
-	camera.view = lookAt( vec3( 0.0,0.0, 0.0 ),
-				  vec3( 0.0,0.0,-1.0 ),
-			      vec3( 0.0,1.0, 0.0 ))
+	camera.view = mat4(1)
 
 
 	camera.rotationQuat = math.uQuat()

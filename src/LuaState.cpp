@@ -137,14 +137,6 @@ namespace de
 
 		bool LuaState::handleEvents( const SDL_Event &_event )
 		{
-			if( _event.type == SDL_USEREVENT )
-			{
-				if( _event.user.code == de::enums::events::OPENGL_RELOAD )
-				{
-					reLoadTextures();
-				}
-			}
-
 			if( !luaError)
 			{
 				try
@@ -188,6 +180,15 @@ namespace de
 					{
 						loadLuaState( "Bootstrap" );
 					}
+				}
+			}
+
+
+			if( _event.type == SDL_USEREVENT )
+			{
+				if( _event.user.code == de::enums::events::OPENGL_RELOAD )
+				{
+					reLoadTextures();
 				}
 			}
 

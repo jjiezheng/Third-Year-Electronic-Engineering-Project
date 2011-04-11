@@ -40,6 +40,7 @@ namespace de
                 bool loadShader( lua_State* L, Shader &_shader, const std::string &_name );
                 bool unloadShader( Shader &_shader );
 
+				void pushSettings( const std::string &_serialisedText );
             private:
                 IGraphics* wrapped;
         };

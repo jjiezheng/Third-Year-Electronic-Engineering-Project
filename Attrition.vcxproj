@@ -49,12 +49,14 @@
     <ClInclude Include="include\LuaInterface.h" />
     <ClInclude Include="include\luaInterfaceAttrition.h" />
     <ClInclude Include="include\LuaInterfaceState.h" />
+    <ClInclude Include="include\luaSound.h" />
     <ClInclude Include="include\LuaState.h" />
     <ClInclude Include="include\luaSystem.h" />
     <ClInclude Include="include\Material.h" />
     <ClInclude Include="include\MeshResource.h" />
     <ClInclude Include="include\modelObject.h" />
     <ClInclude Include="include\Monitor.h" />
+    <ClInclude Include="include\Music.h" />
     <ClInclude Include="include\MusicResource.h" />
     <ClInclude Include="include\OBB.h" />
     <ClInclude Include="include\Object3D.h" />
@@ -71,6 +73,7 @@
     <ClInclude Include="include\ShaderResource.h" />
     <ClInclude Include="include\SkyBox.h" />
     <ClInclude Include="include\Sound.h" />
+    <ClInclude Include="include\SoundEffect.h" />
     <ClInclude Include="include\SoundEffectResource.h" />
     <ClInclude Include="include\SpriteInstance.h" />
     <ClInclude Include="include\SpriteObject.h" />
@@ -120,6 +123,7 @@
     <ClCompile Include="src\LuaInterface.cpp" />
     <ClCompile Include="src\luaInterfaceAttrition.cpp" />
     <ClCompile Include="src\LuaInterfaceState.cpp" />
+    <ClCompile Include="src\luaSound.cpp" />
     <ClCompile Include="src\LuaState.cpp" />
     <ClCompile Include="src\luaSystem.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -127,6 +131,7 @@
     <ClCompile Include="src\MeshResource.cpp" />
     <ClCompile Include="src\modelObject.cpp" />
     <ClCompile Include="src\Monitor.cpp" />
+    <ClCompile Include="src\Music.cpp" />
     <ClCompile Include="src\MusicResource.cpp" />
     <ClCompile Include="src\OBB.cpp" />
     <ClCompile Include="src\Object3D.cpp" />
@@ -141,6 +146,7 @@
     <ClCompile Include="src\ShaderResource.cpp" />
     <ClCompile Include="src\SkyBox.cpp" />
     <ClCompile Include="src\Sound.cpp" />
+    <ClCompile Include="src\SoundEffect.cpp" />
     <ClCompile Include="src\SoundEffectResource.cpp" />
     <ClCompile Include="src\SpriteInstance.cpp" />
     <ClCompile Include="src\SpriteObject.cpp" />
@@ -192,7 +198,7 @@
     <OutDir>$(SolutionDir)$(Configuration)\exe\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>C:\Programming\Libraries\assimp\assimp--2.0.863-sdk\include;C:\Programming\Libraries\Lua\5.1\include;C:\Programming\Projects\Attrition\Attrition\include;C:\Programming\Libraries\Stlsoft\stlsoft-1.9.97\include;C:\Programming\Libraries\SDL-1.2.14\include;C:\Programming\Libraries\glm\glm-0.9.0.3;C:\Programming\Libraries\corona-1.0.2\include;C:\Programming\Libraries\Boost\boost_1_43_0;C:\Programming\Libraries\luabind-0.9.1;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Programming\Libraries\assimp\assimp--2.0.863-sdk\include;C:\Programming\Libraries\Lua\5.1\include;C:\Programming\Projects\Attrition\Attrition\include;C:\Programming\Libraries\Stlsoft\stlsoft-1.9.97\include;C:\Programming\Libraries\SDL-1.2.14\include;C:\Programming\Libraries\glm\glm-0.9.1.1;C:\Programming\Libraries\corona-1.0.2\include;C:\Programming\Libraries\Boost\boost_1_43_0;C:\Programming\Libraries\luabind-0.9.1;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Programming\Libraries\assimp\assimp--2.0.863-sdk\lib\assimp_release-dll_win32;C:\Programming\Libraries\Lua\5.1\lib;C:\Programming\Libraries\SDL-1.2.14\lib;C:\Programming\Libraries\corona-1.0.2\lib;C:\Programming\Libraries\luabind-0.9.1\bin\msvc-10.0\release;C:\Programming\Libraries\Boost\boost_1_43_0\bin.v2\libs\filesystem\build\msvc-10.0\release\link-static\threading-multi;C:\Programming\Libraries\Boost\boost_1_43_0\bin.v2\libs\system\build\msvc-10.0\release\link-static\threading-multi;C:\Programming\Libraries\Boost\boost_1_43_0\bin.v2\libs\date_time\build\msvc-10.0\release\link-static\threading-multi;$(LibraryPath)</LibraryPath>
     <OutDir>.\bin\exe\</OutDir>
   </PropertyGroup>

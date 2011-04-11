@@ -10,8 +10,8 @@
 #include <luabind/operator.hpp>
 #include <luabind/return_reference_to_policy.hpp>
 #include <glm/gtc/quaternion.hpp>
-#include <glm/gtx/rotate_vector.hpp>
-#include <glm/gtx/inverse_transpose.hpp>
+#include <glm/gtx/rotate_vector.hpp> 
+#include <glm/gtc/matrix_inverse.hpp>
 
 
 namespace
@@ -68,6 +68,7 @@ namespace de
                     .def( luabind::self/float() )
                     .def( luabind::self*float() )
                     .def( luabind::self*glm::mat3() )
+					.def( glm::mat3()*luabind::self )
                     .def( luabind::self-glm::vec3() )
                     .def( luabind::self+glm::vec3() ),
 
@@ -77,6 +78,7 @@ namespace de
                     .def( luabind::constructor< const float&, const float&, const float&, const float& >() )
                     .def( luabind::constructor< const glm::vec3&, const float& >() )
                     .def( luabind::self*glm::mat4() )
+					.def( luabind::self*glm::mat4() )
                     .def( luabind::self+glm::vec4() )
                     .def( luabind::self-glm::vec4() )
                     .def( luabind::self*glm::vec4() ),

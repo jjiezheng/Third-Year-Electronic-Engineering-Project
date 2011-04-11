@@ -4,7 +4,7 @@
 #include "luaSystem.h"
 #include "luaGraphics.h"
 #include "luaCollision.h"
-
+#include "luaSound.h"
 
 
 namespace de
@@ -19,6 +19,7 @@ namespace de
 			exportCollision( _luaState );
 			exportInput( _luaState );
 			luaSystem( _luaState );
+			luaSound( _luaState );
 		}
     }
 }

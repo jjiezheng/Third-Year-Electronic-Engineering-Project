@@ -1,6 +1,7 @@
 dofile( include( "math" ) )
 dofile( include( "FreeFormCamera" ) )
 dofile( include( "make_earth" ) )
+dofile( include( "load_settings" ) )
 
 Projection = perspective( 45.0, 16.0/10.0, 10, 1000.0 )
 farProjection = perspective( 45.0, 16.0/10.0, 100, 100000.0 )
@@ -32,13 +33,26 @@ end
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Game = {}
 function Game.Start( self )
 
 	loadResources( "Attrition" )
 	sys.title( "A Game" )
 
-	self.rotateAngle = 0
 	self.modelMatrix = scale( 
 		translate( 
 			rotate( mat4(1.0), 180,  vec3( 0,0,1) ), 
@@ -50,13 +64,11 @@ function Game.Start( self )
 	self.borders = make_level_borders( self.View )
 
 	self.player = make_player(self.View)
-	self.world = make_earth( 100 )
+	self.world = make_earth()
 	self.camera = FreeFormCamera()
 	self.angle = 0
-
-
-
-	--aButton = make_button( {640-0, 400-0}, 80, 35, "UI", "UIButton", { "UI.button1", "UI.button2", "UI.button3" } )
+	--self.pos = vec3(0,0,350)
+	self.pos = vec3(0,0,35)
 end
 
 function Game.HandleEvents( self, _events )
@@ -76,36 +88,39 @@ end
 
 function Game.Logic( self, _deltaTime )
 
-
-	self.rotateAngle = self.rotateAngle + 0.05*_deltaTime
+	--self.pos = self.pos - vec3(0,0,0.01*_deltaTime)
 	self.View = translate( mat4(1.0), vec3(0,0,-zDepth) )
 	--self.View = rotate( self.View, self.rotateAngle, vec3(0,1,0) )
 
 	self.player:logic( _deltaTime, self.View )
 	self.borders:logic( _deltaTime, self.View )
-
-	self.world.angle = self.world.angle + 0.0005*_deltaTime
-
-
-
 	self.camera:logic( _deltaTime )
-	--local cameraPos = vec3(0,0,35) - self.camera.currentPosition
-	local cameraPos = vec3(0,0,3500) - self.camera.currentPosition
 
-	self.world:model_logic()
-	self.world:uniform( "pos",vec4(vec3(0)-cameraPos,0) )
-	--[[
+
+
+
+
+
+	self.angle = self.angle + 0.0005*_deltaTime
+	local cameraPos = self.pos - self.camera.currentPosition
+
+	--self.world:uniform( "pos",vec4(vec3(0)-cameraPos,0) )
 	self.world:uniform( "Model", 
 		rotate( rotate( 
-			scale( mat4(1.0), vec3(100) ), 23.44, vec3(0,0,-1) ), 
-			self.world.angle,vec3(0,1,0) ) )--]]
+			mat4(1.0), 23.44, vec3(0,0,-1) ), 
+			self.angle,vec3(0,1,0) ) )
 
-	self.world:uniform( "View", self.camera.view )
+	self.world:uniform( "View", 
+		self.camera.view*translate( 
+			scale(mat4(1), vec3(200)), vec3(0)-self.pos ) )
+
 	self.world:uniform( "Projection", 
-		perspective( 45.0, 16.0/10.0, 10, 10000.0 ) )
+		perspective( 45.0, 16.0/10.0, 10, 1000000.0 ) )
+
 	self.world:uniform( "v3CameraPos", cameraPos )
 	self.world:uniform( "fCameraHeight", length(cameraPos) )
 	self.world:uniform( "fCameraHeight2", length(cameraPos)^2 )
+
 
 end
 
@@ -120,6 +135,23 @@ function Game.Reload( self )
 	self.borders:reload()
 	self.ship:reload()
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -165,11 +197,35 @@ function turningClosure()
 		end
 	end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 --Closure for Ship Controls
 function controlsClosure( _controls )
 
 	local dir = vec3(0)
-	local controls = _controls or {}
+	local controls = {}
+
+	if type(_controls) ~= "table" then
+		Log( "Not a fucking table")
+	else controls = _controls end
+
 
 	if controls.up == nil then	controls.up = key.w	end
 	if controls.down == nil then controls.down = key.s	end
@@ -208,6 +264,14 @@ function controlsClosure( _controls )
 		return dir
 	end
 end
+
+
+
+
+
+
+
+
 --Closure for Ship Movement
 function movementClosure()
 
@@ -227,6 +291,17 @@ function movementClosure()
 		return _info.pos
 	end
 end
+
+
+
+
+
+
+
+
+
+
+
 
 function load_player_ship( _view, _modelMatrix )
 
@@ -254,8 +329,27 @@ function load_player_ship( _view, _modelMatrix )
 end
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function make_player( _view )
 
+	sys.load_settings( "player_controls" )
+
+	if type(player_controls) ~= "table" then
+		Log("Not a table here either!")
+	end
 	local player = {}
 
 	player.vel = vec3(0)
@@ -274,7 +368,7 @@ function make_player( _view )
 
 	player.hitbox = collision.obb(5,5)
 	player.render_hitbox = collision.visualHitbox( player.hitbox )
-	player.render_hitbox:uniform( "Colour", vec3(0.16863,0.1451,0.1647) )
+	player.render_hitbox:uniform( "Colour", vec3(0.16863,1,0.1647) )
 	player.render_hitbox:uniform( "ProjectionView", Projection*mat4(1.0) )
 	player.render_hitbox:uniform( "Z", -241.0 )
 
@@ -283,7 +377,7 @@ function make_player( _view )
 
 	player.move = movementClosure()
 	player.ship_turning = turningClosure()
-	player.ship_controls = controlsClosure()
+	player.ship_controls = controlsClosure(player_controls)
 
 
 	--Event Handler
@@ -321,11 +415,31 @@ function make_player( _view )
 	--Render
 	function player.render(self)
 		self.ship:render()
-		--self.render_hitbox:render()
+		self.render_hitbox:render()
 	end
 
 	return player
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function make_level_borders( _view )
 
@@ -391,85 +505,4 @@ function make_level_borders( _view )
 	return border
 end
 
-function make_button( _position, _width, _height, _texture, _shader, _sprites )
-	local button = {}
 
-	button.hovering = false
-	button.pressedLastFrame = false
-	button.pressed = false
-	button.hover = 0.0
-	button.timeHover = 0.0
-
-	button.hitbox = Poly( _width, _height, true )
-	button.hitbox:transform( Vector(_position[1],_position[2]), 0 )
-
-	for i, v in ipairs(_sprites) do
-
-		if i == 1 then
-			button.sprite = Sprite3D( _texture, v, _shader )
-		else
-			button.sprite:addSprite( _texture, v, i-1 )
-		end
-	end
-	button.sprite:uniform( "offset", vec3( (_position[1]-640),
-										   (397-_position[2]),
-										   -1000.0/1.049 ) )
-
-	button.sprite:uniform( "angle", 0.0 ):uniform( "hover", 0.0 ):uniform( "pressed", 0.0 ):uniform( "ProjectionView", Projection )
-
-	function button.handleEvents( self, _events )
-
-		if not self.hovering and self.hitbox:containsPoint( events.getMousePosition( _events, true ) ) then
-			self.hovering = true
-			self.timeHover = 0
-		elseif self.hovering and not self.hitbox:containsPoint( events.getMousePosition( _events, true ) ) then
-			self.hovering = false
-			self.timeHover = 0
-		end
-
-		if events.isButtonDown( _events, mouse.left ) then
-			self.pressed = true
-		elseif events.isButtonUp( _events, mouse.left ) then
-			self.pressed = false
-		end
-	end
-
-	function button.logic( self, _deltaTime )
-
-		if self.hovering then
-
-			if self.timeHover < 1000 then
-				self.timeHover = self.timeHover + _deltaTime/4
-				self.hover = smoothstep( 0, 100.0, self.timeHover)
-				self.sprite:uniform( "hover", self.hover )
-			end
-
-		else
-			if self.timeHover < 1000 then
-				self.timeHover = self.timeHover + _deltaTime/4
-				self.hover = smoothstep( 0, 100.0, self.timeHover)
-				self.sprite:uniform( "hover", 1.0-self.hover )
-			end
-
-		end
-
-		if self.hovering then
-			if self.pressed then
-				self.sprite:uniform( "pressed", 1.0 )
-			else
-				self.sprite:uniform( "pressed", 0.0 )
-			end
-		else
-			self.sprite:uniform( "pressed", 0.0 )
-		end
-
-	end
-
-
-	function button.render(self)
-		self.sprite:render()
-		self.hitbox:render(Colour(0.0,1.0,0.0,0.2),3)
-	end
-
-	return button
-end

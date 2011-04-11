@@ -19,7 +19,6 @@
 #include <luabind/luabind.hpp>
 
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_projection.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform2.hpp>
 #include <glm/gtx/rotate_vector.hpp>

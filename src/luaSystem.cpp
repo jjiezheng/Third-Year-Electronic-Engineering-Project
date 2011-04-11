@@ -1,5 +1,7 @@
 #include "luaSystem.h"
 #include "CoreEnumsAndClasses.h"
+#include "GameServices.h"
+#include "Monitor.h"
 
 namespace de
 {
@@ -42,6 +44,19 @@ namespace de
 
 			return chunks;
 		}
+
+		bool push_settings( const std::string &_serialisedText, const std::string &_system )
+		{
+			if( _system == "Sound" )
+			{
+				Engine::Audio().pushSettings( _serialisedText );
+			}
+			else if( _system == "Graphics" )
+			{
+				Engine::Graphics().pushSettings( _serialisedText );
+			}
+			return false;
+		}
 	}
 }
 namespace de
@@ -58,7 +73,8 @@ namespace de
                 luabind::def( "title",           (void(*)(const std::string &)) &::de::sys::titleBar ),
 				luabind::def( "exit",            (void(*)()) &::de::sys::exit ),
 				luabind::def( "save_setting",    (bool(*)(const std::string &,const std::string &)) &::de::sys::saveLuaText ),
-				luabind::def( "load_settings",   (std::string(*)(const std::string &)) &::de::sys::loadLuaTextPath )
+				luabind::def( "load_settings",   (std::string(*)(const std::string &)) &::de::sys::loadLuaTextPath ),
+				luabind::def( "push_settings",   (bool(*)(const std::string &, const std::string &)) &::de::sys::push_settings )
             ];
 		}
     }

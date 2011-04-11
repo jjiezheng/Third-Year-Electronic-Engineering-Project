@@ -134,7 +134,7 @@ namespace Attrition
                 delete currentState;
                 currentState = nextState;
                 nextState = NULL;
-                de::Engine::Audio().stopMusic();
+                //de::Engine::Audio().stopMusic();
             }
         }
     }
@@ -211,7 +211,6 @@ namespace Attrition
 				bool fullscreen = de::Engine::Graphics().getVideoSettings().fullScreen;
                 de::Engine::Resources().free( TEXTURES | SHADERS | MESHES );
                 de::Engine::Graphics().fullscreen( !fullscreen );
-                de::Engine::Resources().load( TEXTURES | SHADERS );
             }
 
             if( keystate[SDLK_LALT] && ( keystate[SDLK_RETURN] || keystate[SDLK_BACKSPACE] )  )
@@ -219,18 +218,18 @@ namespace Attrition
                 de::Engine::Resources().free( SHADERS | TEXTURES | MESHES | MUSIC | SOUNDEFFECTS );
 
                 de::Engine::clear();
+				de::Engine::Register( new SDLSound() );
+				de::Engine::Register( new Graphics() );
+				de::Engine::Register( new de::haptics::OpenHaptics() );
+				de::Engine::Register( new ResourceManager( de::Engine::Graphics().getVideoSettings() ) );
+				de::Engine::Register( new FontManager() );
 
-                de::Engine::Register( new SDLSound() );
-                de::Engine::Register( new Graphics() );
-                de::Engine::Register( new de::haptics::OpenHaptics() );
-                de::Engine::Register( new ResourceManager( de::Engine::Graphics().getVideoSettings() ) );
-
-                de::Engine::Resources().load( SHADERS | TEXTURES | MESHES | MUSIC | SOUNDEFFECTS );
-
+				de::Engine::Resources().load( MUSIC | SOUNDEFFECTS );
                 de::events::pushEvent( de::enums::events::OPENGL_RELOAD );
             }
         }
-        if( _event.type == SDL_VIDEORESIZE )
+
+        else if( _event.type == SDL_VIDEORESIZE )
         {
             int screenWidth(0), screenHeight(0);
 
@@ -250,9 +249,16 @@ namespace Attrition
                 de::Engine::Resources().free( TEXTURES | MESHES | SHADERS );
                 de::Engine::Graphics().resize( screenWidth, screenHeight );
             }
-
-            de::Engine::Resources().load( TEXTURES | MESHES | SHADERS );
         }
+
+		else if( _event.type == SDL_USEREVENT )
+		{
+			if( _event.user.code == de::enums::events::OPENGL_RELOAD )
+			{
+				de::Engine::Resources().load( TEXTURES | SHADERS | MESHES );
+				de::Engine::Fonts().reload();
+			}
+		}
     }
 
     void DifferenceEngine::logic()

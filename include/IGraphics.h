@@ -42,6 +42,8 @@ namespace de
 
                 virtual bool loadShader( lua_State* L, Shader &_shader, const std::string &_name ) = 0;
                 virtual bool unloadShader( Shader &_shader ) = 0;
+
+				virtual void pushSettings( const std::string &_serialisedText ) = 0;
             protected:
             private:
         };
@@ -76,6 +78,8 @@ namespace de
 
                 bool loadShader( lua_State* L, Shader &_shader, const std::string &_name ) { return true; }
                 bool unloadShader( Shader &_shader ) { return true; }
+
+				void pushSettings( const std::string &_serialisedText ) {};
             protected:
             private:
                 SDL_Surface* Display;

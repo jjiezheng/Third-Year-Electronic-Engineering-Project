@@ -28,9 +28,10 @@ namespace de
             luaL_openlibs(luaState);
             luabind::open(luaState);
 
-            videoInfo = SDL_GetVideoInfo();
-            videoSettings = getSettings();
+            fs::path dir( Roots->get( root::SETTINGS ) + "Graphics.lua" );
+            luaL_dofile( luaState, dir.file_string().c_str() );
 
+            videoSettings = getSettings();
             context.create( videoSettings );
         }
         Graphics::~Graphics()
@@ -41,10 +42,6 @@ namespace de
 
         VideoInfo Graphics::getSettings()
         {
-            fs::path dir( Roots->get( root::SETTINGS ) + "Graphics.lua" );
-
-            luaL_dofile( luaState, dir.file_string().c_str() );
-
             luabind::object global = luabind::globals(luaState);
             luabind::object GraphicsTable = global["Graphics"];
             luabind::object WindowedTable = GraphicsTable["Windowed"];
@@ -213,5 +210,14 @@ namespace de
         {
             return shaderModule.unload( _shader );
         }
+
+
+		void Graphics::pushSettings( const std::string &_serialisedText )
+		{
+			luaL_dostring( luaState, _serialisedText.c_str() );
+            videoSettings = getSettings();
+            context.create( videoSettings );
+			events::pushEvent( de::enums::events::OPENGL_RELOAD );
+		}
     }
 }

@@ -45,6 +45,8 @@ class modelObject : public de::graphics::renderObject
         void reload();
         void render();
 		void actualRender();
+
+		bool refresh;
     private:
 		
 

@@ -53,6 +53,7 @@ namespace de
                 //!Unload the shader "_shader"
                 bool unloadShader( Shader &_shader );
 
+				void pushSettings( const std::string &_serialisedText );
             private:
                 Uint32 loadTexture( const std::string& _fileName, int &_width, int &_height, int _textureDimensions );
 

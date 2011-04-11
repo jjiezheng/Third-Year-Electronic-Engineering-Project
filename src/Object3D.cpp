@@ -12,7 +12,7 @@ namespace
         Uint32 buffer;
         CHECKGL( glGenBuffers( 1, &buffer ) );
         CHECKGL( glBindBuffer( target, buffer ) );
-        CHECKGL( glBufferData( target, buffer_size, buffer_data, GL_STATIC_DRAW ) );
+        CHECKGL( glBufferData( target, buffer_size, buffer_data, GL_DYNAMIC_DRAW ) );
         return buffer;
     }
 }
@@ -278,7 +278,6 @@ void Object3D::makeBuffers()
 void Object3D::reload()
 {
     refreshVBO = true;
-	created = false;
     shader.setUniform( "Texture0", de::Engine::Resources().getTexture(textureName) );
 
     texture = de::Engine::Resources().getTexture(textureName);

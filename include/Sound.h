@@ -4,9 +4,7 @@
 #include "IAudio.h"
 #include "Monitor.h"
 #include "Log.h"
-#include <string>
-#include <vector>
-#include <lua.hpp>
+#include "Base.h"
 
 
 
@@ -53,23 +51,27 @@ namespace de
                 //! Stop currently playing music
                 bool stopMusic();
 
+				void pushSettings( const std::string &_serialisedText );
+
                 bool isOk();
                 std::string name();
                 std::string about();
                 std::string getError();
 
             private:
+				void loadSettings();
+				void saveSettings();
                 bool error;
-                unsigned int numberOfChannels;
+                unsigned int numberOfChannels, musicVolume, fxVolume;
                 std::string errorString;
                 lua_State *luaState;
 
 
-                std::vector<de::internal::Music> musicVector;
-                std::vector<de::internal::Music>::iterator iterMusic;
+                std::map<int, de::internal::Music> music;
+                std::map<int, de::internal::Music>::iterator iterMusic;
 
-                std::vector<de::internal::SoundEffect> soundEffectVector;
-                std::vector<de::internal::SoundEffect>::iterator iterSoundEffect;
+                std::map<int, de::internal::SoundEffect> soundEffect;
+                std::map<int, de::internal::SoundEffect>::iterator iterSoundEffect;
         };
     }
 }
