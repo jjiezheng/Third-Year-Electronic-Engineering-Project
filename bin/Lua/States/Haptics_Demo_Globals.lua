@@ -87,7 +87,7 @@ function Haptics_Demo_Globals.Start(self)
 	self.background:texture( "Texture0", "Earth" )
 
 	self.background:uniform( "Model", mat4(1.0) )
-	self.background:uniform( "View", translate( mat4(1), vec3(0,0,-200) ) )
+	self.background:uniform( "View", translate( mat4(1), vec3(0,0,-240) ) )
 	self.background:uniform( "Projection", Projection )
 	self.background:uniform( "NormalMatrix", mat4(1.0) )
 	self.background:depth( true )
@@ -174,16 +174,46 @@ function Haptics_Demo_Globals.Start(self)
 
 
 	self.earth = model()
-	self.earth:load( "world.3ds", "TexturedVbo" )
+	self.earth:load( "dactyl.3ds", "TexturedVbo" )
 	self.earth:texture( "Texture0", "plutomap1k" )
 	self.earth:depth( true )
 	self.earth:writeToDepth( true )
 
-	self.earth.model_matrix = rotate( scale( mat4(1), vec3(30) ), 90, vec3(1,0,0))
+	self.earth.model_matrix = rotate( scale( mat4(1), vec3(0.1) ), 90, vec3(1,0,0))
 	self.earth:uniform( "Model", self.earth.model_matrix )
 	self.earth:uniform( "View", translate( mat4(1), vec3(0,0,-200) ) )
 	self.earth:uniform( "Projection", Projection )
 	self.time_passed = 0
+
+
+
+	self.astroids = {}
+	for i=1,10 do
+		self.astroids[i] = model()
+		self.astroids[i]:load( "dactyl.3ds", "TexturedVbo" )
+		self.astroids[i]:texture( "Texture0", "dactyl" )
+		self.astroids[i]:depth( true )
+		self.astroids[i]:writeToDepth( true )
+
+		local X = math.random( -10, 10 )
+		local Y = math.random( -10, 10 )
+		local Z = math.random( -400, -25 )
+		local _X = math.random( -1, 1 )
+		local _Y = math.random( -1, 1 )
+		local _Z = math.random( -1, -1 )
+		local _amount = math.random()
+		self.astroids[i].pos = vec3( X,Y,Z )
+		self.astroids[i].dir = vec3( 0,0,0.01 )
+		self.astroids[i].rot = vec3( _X, _Y, _Z )
+		self.astroids[i].rotAmount = _amount/10
+
+		self.astroids[i].model_matrix = rotate( scale( mat4(1), vec3(0.05) ), 90, vec3(1,0,0))
+
+		self.astroids[i]:uniform( "Model", self.astroids[i].model_matrix )
+		self.astroids[i]:uniform( "View", translate( mat4(1), self.astroids[i].pos ) )
+		self.astroids[i]:uniform( "Projection", Projection )
+	end
+
 
 
 
@@ -274,7 +304,13 @@ end
 
 
 function Haptics_Demo_Globals.Logic( self, _deltaTime )
+
 	self.time_passed = self.time_passed + _deltaTime
+	self.camera:logic( _deltaTime )
+	local position = haptics.proxy_position()
+	local trans = haptics.proxy_transform()
+
+
 
 	if self.reload then
 		self.reload = false
@@ -284,13 +320,24 @@ function Haptics_Demo_Globals.Logic( self, _deltaTime )
 	self.wind:logic()
 
 
-	self.earth:uniform( "Model", rotate( self.earth.model_matrix, 0.01*self.time_passed, vec3(0,0,1)) )
+
+	self.earth:uniform( "Model", 
+		rotate( self.earth.model_matrix, 0.01*self.time_passed, vec3(0,0,1)) )
 
 
-	self.camera:logic( _deltaTime )
-	local position = haptics.proxy_position()
-	local trans = haptics.proxy_transform()
 
+	for i, v in ipairs(self.astroids) do
+		v.pos = v.pos + v.dir*_deltaTime
+
+		v:uniform( "View", translate( self.camera.view, v.pos ) )
+		v:uniform( "Model",
+			rotate( v.model_matrix, v.rotAmount*self.time_passed, v.rot) )
+	end
+
+
+
+
+	
 	local _model = rotate( rotate( scale(trans, vec3(2)), 90, vec3(1,0,0)), 180,vec3(0,1,0))
 	self.Model:uniform( "Model", _model );
 
@@ -325,7 +372,11 @@ end
 function Haptics_Demo_Globals.Render(self)
 	--self.haptics_ball:render()
 	self.Model:render()
-	self.earth:render()
+	--self.earth:render()
+
+	for i, v in ipairs(self.astroids) do
+		v:render()
+	end
 	self.background:render()
 end
 
@@ -351,4 +402,8 @@ function Haptics_Demo_Globals.Reload(self)
 	Haptics_Demo_Globals:Start()
 	self.Model:reload()
 	self.earth:reload()
+
+	for i, v in ipairs(self.astroids) do
+		v:reload()
+	end
 end

@@ -13,7 +13,7 @@ namespace de
 			if (HD_DEVICE_ERROR(hdGetError()))
 			{
 				de::io::error << "No haptics Device found\n";
-				assert(!"No haptics Device found, Continue?");
+				//assert(!"No haptics Device found, Continue?");
 				return false;
 			}
 

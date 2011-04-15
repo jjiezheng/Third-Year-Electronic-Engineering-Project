@@ -10,7 +10,7 @@ TestState::TestState()
 	if (HD_DEVICE_ERROR(hdGetError()))
 	{
 		de::io::error << "No haptics Device found\n";
-		assert(!"No haptics Device found");
+		//assert(!"No haptics Device found");
 	}
 
 	hapticsContext = hlCreateContext(deviceHandle);
