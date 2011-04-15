@@ -190,8 +190,8 @@ function Haptics_Demo_Globals.Start(self)
 	self.astroids = {}
 	for i=1,10 do
 		self.astroids[i] = model()
-		self.astroids[i]:load( "dactyl.3ds", "TexturedVbo" )
-		self.astroids[i]:texture( "Texture0", "dactyl" )
+		self.astroids[i]:load( "gaspra.3ds", "TexturedVbo" )
+		self.astroids[i]:texture( "Texture0", "gaspra" )
 		self.astroids[i]:depth( true )
 		self.astroids[i]:writeToDepth( true )
 
@@ -207,7 +207,7 @@ function Haptics_Demo_Globals.Start(self)
 		self.astroids[i].rot = vec3( _X, _Y, _Z )
 		self.astroids[i].rotAmount = _amount/10
 
-		self.astroids[i].model_matrix = rotate( scale( mat4(1), vec3(0.05) ), 90, vec3(1,0,0))
+		self.astroids[i].model_matrix = rotate( scale( mat4(1), vec3(0.5) ), 90, vec3(1,0,0))
 
 		self.astroids[i]:uniform( "Model", self.astroids[i].model_matrix )
 		self.astroids[i]:uniform( "View", translate( mat4(1), self.astroids[i].pos ) )
@@ -249,6 +249,8 @@ function Haptics_Demo_Globals.Start(self)
 	self.haptics_ball:depth( true )
 	self.haptics_ball:writeToDepth( true )
 
+
+	self.got_hit = false
 end
 
 
@@ -332,9 +334,31 @@ function Haptics_Demo_Globals.Logic( self, _deltaTime )
 		v:uniform( "View", translate( self.camera.view, v.pos ) )
 		v:uniform( "Model",
 			rotate( v.model_matrix, v.rotAmount*self.time_passed, v.rot) )
+
+		local distance = position - v.pos
+
+		local x = distance:x()
+		local y = distance:y()
+		local z = distance:z()
+		
+		if x < 0 then x = -x end
+		if y < 0 then y = -y end
+		if z < 0 then z = -z end
+
+		if x < 3 and
+		   y < 3 and
+		   z < 3 then 
+			self.got_hit = true 
+		end
 	end
 
 
+	if self.got_hit then
+		self.got_hit = false
+		self.Model:uniform( "DiffuseMaterial", vec3( 0.75, 0, 0 ) )
+	else
+		self.Model:uniform( "DiffuseMaterial", vec3( 0.75, 0.75, 0.5 ) )
+	end
 
 
 	
