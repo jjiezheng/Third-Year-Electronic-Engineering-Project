@@ -6,7 +6,6 @@ namespace de
 {
     namespace luaInterface
     {
-        void export2D( lua_State *_luaState );
         void export3D( lua_State *_luaState );
     }
 }

@@ -1,9 +1,9 @@
 player_controls = 
 {
-	fire2 = 115, 
-	up = 273, 
-	fire1 = 97, 
 	right = 275, 
+	left = 276, 
+	fire2 = 120, 
 	down = 274, 
-	left = 276
+	up = 273, 
+	fire1 = 122
 }

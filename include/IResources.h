@@ -7,10 +7,6 @@ namespace de
 {
     namespace classes
     {
-        class Sprite;
-        class Line;
-        class Poly;
-        class Colour;
         class Frect;
     }
     namespace graphics
@@ -31,9 +27,6 @@ namespace de
 
                 virtual void free( const std::string &_choice ) = 0;
                 virtual void load( const std::string &_choice ) = 0;
-
-                virtual de::classes::Poly getSprite( const std::string &_name ) = 0;
-                virtual const std::vector<de::classes::Poly>& getSprites( const std::vector<std::string> &_names ) = 0;
 
                 virtual de::classes::Frect getSpriteCoords( const std::string &_name, bool tex = true ) = 0;
                 virtual std::map<std::string, de::classes::Frect>& getSpritesCoords( const std::vector<std::string> &_names, bool tex = true ) = 0;
@@ -63,9 +56,6 @@ namespace de
 
                 void free( const std::string &_choice ) {}
                 void load( const std::string &_choice ) {}
-
-                de::classes::Poly getSprite( const std::string &_name );
-                const std::vector<de::classes::Poly>& getSprites( const std::vector<std::string> &_names );
 
                 de::classes::Frect getSpriteCoords( const std::string &_name, bool tex = true );
                 std::map<std::string, de::classes::Frect>& getSpritesCoords( const std::vector<std::string> &_names, bool tex = true );

@@ -120,9 +120,6 @@
     <ClInclude Include="include\luaInterfaceAttrition.h">
       <Filter>Header Files\Engine\Lua</Filter>
     </ClInclude>
-    <ClInclude Include="include\LuaState.h">
-      <Filter>Header Files\Engine\Lua</Filter>
-    </ClInclude>
     <ClInclude Include="include\Counter.h">
       <Filter>Header Files\Engine\Timers and Logging</Filter>
     </ClInclude>
@@ -309,14 +306,23 @@
     <ClInclude Include="include\modelObject.h">
       <Filter>Header Files\Engine\OpenGL\Renderables</Filter>
     </ClInclude>
-    <ClInclude Include="include\Music.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\luaSound.h">
       <Filter>Header Files\Engine\Lua</Filter>
     </ClInclude>
+    <ClInclude Include="include\LuaState.h">
+      <Filter>Header Files\Engine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luaMatrix.h">
+      <Filter>Header Files\Engine\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luaSplines.h">
+      <Filter>Header Files\Engine\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Music.h">
+      <Filter>Header Files\Engine\Services</Filter>
+    </ClInclude>
     <ClInclude Include="include\SoundEffect.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Services</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -479,9 +485,6 @@
     <ClCompile Include="src\IHaptics.cpp">
       <Filter>Source Files\Engine\Services\Interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="src\Input.cpp">
-      <Filter>Source Files\Engine\Services\Interfaces</Filter>
-    </ClCompile>
     <ClCompile Include="src\TestState.cpp">
       <Filter>Source Files\Engine\States</Filter>
     </ClCompile>
@@ -509,20 +512,29 @@
     <ClCompile Include="src\VBO.cpp">
       <Filter>Source Files\Engine\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="src\PostFX.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\modelObject.cpp">
       <Filter>Source Files\Engine\OpenGL\Renderables</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Music.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\luaSound.cpp">
       <Filter>Source Files\Engine\Lua</Filter>
     </ClCompile>
+    <ClCompile Include="src\luaMatrix.cpp">
+      <Filter>Source Files\Engine\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\luaSplines.cpp">
+      <Filter>Source Files\Engine\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Music.cpp">
+      <Filter>Source Files\Engine\Services</Filter>
+    </ClCompile>
     <ClCompile Include="src\SoundEffect.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PostFX.cpp">
+      <Filter>Source Files\Engine\Services\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input.cpp">
+      <Filter>Source Files\Engine\Services</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

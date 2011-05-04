@@ -5,7 +5,8 @@
 #include "luaGraphics.h"
 #include "luaCollision.h"
 #include "luaSound.h"
-
+#include "luaMatrix.h"
+#include "luaSplines.h"
 
 namespace de
 {
@@ -13,11 +14,12 @@ namespace de
     {
 		void exportAPI( lua_State *_luaState )
 		{
-			export2D( _luaState );
 			export3D( _luaState );
 			exportLuaState( _luaState );
 			exportCollision( _luaState );
 			exportInput( _luaState );
+			exportSplines( _luaState );
+			exportMatrix( _luaState );
 			luaSystem( _luaState );
 			luaSound( _luaState );
 		}

@@ -74,6 +74,10 @@ modelObject& modelObject::load( const std::string &_mesh, const std::string &_sh
 	meshName = _mesh;
 	shaderName = _shader;
 
+	return loadMesh();
+}
+modelObject& modelObject::loadMesh()
+{
 	vbo = de::Engine::Resources().getMesh( meshName );
     shader = de::Engine::Resources().getShader( shaderName );
     AttributeNames = shader.getAttributeNames();
@@ -95,7 +99,6 @@ modelObject& modelObject::load( const std::string &_mesh, const std::string &_sh
 	return *this;
 }
 
-
 void modelObject::reload()
 {
 	refresh = true;
@@ -111,7 +114,7 @@ void modelObject::actualRender()
 	if( refresh)
 	{
 		refresh = false;
-		load( meshName, shaderName );
+		loadMesh();
 	}
 
 	if( active )

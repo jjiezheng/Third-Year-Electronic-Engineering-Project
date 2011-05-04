@@ -30,6 +30,11 @@ namespace de
 
         bool ShaderResource::loadUsing( lua_State* L )
         {
+			if( name.empty() )
+			{
+				de::io::error << "Error in ShaderResource::loadUsing. No name given for shader\n";
+				return false;
+			}
             Engine::Graphics().loadShader( L, shader, name );
             return true;
         };

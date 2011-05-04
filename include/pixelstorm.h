@@ -41,6 +41,7 @@ namespace Attrition
             std::vector<SDL_Joystick*> Sticks;
             de::state::options Option;
 
+			std::ofstream deltaLog;
             std::string lastError;
             bool failBit, exit;
     };

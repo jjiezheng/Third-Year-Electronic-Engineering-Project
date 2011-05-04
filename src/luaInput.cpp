@@ -47,7 +47,7 @@ namespace de
 
                 luabind::def( "relativeMouseMovement",(glm::vec3(*)(const SDL_Event & )) &::de::events::getRelativeMouseMovementVec3 ),
                 luabind::def( "relativeMouseAngle",   (float(*)(const SDL_Event &, int _axis )) &::de::events::relativeMouseAngle ),
-                luabind::def( "getMousePosition",     (Vector(*)(const SDL_Event &, bool )) &::de::events::getMousePosition ),
+	            luabind::def( "mouse_position",       (glm::vec3(*)(const SDL_Event & )) &::de::events::MousePosition ),
                 luabind::def( "showMouse",            (void(*)(bool)) &::de::events::showMouse ),
                 luabind::def( "toggleMouse",          (void(*)()) &::de::events::toggleMouse ),
                 luabind::def( "toggleMouseGrab",      (void(*)()) &::de::events::toggleMouseGrab ),

@@ -22,13 +22,19 @@ namespace de
                 {
                     hitbox.setUniform( _name, _value );
                 }
+				VisualHitbox& writeToDepth( bool _depth );
+				VisualHitbox& depth( bool _depth );
+				VisualHitbox& alpha( bool _alpha );
+				VisualHitbox& blend( bool _blend );
 
+				void flip( const bool &_flipIt );
                 void update( const OBB &_obb );
                 void reload();
                 void render();
             protected:
             private:
                 Object3D hitbox;
+				bool flipIt;
         };
     }
 }

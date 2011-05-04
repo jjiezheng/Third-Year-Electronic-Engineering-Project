@@ -13,7 +13,7 @@ class TestState : public de::state::State
         virtual ~TestState();
 
         bool handleEvents( const SDL_Event &_event );
-        bool logic( const Uint32 &_deltaTicks, State* &_nextState, de::state::options &_options );
+        bool logic( const float &_deltaTicks, State* &_nextState, de::state::options &_options );
 
         void render();
 

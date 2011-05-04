@@ -32,7 +32,7 @@ bool TestState::handleEvents( const SDL_Event &_event )
     return true;
 }
 
-bool TestState::logic( const Uint32 &_deltaTicks, State* &_nextState, de::state::options &_options )
+bool TestState::logic( const float &_deltaTicks, State* &_nextState, de::state::options &_options )
 {
 
     return false;

@@ -22,7 +22,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform2.hpp>
 #include <glm/gtx/rotate_vector.hpp>
-
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
+#include <glm/gtc/matrix_inverse.hpp>
 
 #include <boost/variant.hpp>
 #include <boost/shared_ptr.hpp>

@@ -49,13 +49,6 @@ namespace de
                 void load( const std::string &_choice );
                 void free( const std::string &_choice );
 
-                //! Returns texture coords for the the sprite _name
-                /*! The format for _name is <spritesheet>.<Sprite> Say you want the sprite called coolShip on the spritesheet called Ships.
-                    The _name you would pass in would be "Ships.coolShip" */
-                de::classes::Poly getSprite( const std::string &_name );
-                //! Returns texture coords for the the sprites in the vector passes in. see getSprite.
-                const std::vector<de::classes::Poly>& getSprites( const std::vector<std::string> &_names );
-
                 de::classes::Frect getSpriteCoords( const std::string &_name, bool tex = true );
                 std::map<std::string, de::classes::Frect>& getSpritesCoords( const std::vector<std::string> &_names, bool tex = true );
                 std::map<std::string, de::classes::Frect>& getSpritesCoords( const std::string &_texture, bool tex = true );

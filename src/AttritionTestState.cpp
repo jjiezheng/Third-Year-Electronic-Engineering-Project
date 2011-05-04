@@ -27,7 +27,6 @@ namespace Attrition
     {
         //dtor
     }
-
     bool AttritionTestState::handleEvents( const SDL_Event &_event )
     {
 
@@ -60,12 +59,12 @@ unProject	(	detail::tvec3< T > const & 	win,
         return true;
     }
 
-    bool AttritionTestState::logic( const Uint32 &_deltaTicks, State* &_nextState, de::state::options &_options )
+    bool AttritionTestState::logic( const float &_deltaTicks, State* &_nextState, de::state::options &_options )
     {
         static float rotation = 0;
         hitbox.transform( glm::vec2(0,-0.3));
         hitbox2.transform( glm::vec2(-0.3,0));
-        rotation += (float)_deltaTicks/20.0f;
+        rotation += _deltaTicks/20.0f;
 
         hitbox.rotate( rotation );
         hitbox2.rotate( -rotation/2.0f );

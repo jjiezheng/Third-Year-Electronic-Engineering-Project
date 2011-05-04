@@ -27,7 +27,7 @@ namespace
     }
 
     void setResources( const std::string &_location )
-    {
+	{
         de::Engine::Resources().load( _location );
     }
 
@@ -195,18 +195,18 @@ namespace de
 			return true;
 		}
 
-		bool LuaState::logic( const Uint32 &_deltaTicks, State* &_nextState, state::options &_options )
+		bool LuaState::logic( const float &_deltaTicks, State* &_nextState, state::options &_options )
 		{
 			return logic( _deltaTicks );
 		}
 
-		bool LuaState::logic( const Uint32 &_deltaTicks )
+		bool LuaState::logic( const float &_deltaTicks )
 		{
 			if( !luaError)
 			{
 				try
 				{
-					luabind::call_function<void>( currentState["Logic"], currentState, (int)_deltaTicks );
+					luabind::call_function<void>( currentState["Logic"], currentState, _deltaTicks );
 				}
 				catch( luabind::error &e)
 				{

@@ -49,6 +49,7 @@ class modelObject : public de::graphics::renderObject
 		bool refresh;
     private:
 		
+		modelObject& loadMesh();
 
         bool usingTexture, writingToDepth, depthTest, alphaTest, blending, active, frontFaceCCW;
         int type;

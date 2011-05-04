@@ -36,11 +36,11 @@ namespace Attrition
         exit(false)
     {
         initBase();
-
+		deltaLog.open ("../deltaTimes.csv");
+		deltaLog << "Delta\n";
         if( !failBit )
         {
             Roots = new Root();
-            //Settings::Init();
 
             de::Engine::Register( new SDLSound() );
             de::Engine::Register( new Graphics() );
@@ -48,27 +48,13 @@ namespace Attrition
             de::Engine::Register( new ResourceManager( de::Engine::Graphics().getVideoSettings() ) );
 			de::Engine::Register( new FontManager() );
 
-            de::Engine::Resources().load( SHADERS | TEXTURES | MESHES | MUSIC | SOUNDEFFECTS );
-
-			boost::filesystem::path _path( Roots->get( root::TEXTURES ) );
-			std::vector<boost::filesystem::path> foundFiles;
-            std::vector<boost::filesystem::path>::iterator iter, end;
-
-            getFilesFrom( _path, foundFiles, filetypes::FONT );
-
-            for( iter = foundFiles.begin(); iter < foundFiles.end(); ++iter )
-            {
-                std::string fontName( stripFileEnding( iter->filename() ) );
-				de::Engine::Fonts().load( fontName );
-            }
-
-            //Attrition::shipManager.parseShips();
-            //Attrition::particleManager.parseParticles();
-            //Attrition::bulletManager.parseBullets();
+            de::Engine::Resources().load( SHADERS | 
+										  TEXTURES | 
+										  MESHES | 
+										  MUSIC | 
+										  SOUNDEFFECTS );
 
             overlay = new de::state::Overlay;
-
-            SDL_WM_SetCaption( "Difference Engine", NULL );
         }
     }
 
@@ -85,6 +71,7 @@ namespace Attrition
         delete currentState;
         de::Engine::clear();
 
+		deltaLog.close();
         de::io::log << "Closing SDL... ";
         SDL_Quit();
         de::io::log << "Done\n";
@@ -106,6 +93,7 @@ namespace Attrition
 
             SDL_EnableUNICODE(SDL_ENABLE);
             SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+			SDL_WM_SetCaption( "Difference Engine", NULL );
 
             //SDL_JoystickOpen( 0 );
             for( int i(0); i < SDL_NumJoysticks(); ++i )
@@ -149,14 +137,15 @@ namespace Attrition
     {
         if( !exit )
         {
+			//Delta.start();
             handleEvents();
             logic();
             render();
 
-            Delta.frame_cap();
             overlay->graph( perfTimer.stopstartAndSample()/*, GRAPH_MAIN_IDLETIME*/ );
             overlay->endOfFrame();
 
+			Delta.frame_cap();
             changeState();
         }
     }
@@ -268,9 +257,9 @@ namespace Attrition
             currentState->logic( Delta.getTime(), nextState, Option );
         }
 
-        de::sys::getTime( Delta.getTime() );
-        Delta.start();
+        de::sys::getFrameRate( Delta.getFrameRate() );
 
+		deltaLog << Delta.getTime() << "\n";
         overlay->graph( perfTimer.stopstartAndSample()/*, GRAPH_MAIN_LOGIC*/ );
     }
 

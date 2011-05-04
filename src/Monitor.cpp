@@ -13,8 +13,7 @@ namespace de
     namespace sys
     {
 
-        float currentFrameRate, Timer;
-        int frame;
+        int currentFrameRate;
         int screenWidth, screenHeight;
 
 
@@ -25,20 +24,12 @@ namespace de
             screenHeight = _frameDetails.screenHeight;
         }
 
-        void getTime( const int &_delta )
+        void getFrameRate( const float &_delta )
         {
-            frame++;
-            Timer += _delta;
-
-            if ( Timer > 1000 )
-            {
-                currentFrameRate =  frame / ( Timer / 1000.f );
-                Timer = 0.0f;
-				frame = 0;
-            }
+            currentFrameRate = (int)(_delta+0.5f);
         }
 
-        const float& FrameRate()
+        const int& FrameRate()
         {
             return currentFrameRate;
         }

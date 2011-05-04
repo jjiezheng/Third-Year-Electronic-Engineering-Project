@@ -13,7 +13,7 @@ namespace de
             public:
                 OBB();
                 OBB( const float &_width, const float &_height );
-
+				void setZ( const float &_z );
                 void transform( const glm::vec2 &_position );
                 void teleport( const glm::vec2& _position );
 
@@ -25,7 +25,7 @@ namespace de
             public:
                 glm::mat2 orientation;
                 glm::vec2 half,centre;
-                float radiusSqrd;
+                float radiusSqrd, z;
                 bool active;
         };
 
@@ -36,6 +36,7 @@ namespace de
         float GetProjectedRadius( const OBB &_o, const glm::vec2 &_d );
         bool SeparatedOnAxis( const OBB &_a, const OBB &_b, const glm::vec2 &_d );
         bool TestOBBOBB( const OBB &_a, const OBB &_b );
+		bool TestOOBRay(const OBB &_obb, const glm::vec3 &_p0, const glm::vec3 &_p1);
     }
 }
 #endif // OOB_H
