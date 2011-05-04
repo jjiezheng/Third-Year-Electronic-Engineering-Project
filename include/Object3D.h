@@ -56,7 +56,7 @@ class Object3D : public de::graphics::renderObject
         Object3D& loadAssimp( const std::string &_name, const std::string &_shader );
 
 
-        bool refreshVBO, usingTexture, writingToDepth, depthTest, alphaTest, blending;
+        bool refreshVBO, usingTexture, writingToDepth, depthTest, alphaTest, blending, created;
         int type, texture;
         de::graphics::Shader shader;
         Uint32 vertexBuffer, elementBuffer;

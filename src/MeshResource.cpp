@@ -73,6 +73,8 @@ namespace de
 				aiProcess_CalcTangentSpace |
 				aiProcess_Triangulate |
 				aiProcess_SortByPType |
+				aiProcess_JoinIdenticalVertices |
+				aiProcess_ValidateDataStructure  |
 				aiProcess_GenSmoothNormals );
 
 			if( !scene )

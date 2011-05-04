@@ -34,6 +34,8 @@ class IAudio
         //! Stop currently playing music
         virtual bool stopMusic() = 0;
 
+		virtual void pushSettings( const std::string &_serialisedText ) = 0;
+
         virtual bool isOk() = 0;
         virtual std::string name() = 0;
         virtual std::string about() = 0;
@@ -72,6 +74,8 @@ class NullAudio : public IAudio
         bool resumeMusic() { return true; }
         //! Stop currently playing music
         bool stopMusic() { return true; }
+
+		void pushSettings( const std::string &_serialisedText ) {};
 
         bool isOk() { return true; }
         std::string name()

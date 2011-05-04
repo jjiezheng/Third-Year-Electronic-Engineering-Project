@@ -25,7 +25,7 @@ namespace de
                 luabind::class_<de::state::LuaState>( "State" )
                     .def( luabind::constructor<const std::string &>() )
                     .def( "handleEvents", (bool(de::state::LuaState::*)(const SDL_Event &))         &de::state::LuaState::handleEvents )
-                    .def( "logic",        (bool(de::state::LuaState::*)(const Uint32 &_deltaTicks)) &de::state::LuaState::logic )
+                    .def( "logic",        (bool(de::state::LuaState::*)(const float &_deltaTicks)) &de::state::LuaState::logic )
                     .def( "render",       (void(de::state::LuaState::*)())                          &de::state::LuaState::render ),
 
                 luabind::def( "printMessage", (void(*)(const std::string &)) &::de::io::logMessage ),

@@ -195,7 +195,7 @@ namespace de
                 else //if( decimalPoint )
                 {
                     ++_decimalPosition;
-                    _float = _float + ( (float)UnicodeToInt( _event.key.keysym.unicode ) * 1.0/pow(10.0f, _decimalPosition ) );
+                    _float = _float + ( (float)UnicodeToInt( _event.key.keysym.unicode ) * 1.0f/powf(10.0f, _decimalPosition ) );
                 }
             }
 
@@ -214,7 +214,7 @@ namespace de
                 change = true;
                 if( !_decimalPoint )
                 {
-                    _float = (int)_float / 10;
+                    _float = (float)(_float/10);
                 }
                 // TODO (daniel#1#): Fix deleting numbers past the floating point
                 else //if( decimalPoint )
@@ -417,5 +417,14 @@ namespace de
             }
             return out;
         }
+
+		float getkey( const SDL_Event &_event )
+		{
+			if( _event.type == SDL_KEYDOWN )
+            {
+				return (float)_event.key.keysym.sym;
+			}
+			return 0;
+		}
     }
 }

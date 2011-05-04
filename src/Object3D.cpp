@@ -20,7 +20,7 @@ namespace
 
 
 Object3D::Object3D()
-    : refreshVBO(false), usingTexture(false), writingToDepth(true), alphaTest(true), blending(true), type( GL_TRIANGLES )
+    : refreshVBO(false), usingTexture(false), writingToDepth(true), alphaTest(true), blending(true), created(false), type( GL_TRIANGLES )
 {
 }
 
@@ -264,9 +264,15 @@ Object3D& Object3D::loadAssimp( const std::string &_name, const std::string &_sh
 
 void Object3D::makeBuffers()
 {
+	if( created )
+	{
+		CHECKGL( glDeleteBuffers( 1, &vertexBuffer ) );
+		CHECKGL( glDeleteBuffers( 1, &elementBuffer ) );
+	}
     vertexBuffer = make_buffer( GL_ARRAY_BUFFER, &(VertexBuffer[0]), VertexBuffer.size()*sizeof(de::graphics::vertex) );
     elementBuffer = make_buffer( GL_ELEMENT_ARRAY_BUFFER, &(ElementBuffer[0]), ElementBuffer.size()*sizeof(int) );
     refreshVBO = false;
+	created = true;
 }
 
 void Object3D::reload()

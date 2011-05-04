@@ -3,7 +3,6 @@
 
 #include "CoreEngine.h"
 
-
 namespace de
 {
 	namespace state
@@ -19,7 +18,7 @@ namespace de
 			public:
 				//virtual functions that will be overloaded
 				virtual bool handleEvents( const SDL_Event &_event ) = 0;
-				virtual bool logic( const Uint32 &_deltaTicks, State* &_nextState, options &_options ) = 0;
+				virtual bool logic( const float &_deltaTicks, State* &_nextState, options &_options ) = 0;
 
 				virtual void render() = 0;
 				virtual ~State(){};

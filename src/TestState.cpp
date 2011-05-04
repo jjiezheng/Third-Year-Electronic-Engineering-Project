@@ -5,6 +5,9 @@ using namespace de::enums;
 
 TestState::TestState()
 {
+	int num_joy, i;
+	num_joy=SDL_NumJoysticks();
+	de::io::tests << num_joy << " joysticks found\n";
 
 	deviceHandle = hdInitDevice(HD_DEFAULT_DEVICE);
 	if (HD_DEVICE_ERROR(hdGetError()))
@@ -76,7 +79,7 @@ bool TestState::handleEvents( const SDL_Event &_event )
     return true;
 }
 
-bool TestState::logic( const Uint32 &_deltaTicks, State* &_nextState, de::state::options &_options )
+bool TestState::logic( const float &_deltaTicks, State* &_nextState, de::state::options &_options )
 {
 	using namespace de::misc;
 	double pos[3];
@@ -85,6 +88,7 @@ bool TestState::logic( const Uint32 &_deltaTicks, State* &_nextState, de::state:
 	posText.text( "Pos: x:" + toString(pos[0]) + " y:" + toString(pos[1]) + " z:" + toString(pos[2]) );
 	vender.text( (char*)hlGetString( HL_VENDOR ) );
 	version.text( (char*)hlGetString( HL_VERSION ) );
+
     return false;
 }
 
@@ -101,4 +105,5 @@ void TestState::render()
 	vender.render();
 	version.render();
 	mesh.render();
+
 }

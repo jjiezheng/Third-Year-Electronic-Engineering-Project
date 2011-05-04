@@ -51,7 +51,7 @@ namespace de
         bool isMouseButtonUp( const SDL_Event &_event, const int &_key );
 
         std::string getKeyPressed( const SDL_Event &_event );
-
+        float getkey( const SDL_Event &_event );
 
         class dummyClassSDLKey
         {

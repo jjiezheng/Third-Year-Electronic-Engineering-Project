@@ -35,10 +35,10 @@ namespace de
 			return wrapped->add( _Object, _type );
 		}
 
-        void LoggedGraphics::toggleFullscreen()
+        void LoggedGraphics::fullscreen( bool _fullscreen )
         {
-            de::io::log << "toggleFullscreen was called.\n";
-            wrapped->toggleFullscreen();
+            de::io::log << "fullscreen was called.\n";
+            wrapped->fullscreen( _fullscreen );
         }
 
         void LoggedGraphics::resize( int _screenWidth, int _screenHeight )
@@ -53,7 +53,11 @@ namespace de
             return wrapped->getVideoSettings();
         }
 
-
+		void LoggedGraphics::setVideoSettings( const de::graphics::VideoInfo &_info )
+		{
+			de::io::log << "setVideoSettings was called.\n";
+			wrapped->setVideoSettings( _info );
+		}
         Uint32 LoggedGraphics::loadTexture( const std::string& _fileName, int &_width, int &_height )
         {
             de::io::log << "loadTexture was called with _fileName " << _fileName << ".\n";
@@ -78,6 +82,12 @@ namespace de
             de::io::log << "unloadShader was called with _shader " << (int)_shader.get( Shader::PROGRAM ) << ".\n";
             return wrapped->unloadShader( _shader );
         }
+
+		void LoggedGraphics::pushSettings( const std::string &_serialisedText )
+		{
+			de::io::log << "pushSettings\n";
+            return wrapped->pushSettings( _serialisedText );
+		}
 
     }
 }

@@ -34,6 +34,8 @@ class LoggedAudio : public IAudio
         //! Stop currently playing music
         bool stopMusic();
 
+		void pushSettings( const std::string &_serialisedText );
+
         bool isOk();
         std::string name();
         std::string about();

@@ -24,11 +24,12 @@ namespace de
 
                 luabind::def( "wasKeyPressedUnicode", (bool(*)(const SDL_Event &, const std::string &)) &::de::events::wasKeyPressedUnicode ),
                 luabind::def( "wasKeyPressed",        (bool(*)(const SDL_Event &, const int &)) &::de::events::wasKeyPressed ),
-                luabind::def( "getKeyPressed",        (std::string(*)(const SDL_Event &)) &::de::events:: getKeyPressed ),
+                luabind::def( "getKeyPressed",        (std::string(*)(const SDL_Event &)) &::de::events::getKeyPressed ),
                 //luabind::def( "isEvent",            (bool(*)(const SDL_Event &, const int &)) &::de::events::isEvent ),
                 luabind::def( "isButtonDown",         (bool(*)(const SDL_Event &, const int &)) &::de::events::isMouseButtonDown ),
                 luabind::def( "isButtonUp",           (bool(*)(const SDL_Event &, const int &)) &::de::events::isMouseButtonUp ),
-                luabind::def( "isKeyDown",            (bool(*)(const SDL_Event &, const int &)) &::de::events::isKeyDown )
+                luabind::def( "isKeyDown",            (bool(*)(const SDL_Event &, const int &)) &::de::events::isKeyDown ),
+				luabind::def( "get_key",              (float(*)(const SDL_Event &)) &::de::events::getkey )
             ];
         }        
 		
@@ -46,7 +47,7 @@ namespace de
 
                 luabind::def( "relativeMouseMovement",(glm::vec3(*)(const SDL_Event & )) &::de::events::getRelativeMouseMovementVec3 ),
                 luabind::def( "relativeMouseAngle",   (float(*)(const SDL_Event &, int _axis )) &::de::events::relativeMouseAngle ),
-                luabind::def( "getMousePosition",     (Vector(*)(const SDL_Event &, bool )) &::de::events::getMousePosition ),
+	            luabind::def( "mouse_position",       (glm::vec3(*)(const SDL_Event & )) &::de::events::MousePosition ),
                 luabind::def( "showMouse",            (void(*)(bool)) &::de::events::showMouse ),
                 luabind::def( "toggleMouse",          (void(*)()) &::de::events::toggleMouse ),
                 luabind::def( "toggleMouseGrab",      (void(*)()) &::de::events::toggleMouseGrab ),
@@ -58,7 +59,7 @@ namespace de
         {
             luabind::module(_luaState )
             [
-                luabind::class_<de::events::dummyClassSDLKey>( "type" )
+                luabind::class_<de::events::dummyClassSDLKey>( "mouse_event_type" )
                     .def( luabind::constructor<>() )
                     .enum_("constants")
                     [
@@ -143,7 +144,14 @@ namespace de
                         luabind::value("space", SDLK_SPACE ),
                         luabind::value("escape", SDLK_ESCAPE ),
                         luabind::value("home", SDLK_HOME ),
-                        luabind::value("end", SDLK_END )
+                        luabind::value("end", SDLK_END ),
+                        luabind::value("up", SDLK_UP ),
+						luabind::value("down", SDLK_DOWN ),
+						luabind::value("left", SDLK_LEFT ),
+						luabind::value("right", SDLK_RIGHT ),
+						luabind::value("enter", SDLK_RETURN ),
+						luabind::value("return", SDLK_RETURN ),
+						luabind::value("backspace", SDLK_BACKSPACE )
                     ]
 
             ];

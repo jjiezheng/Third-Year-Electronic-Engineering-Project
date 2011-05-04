@@ -5,13 +5,13 @@ namespace de
 {
     namespace collision
     {
-        VisualHitbox::VisualHitbox()
+        VisualHitbox::VisualHitbox() :flipIt(false)
         {
             hitbox.set( "Hitbox" );
             hitbox.setType( "Triangles" );
         }
 
-        VisualHitbox::VisualHitbox( const OBB &_obb )
+        VisualHitbox::VisualHitbox( const OBB &_obb ) :flipIt(false)
         {
             using namespace de::graphics;
             std::vector<vertex> verts;
@@ -39,10 +39,41 @@ namespace de
             //dtor
         }
 
+		void VisualHitbox::flip( const bool &_flipIt )
+		{
+			flipIt = _flipIt;
+		}
+
+		VisualHitbox& VisualHitbox::writeToDepth( bool _depth )
+		{
+			hitbox.writeToDepth( _depth );
+			return *this;
+		}
+		VisualHitbox& VisualHitbox::depth( bool _depth )
+		{
+			hitbox.depth( _depth );
+			return *this;
+		}
+		VisualHitbox& VisualHitbox::alpha( bool _alpha )
+		{
+			hitbox.alpha( _alpha );
+			return *this;
+		}
+		VisualHitbox& VisualHitbox::blend( bool _blend )
+		{
+			hitbox.blend( _blend );
+			return *this;
+		}
+
+
         void VisualHitbox::update( const OBB &_obb )
         {
             hitbox.setUniform( "Model", glm::mat4(_obb.orientation) );
-            hitbox.setUniform( "Centre", _obb.centre);
+			if(flipIt)
+				hitbox.setUniform( "Centre", glm::vec2(_obb.centre.x,-_obb.centre.y) );
+			else
+				hitbox.setUniform( "Centre", _obb.centre);
+			hitbox.setUniform( "Z", _obb.z);
         }
 
         void VisualHitbox::reload()

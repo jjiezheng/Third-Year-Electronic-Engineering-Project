@@ -276,21 +276,6 @@ namespace de
             }
         }
 
-
-        de::classes::Poly ResourceManager::getSprite( const std::string &_name )
-        {
-            return de::classes::Poly( getSpriteCoords( _name, true ), 0, true );
-        }
-        const std::vector<de::classes::Poly>& ResourceManager::getSprites( const std::vector<std::string> &_names )
-        {
-            static std::vector<de::classes::Poly> frames;
-            frames.clear();
-
-            for( std::vector<std::string>::const_iterator iter = _names.begin(); iter < _names.end(); ++iter )
-                frames.push_back( getSprite( (*iter) ) );
-
-            return frames;
-        }
         de::classes::Frect ResourceManager::getSpriteCoords( const std::string &_name, bool tex )
         {
             std::vector<std::string> strs;
@@ -379,6 +364,13 @@ namespace de
         }
         const de::graphics::Shader& ResourceManager::getShader( const std::string &_shaderName )
         {
+			static Shader empty;
+
+			if( _shaderName.empty() )
+			{
+				de::io::error << "Error in ResourceManager::getShader, no shaderName given\n";
+				return empty;
+			}
             if( glslVersion::none < GLSL )
             {
                 shaderIter = shaders.find(_shaderName);
@@ -389,7 +381,7 @@ namespace de
                 }
                 return shaderIter->second.getShaderObject( luaShaderLoader );
             }
-            static Shader empty;
+            
 
             de::io::error << "ResourceManager: Couldn't find shader - " << _shaderName << "\n";
             return empty;

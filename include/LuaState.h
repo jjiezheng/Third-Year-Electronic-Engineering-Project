@@ -21,8 +21,8 @@ namespace de
 				virtual ~LuaState();
 
 				bool handleEvents( const SDL_Event &_event );
-				bool logic( const Uint32 &_deltaTicks, State* &_nextState, state::options &_options );
-				bool logic( const Uint32 &_deltaTicks );
+				bool logic( const float &_deltaTicks, State* &_nextState, state::options &_options );
+				bool logic( const float &_deltaTicks );
 				void render();
 
 			private:

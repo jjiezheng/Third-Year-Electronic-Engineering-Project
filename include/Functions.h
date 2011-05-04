@@ -85,7 +85,7 @@ namespace de
 				STUDIOMAX = 1 << 8,
                 LWO = 1 << 9,
 				OBJ = 1 << 10,
-
+				FONT = 1 << 11,
                 IMAGES = PNG | JPG | BMP | TGA,
                 MUSIC = WAV | OGG,
                 SOUNDEFFECTS = WAV | OGG,

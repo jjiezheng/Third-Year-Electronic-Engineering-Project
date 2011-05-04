@@ -1,19 +1,19 @@
 Graphics = 
 {
 	frameRate = 60, 
-	colorDepth = 32, 
 	fullScreen = false, 
-	Windowed = 
-{
-	screenWidth = 1093, 
-	screenHeight = 614, 
-	antiAliasing = 4
-}, 
 	FullScreen = 
 {
-	screenWidth = 1366, 
-	screenHeight = 768, 
-	antiAliasing = 0
+	antiAliasing = 0, 
+	screenHeight = 1050, 
+	screenWidth = 1680
 }, 
+	Windowed = 
+{
+	antiAliasing = 0, 
+	screenHeight = 775, 
+	screenWidth = 1240
+}, 
+	colorDepth = 32, 
 	postFX = false
 }

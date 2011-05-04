@@ -28,10 +28,11 @@ namespace de
             luaL_openlibs(luaState);
             luabind::open(luaState);
 
-            videoInfo = SDL_GetVideoInfo();
-            videoSettings = getSettings();
+            fs::path dir( Roots->get( root::SETTINGS ) + "Graphics.lua" );
+            luaL_dofile( luaState, dir.file_string().c_str() );
 
-             context.create( videoSettings );
+            videoSettings = getSettings();
+            context.create( videoSettings );
         }
         Graphics::~Graphics()
         {
@@ -41,10 +42,6 @@ namespace de
 
         VideoInfo Graphics::getSettings()
         {
-            fs::path dir( Roots->get( root::SETTINGS ) + "Graphics.lua" );
-
-            luaL_dofile( luaState, dir.file_string().c_str() );
-
             luabind::object global = luabind::globals(luaState);
             luabind::object GraphicsTable = global["Graphics"];
             luabind::object WindowedTable = GraphicsTable["Windowed"];
@@ -123,16 +120,24 @@ namespace de
         {
             return videoSettings;
         }
+
+		void Graphics::setVideoSettings( const de::graphics::VideoInfo &_info )
+		{
+			videoSettings = _info;
+			context.create( videoSettings );
+            events::pushEvent( de::enums::events::OPENGL_RELOAD );
+		}
+
         frameDetails Graphics::getFrameInfo()
         {
             return frameDetails( context.width(), context.height() );
         }
 
-		void Graphics::toggleFullscreen()
+		void Graphics::fullscreen( bool _fullscreen )
         {
-            videoSettings.fullScreen = !videoSettings.fullScreen;
+            videoSettings.fullScreen = _fullscreen;
 
-             context.create( videoSettings );
+            context.create( videoSettings );
             events::pushEvent( de::enums::events::OPENGL_RELOAD );
         }
         void Graphics::resize( int _screenWidth, int _screenHeight )
@@ -147,8 +152,7 @@ namespace de
                 videoSettings.screenWidth = _screenWidth;
                 videoSettings.screenHeight = _screenHeight;
             }
-             context.create( videoSettings );
-
+            context.create( videoSettings );
             events::pushEvent( de::enums::events::OPENGL_RELOAD );
         }
 
@@ -222,5 +226,14 @@ namespace de
         {
             return shaderModule.unload( _shader );
         }
+
+
+		void Graphics::pushSettings( const std::string &_serialisedText )
+		{
+			luaL_dostring( luaState, _serialisedText.c_str() );
+            videoSettings = getSettings();
+            context.create( videoSettings );
+			events::pushEvent( de::enums::events::OPENGL_RELOAD );
+		}
     }
 }

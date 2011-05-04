@@ -12,7 +12,15 @@ namespace de
     {
         //If a varible is passed in for the framerate its stored here, otherwise it defaults to 60fde
         MainTimer::MainTimer( const float &_framesPerSecond ) :
-            startTime(0), pausedTime(0), currentTime(0), framesPerSecond(_framesPerSecond), paused(false), started(false)
+            startTime(0), 
+			pausedTime(0), 
+			currentTime(0), 
+			framesPerSecond(_framesPerSecond), 
+			timePerFrame(1000.0f / _framesPerSecond), 
+			deltaFrame(0), 
+			sinceLastFrame(0), 
+			paused(false), 
+			started(false)
         {
             SDL_Init( SDL_INIT_TIMER );
 
@@ -22,29 +30,28 @@ namespace de
         void MainTimer::start()
         {
             started = true;
-            paused = false;
             startTime = SDL_GetTicks();
         }
 
         void MainTimer::stop()
         {
-            started = false;
+            /*started = false;
             paused = false;
-            currentTime = 0;
+            currentTime = 0;*/
         }
 
         void MainTimer::pause()
-        {
+        {/*
             if( started && !paused )
             {
                 paused = true;
                 pausedTime = SDL_GetTicks() - startTime;
-            }
+            }*/
         }
 
         void MainTimer::unpause()
         {
-
+			/*
             //If the timer is paused
             if( paused == true )
             {
@@ -52,29 +59,22 @@ namespace de
                 paused = false;
 
                 //Reset the starting ticks
-                started = SDL_GetTicks() - pausedTime;
+                startTime = SDL_GetTicks() - pausedTime;
 
                 //Reset the paused ticks
                 pausedTime = 0;
-            }
+            }*/
         }
 
-        unsigned int& MainTimer::getTime()
+        float MainTimer::getTime()
         {
-            if( started == true )
-            {
-                if( paused == true )
-                {
-                    return pausedTime;
-                }
-                else
-                {
-                    currentTime = SDL_GetTicks() - startTime;
-                    return currentTime;
-                }
-            }
-            return currentTime;
+            return deltaFrame;
         }
+
+		float MainTimer::getFrameRate()
+		{
+			return (1000.0f/sinceLastFrame);
+		}
 
         bool MainTimer::is_started()
         {
@@ -88,15 +88,19 @@ namespace de
 
         void MainTimer::frame_cap()
         {
-            float timePerFrame( 1000.0f / framesPerSecond );
-            float sinceLastFrame = timer.stopstartAndSample() / 1000.0;
-            float delay = timePerFrame - sinceLastFrame;
+			timer.stop();
+            sinceLastFrame = timer.sample()/1000.0f;
+			if( sinceLastFrame < timePerFrame )
+			{
 
-            if( delay > 0.0 )
-            {
-                SDL_Delay( delay );
-            }
-
+				//SDL_Delay( delay );
+				Sleep( timePerFrame - sinceLastFrame );
+				deltaFrame = timePerFrame;
+			}
+			else
+			{
+				deltaFrame = sinceLastFrame;
+			}
             timer.start();
         }
     }

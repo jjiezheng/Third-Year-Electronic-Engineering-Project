@@ -5,8 +5,6 @@
 
 
 #include "CoreEngine.h"
-
-
 #include <iostream>
 #include <fstream>
 
@@ -22,7 +20,7 @@ namespace de
 				virtual ~Overlay();
 
 				bool handleEvents( const SDL_Event &_event );
-				bool logic( const Uint32 &_deltaticks, State* &_nextState, options &_options );
+				bool logic( const float &_deltaticks, State* &_nextState, options &_options );
 				void render();
 
 

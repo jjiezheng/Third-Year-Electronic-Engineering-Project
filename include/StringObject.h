@@ -35,6 +35,7 @@ class StringObject : public de::graphics::renderObject
 
 		
 		glm::vec3& align();
+		glm::vec2 getSize();
 
 		void reload();
         void render();
@@ -47,6 +48,7 @@ class StringObject : public de::graphics::renderObject
 		Object3D renderableText;
 		std::string textString, fontType, shaderType;
 		glm::vec3 halfLength;
+		glm::vec2 size;
 		bool refresh;
 };
 

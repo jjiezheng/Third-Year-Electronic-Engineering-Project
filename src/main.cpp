@@ -15,9 +15,6 @@
 int main( int argc, char* args[] )
 {
 	de::addLuaInterface( "API", &de::luaInterface::exportAPI );
-	de::addLuaInterface( "Ships", &Attrition::luaInterface::exportShips );
-
-
     Attrition::Game = new Attrition::DifferenceEngine;
     Attrition::Game->setNextState( new de::state::LuaState( "Bootstrap" ) );
 	//Attrition::Game->setNextState( new TestState() );

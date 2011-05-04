@@ -254,6 +254,11 @@ namespace de
 
         bool ShaderModule::load( lua_State* L, Shader &_shader, const std::string &_name, glslVersion::glslVersions _version )
         {
+			if( _name.empty() )
+			{
+				de::io::error << "no name given\n";
+				return false;
+			}
             std::string glsl = glToToken( _version );
             std::string name(  _name +  "." + glsl  );
 
@@ -268,11 +273,13 @@ namespace de
             if( !compileShader( vertexShaderName, vertexShaderText, vertexShader, GL_VERTEX_SHADER ) ||
                 !compileShader( vertexShaderName, fragmentShaderText, fragShader, GL_FRAGMENT_SHADER ) )
             {
+				de::io::error << "Can't compile vertex or fragment shader \"" << _name << "\" for glsl " << glsl << "\n";
                 return false;
             }
 
             if( !linkProgram( name, ShaderHandle, vertexShader, fragShader ) )
             {
+				de::io::error << "Can't link shader  \"" << _name << "\" for glsl " << glsl << "\n";
                 return false;
             }
 

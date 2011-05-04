@@ -1,7 +1,7 @@
 #ifndef LUASYSTEM_H
 #define LUASYSTEM_H
+#include "Base.h"
 
-#include "CoreEngine.h"
 namespace de
 {
     namespace luaInterface

@@ -1,7 +1,6 @@
 ------------ Vertex Shaders ------------
 
 oglVert = [[
-
 //
 // Atmospheric scattering vertex shader
 //
@@ -27,19 +26,15 @@ uniform float fScale;			// 1 / (fOuterRadius - fInnerRadius)
 uniform float fScaleDepth;		// The scale depth (i.e. the altitude at which the atmosphere's average density is found)
 uniform float fScaleOverScaleDepth;	// fScale / fScaleDepth
 
-uniform int nSamples;
-uniform float fSamples;
-
 uniform mat4 Model;
 uniform mat4 View;
 uniform mat4 Projection;
-
 
 in vec4 Position;
 out vec3 v3Direction;
 out vec4 Rayleigh;
 out vec4 Mie;
-
+out vec4 TestColor;
 
 float scale(float fCos)
 {
@@ -49,8 +44,13 @@ float scale(float fCos)
 
 void main(void)
 {
+	int nSamples = 2;
+	float fSamples = 2.0;
+
 	// Get the ray from the camera to the vertex and its length (which is the far point of the ray passing through the atmosphere)
 	vec3 v3Pos = Position.xyz;
+	v3Pos = (Model*vec4(Position.xyz, 1.0 )).xyz;
+
 	vec3 v3Ray = v3Pos - v3CameraPos;
 	float fFar = length(v3Ray);
 	v3Ray /= fFar;
@@ -68,9 +68,14 @@ void main(void)
 	float fStartDepth = exp(-1.0 / fScaleDepth);
 	float fStartOffset = fStartDepth*scale(fStartAngle);
 
+
+
 	// Initialize the scattering loop variables
 	//gl_FrontColor = vec4(0.0, 0.0, 0.0, 0.0);
 	float fSampleLength = fFar / fSamples;
+
+	TestColor = vec4( fFar);
+
 	float fScaledLength = fSampleLength * fScale;
 	vec3 v3SampleRay = v3Ray * fSampleLength;
 	vec3 v3SamplePoint = v3Start + v3SampleRay * 0.5;
@@ -131,6 +136,7 @@ uniform float g2;
 in vec3 v3Direction;
 in vec4 Rayleigh;
 in vec4 Mie;
+in vec4 TestColor;
 
 out vec4 FragColor;
 
@@ -140,12 +146,9 @@ void main (void)
 	float RayleighPhase = 0.75 * (1.0 + Cos*Cos);
 	float MiePhase = 1.5 * ((1.0 - g2) / (2.0 + g2)) * (1.0 + Cos*Cos) / pow(1.0 + g2 - 2.0*g*Cos, 1.5);
 
-    FragColor = RayleighPhase*Rayleigh + MiePhase*MiePhase;
-	FragColor.a = 1.0;
+    //FragColor = RayleighPhase*Rayleigh + MiePhase*Mie;
+    FragColor = TestColor;
 }
-
-
-
 ]]
 
 

@@ -62,6 +62,11 @@ glm::vec3& StringObject::align()
 {
 	return halfLength;
 }
+glm::vec2 StringObject::getSize()
+{
+	return size;
+}
+
 
 void StringObject::rebuild()
 {
@@ -82,9 +87,9 @@ void StringObject::rebuild()
 	min.y = tempVerts[0].g;
 	min.z = tempVerts[0].b;
 
-	min.x = tempVerts[0].r;
-	min.y = tempVerts[0].g;
-	min.z = tempVerts[0].b;
+	max.x = tempVerts[0].r;
+	max.y = tempVerts[0].g;
+	max.z = tempVerts[0].b;
 
 	int i(0);
 	for( i;i!=tempVerts.size();++i )
@@ -99,6 +104,7 @@ void StringObject::rebuild()
 	}
 
 	halfLength = (min-max)/2.0f - min;
+	size = glm::vec2(max.x-min.x,max.y-min.y);
 	for( i = 0;i!=tempVerts.size();++i )
 	{
 		tempVerts[i].r = tempVerts[i].r + halfLength.x;

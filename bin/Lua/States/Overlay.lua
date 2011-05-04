@@ -18,8 +18,7 @@ end
 
 function Overlay.Start(self)
 
-	self.hint = makeString( "PRESS CTRL + TAB FOR OVERLAY", "UnsteadySmall" ,510.0, 375.0, "centre" )
-	self.preAlpha = makeString( "ATTRITION - PRE ALPHA", "UnsteadySmall" ,510.0, 375.0, "centre" )
+	self.preAlpha = makeString( "attrition - pre alpha", "Circle" ,510.0, 375.0, "centre" )
 	self.title = makeString( "overlay", "visitor" ,510.0, 375.0, "centre" )
 
 	self.theTime = makeString( "Caturday", "visitor" ,510.0, 375.0, "left" )
@@ -113,11 +112,8 @@ function Overlay.Logic(self, _deltaTime)
 
 	local Z = self.ToggleUI(self.showCounters, _deltaTime)
 
-	self.hint.pos = vec3(0, 375, Z)
-	UpdateText( self.hint, "PRESS CTRL + TAB FOR OVERLAY" )
-
 	self.preAlpha.pos = vec3(0.0, -375.0, Z)
-	UpdateText( self.preAlpha, "ATTRITION - PRE ALPHA" )
+	UpdateText( self.preAlpha, "attrition - pre alpha" )
 
 	self.title.pos = vec3( 0, 375.0, Z)
 	UpdateText( self.title, "overlay" )
@@ -158,9 +154,6 @@ function Overlay.Reload(self)
 
 	self.preAlpha:reload()
 	self.title:reload()
-
-	self.hint:reload()
-	--self.fade:reload()
 end
 
 function Overlay.ToggleActive(self)

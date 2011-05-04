@@ -29,7 +29,8 @@ namespace de
                     void frame_cap();
 
                     //! Returns how much time has passed since the last frame.
-                    unsigned int& getTime();
+                    float getTime();
+					float getFrameRate();
 
                     //! Returns true if the Timer is started
                     bool is_started();
@@ -42,7 +43,7 @@ namespace de
                     unsigned int startTime;
                     unsigned int pausedTime;
                     unsigned int currentTime;
-                    float framesPerSecond;
+                    float framesPerSecond, sinceLastFrame, timePerFrame, deltaFrame;
                     bool paused;
                     bool started;
         };

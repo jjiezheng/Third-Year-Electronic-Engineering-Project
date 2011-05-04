@@ -17,9 +17,9 @@ namespace de
     namespace sys
     {
         void getFrameDetails( graphics::frameDetails _frameDetails );
-        void getTime( const int &_delta );
+        void getFrameRate( const float &_delta );
 
-        const float& FrameRate();
+        const int& FrameRate();
         void Resolution( int &_screenWidth, int &_screenHeight );
 
         std::string getFrameRate();

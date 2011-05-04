@@ -42,6 +42,8 @@ namespace de
                     return filetypes::LWO;
                 else if( (*iter) == "obj" )
                     return filetypes::OBJ;
+				else if( (*iter) == "fnt" )
+                    return filetypes::FONT;
             }
             return filetypes::NONE;
         }

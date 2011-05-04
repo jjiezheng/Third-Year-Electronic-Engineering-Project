@@ -52,8 +52,13 @@ namespace de
             half.x = _width/2.0f;
             half.y = _height/2.0f;
             centre = glm::vec2(0.0f);
+			z = 0;
         }
 
+		void OBB::setZ( const float &_z )
+		{
+			z = _z;
+		}
         void OBB::transform( const glm::vec2 &_position )
         {
             centre += _position;
@@ -122,5 +127,43 @@ namespace de
             // Must be overlapping
             return true;
         }
+
+		// Test if segment specified by points p0 and p1 intersects AABB b
+		bool TestOOBRay(const OBB &_obb, const glm::vec3 &_p0, const glm::vec3 &_p1) 
+		{
+			float EPSILON = 0.0000001f;
+
+			glm::vec3 c(_obb.centre.x, _obb.centre.y, _obb.z); // Box center-point
+
+			glm::vec3 e(_obb.half.x,_obb.half.y, 0.1 ); // Box halflength extents
+			glm::vec3 m = (_p0 + _p1) * 0.5f; // Segment midpoint
+			glm::vec3 d = _p1 - m; // Segment halflength vector
+			m = m - c; // Translate box and segment to origin
+
+			// Try world coordinate axes as separating axes
+			float adx = glm::abs(d.x);
+			if (Abs(m.x) > e.x + adx) 
+				return false;
+
+			float ady = glm::abs(d.y);
+			if (Abs(m.y) > e.y + ady) 
+				return false;
+
+			float adz = glm::abs(d.z);
+			if (Abs(m.z) > e.z + adz) 
+				return false;
+
+			// Add in an epsilon term to counteract arithmetic errors when segment is
+			// (near) parallel to a coordinate axis (see text for detail)
+			adx += EPSILON; 
+			ady += EPSILON; 
+			adz += EPSILON;
+			// Try cross products of segment direction vector with coordinate axes
+			if (glm::abs(m.y * d.z - m.z * d.y) > e.y * adz + e.z * ady) return 0;
+			if (glm::abs(m.z * d.x - m.x * d.z) > e.x * adz + e.z * adx) return 0;
+			if (glm::abs(m.x * d.y - m.y * d.x) > e.x * ady + e.y * adx) return 0;
+			// No separating axis found; segment must be overlapping AABB
+			return true;
+		}
     }
 }

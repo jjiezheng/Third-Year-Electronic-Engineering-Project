@@ -8,18 +8,6 @@ namespace de
 {
     namespace resources
     {
-        de::classes::Poly NullResources::getSprite( const std::string &_name )
-        {
-            static de::classes::Poly sprite;
-            return sprite;
-        }
-
-        const std::vector<de::classes::Poly>& NullResources::getSprites( const std::vector<std::string> &_names )
-        {
-            static std::vector<de::classes::Poly> sprites;
-            return sprites;
-        }
-
         de::classes::Frect NullResources::getSpriteCoords( const std::string &_name, bool tex )
         {
             static de::classes::Frect frect;

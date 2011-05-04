@@ -22,7 +22,7 @@ namespace de
 				virtual ~RenderStressTest2D();
 
 				bool handleEvents( const SDL_Event &_event );
-				bool logic( const Uint32 &_deltaTicks, State* &_nextState, options &_options );
+				bool logic( const float &_deltaTicks, State* &_nextState, options &_options );
 
 				void render();
 

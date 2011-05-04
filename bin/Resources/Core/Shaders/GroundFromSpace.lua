@@ -4,7 +4,7 @@ oglVert = [[
 //
 // Atmospheric scattering vertex shader
 //
-// Author: Sean O'Neil
+// Author: Sean O'Neil - Edited by Daniel Hartnett
 //
 // Copyright (c) 2004 Sean O'Neil
 //
@@ -26,14 +26,14 @@ uniform float fScale;			// 1 / (fOuterRadius - fInnerRadius)
 uniform float fScaleDepth;		// The scale depth (i.e. the altitude at which the atmosphere's average density is found)
 uniform float fScaleOverScaleDepth;	// fScale / fScaleDepth
 
-uniform int nSamples = 4;
-uniform float fSamples = 4.0;
-
 uniform mat4 Model;
 uniform mat4 View;
 uniform mat4 Projection;
+uniform mat4 Lighting;
 
 in vec4 Position;
+in vec2 UV_0;
+out vec2 TexCoord;
 out vec4 FirstColor;
 out vec4 SecondColor;
 
@@ -45,24 +45,32 @@ float scale(float fCos)
 
 void main(void)
 {
+	int nSamples = 4;
+	float fSamples = 4.0;
+
 	// Get the ray from the camera to the vertex and its length (which is the far point of the ray passing through the atmosphere)
+	vec3 camPos = v3CameraPos;
 	vec3 v3Pos = Position.xyz;
-	vec3 v3Ray = v3Pos - v3CameraPos;
+	vec3 v3light = v3LightPos;
+	v3Pos = (Model*vec4(Position.xyz, 1.0 )).xyz;
+
+	vec3 v3Ray = v3Pos - camPos;
 	float fFar = length(v3Ray);
 	v3Ray /= fFar;
 
 	// Calculate the closest intersection of the ray with the outer atmosphere (which is the near point of the ray passing through the atmosphere)
-	float B = 2.0 * dot(v3CameraPos, v3Ray);
+	float B = 2.0 * dot(camPos, v3Ray);
 	float C = fCameraHeight2 - fOuterRadius2;
 	float fDet = max(0.0, B*B - 4.0 * C);
 	float fNear = 0.5 * (-B - sqrt(fDet));
 
 	// Calculate the ray's starting position, then calculate its scattering offset
-	vec3 v3Start = v3CameraPos + v3Ray * fNear;
+	vec3 v3Start = camPos + v3Ray * fNear;
 	fFar -= fNear;
+
 	float fDepth = exp((fInnerRadius - fOuterRadius) / fScaleDepth);
 	float fCameraAngle = dot(-v3Ray, v3Pos) / length(v3Pos);
-	float fLightAngle = dot(v3LightPos, v3Pos) / length(v3Pos);
+	float fLightAngle = dot(v3light, v3Pos) / length(v3Pos);
 	float fCameraScale = scale(fCameraAngle);
 	float fLightScale = scale(fLightAngle);
 	float fCameraOffset = fDepth*fCameraScale;
@@ -77,7 +85,7 @@ void main(void)
 	// Now loop through the sample rays
 	vec3 v3FrontColor = vec3(0.0, 0.0, 0.0);
 	vec3 v3Attenuate;
-	for(int i=0; i<nSamples; i++)
+	for(int i=0; i<nSamples;i++)
 	{
 		float fHeight = length(v3SamplePoint);
 		float fDepth = exp(fScaleOverScaleDepth * (fInnerRadius - fHeight));
@@ -88,13 +96,10 @@ void main(void)
 	}
 
 	FirstColor.rgb = v3FrontColor * (v3InvWavelength * fKrESun + fKmESun);
-
-	// Calculate the attenuation factor for the ground
 	SecondColor.rgb = v3Attenuate;
 
 	gl_Position = Projection*View*Model*Position;
-	//gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
-	//gl_TexCoord[1] = gl_TextureMatrix[1] * gl_MultiTexCoord1;
+	TexCoord = UV_0;
 }
 
 
@@ -121,25 +126,24 @@ oglFrag = [[
 //
 // Atmospheric scattering fragment shader
 //
-// Author: Sean O'Neil
+// Author: Sean O'Neil - Edited by Daniel Hartnett
 //
 // Copyright (c) 2004 Sean O'Neil
 //
 
-//uniform sampler2D s2Tex1;
-//uniform sampler2D s2Tex2;
+uniform sampler2D Texture0;
+uniform sampler2D Texture1;
 
 in vec4 FirstColor;
 in vec4 SecondColor;
-
+in vec2 TexCoord;
 out vec4 FragColor;
 
 void main (void)
 {
-	//FragColor = vec4(1.0,1.0,0.0,1.0 );
-	FragColor = FirstColor + 0.25*SecondColor;
-	//gl_FragColor = gl_Color + texture2D(s2Tex1, gl_TexCoord[0].st) * texture2D(s2Tex2, gl_TexCoord[1].st) * gl_SecondaryColor;
-	FragColor.a = 1.0;
+	vec4 mapNight = texture2D( Texture0, TexCoord );
+	vec4 map = texture2D( Texture1, TexCoord );
+	FragColor = FirstColor +  0.30*SecondColor*map + 0.50*(1.0-SecondColor.r)*mapNight*mapNight;
 }
 
 

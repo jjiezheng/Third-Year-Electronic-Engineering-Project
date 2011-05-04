@@ -1,4 +1,5 @@
 #include "pixelstorm.h"
+#include "Font.h"
 
 #include "Monitor.h"
 
@@ -35,11 +36,11 @@ namespace Attrition
         exit(false)
     {
         initBase();
-
+		deltaLog.open ("../deltaTimes.csv");
+		deltaLog << "Delta\n";
         if( !failBit )
         {
             Roots = new Root();
-            //Settings::Init();
 
             de::Engine::Register( new SDLSound() );
             de::Engine::Register( new Graphics() );
@@ -47,16 +48,13 @@ namespace Attrition
             de::Engine::Register( new ResourceManager( de::Engine::Graphics().getVideoSettings() ) );
 			de::Engine::Register( new FontManager() );
 
-            de::Engine::Resources().load( SHADERS | TEXTURES | MESHES | MUSIC | SOUNDEFFECTS );
-
-
-            //Attrition::shipManager.parseShips();
-            //Attrition::particleManager.parseParticles();
-            //Attrition::bulletManager.parseBullets();
+            de::Engine::Resources().load( SHADERS | 
+										  TEXTURES | 
+										  MESHES | 
+										  MUSIC | 
+										  SOUNDEFFECTS );
 
             overlay = new de::state::Overlay;
-
-            SDL_WM_SetCaption( "Difference Engine", NULL );
         }
     }
 
@@ -73,6 +71,7 @@ namespace Attrition
         delete currentState;
         de::Engine::clear();
 
+		deltaLog.close();
         de::io::log << "Closing SDL... ";
         SDL_Quit();
         de::io::log << "Done\n";
@@ -94,6 +93,7 @@ namespace Attrition
 
             SDL_EnableUNICODE(SDL_ENABLE);
             SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+			SDL_WM_SetCaption( "Difference Engine", NULL );
 
             //SDL_JoystickOpen( 0 );
             for( int i(0); i < SDL_NumJoysticks(); ++i )
@@ -122,7 +122,7 @@ namespace Attrition
                 delete currentState;
                 currentState = nextState;
                 nextState = NULL;
-                de::Engine::Audio().stopMusic();
+                //de::Engine::Audio().stopMusic();
             }
         }
     }
@@ -137,14 +137,15 @@ namespace Attrition
     {
         if( !exit )
         {
+			//Delta.start();
             handleEvents();
             logic();
             render();
 
-            Delta.frame_cap();
             overlay->graph( perfTimer.stopstartAndSample()/*, GRAPH_MAIN_IDLETIME*/ );
             overlay->endOfFrame();
 
+			Delta.frame_cap();
             changeState();
         }
     }
@@ -195,9 +196,10 @@ namespace Attrition
 
             if( keystate[SDLK_LALT] && ( keystate[SDLK_RETURN] || keystate[SDLK_KP_ENTER] )  )
             {
+				
+				bool fullscreen = de::Engine::Graphics().getVideoSettings().fullScreen;
                 de::Engine::Resources().free( TEXTURES | SHADERS | MESHES );
-                de::Engine::Graphics().toggleFullscreen();
-                de::Engine::Resources().load( TEXTURES | SHADERS );
+                de::Engine::Graphics().fullscreen( !fullscreen );
             }
 
             if( keystate[SDLK_LALT] && ( keystate[SDLK_RETURN] || keystate[SDLK_BACKSPACE] )  )
@@ -205,18 +207,18 @@ namespace Attrition
                 de::Engine::Resources().free( SHADERS | TEXTURES | MESHES | MUSIC | SOUNDEFFECTS );
 
                 de::Engine::clear();
+				de::Engine::Register( new SDLSound() );
+				de::Engine::Register( new Graphics() );
+				de::Engine::Register( new de::haptics::OpenHaptics() );
+				de::Engine::Register( new ResourceManager( de::Engine::Graphics().getVideoSettings() ) );
+				de::Engine::Register( new FontManager() );
 
-                de::Engine::Register( new SDLSound() );
-                de::Engine::Register( new Graphics() );
-                de::Engine::Register( new de::haptics::OpenHaptics() );
-                de::Engine::Register( new ResourceManager( de::Engine::Graphics().getVideoSettings() ) );
-
-                de::Engine::Resources().load( SHADERS | TEXTURES | MESHES | MUSIC | SOUNDEFFECTS );
-
+				de::Engine::Resources().load( MUSIC | SOUNDEFFECTS );
                 de::events::pushEvent( de::enums::events::OPENGL_RELOAD );
             }
         }
-        if( _event.type == SDL_VIDEORESIZE )
+
+        else if( _event.type == SDL_VIDEORESIZE )
         {
             int screenWidth(0), screenHeight(0);
 
@@ -236,9 +238,16 @@ namespace Attrition
                 de::Engine::Resources().free( TEXTURES | MESHES | SHADERS );
                 de::Engine::Graphics().resize( screenWidth, screenHeight );
             }
-
-            de::Engine::Resources().load( TEXTURES | MESHES | SHADERS );
         }
+
+		else if( _event.type == SDL_USEREVENT )
+		{
+			if( _event.user.code == de::enums::events::OPENGL_RELOAD )
+			{
+				de::Engine::Resources().load( TEXTURES | SHADERS | MESHES );
+				de::Engine::Fonts().reload();
+			}
+		}
     }
 
     void DifferenceEngine::logic()
@@ -248,9 +257,9 @@ namespace Attrition
             currentState->logic( Delta.getTime(), nextState, Option );
         }
 
-        de::sys::getTime( Delta.getTime() );
-        Delta.start();
+        de::sys::getFrameRate( Delta.getFrameRate() );
 
+		deltaLog << Delta.getTime() << "\n";
         overlay->graph( perfTimer.stopstartAndSample()/*, GRAPH_MAIN_LOGIC*/ );
     }
 

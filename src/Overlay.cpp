@@ -55,7 +55,7 @@ namespace de
 			return !active;
 		}
 
-		bool Overlay::logic( const Uint32 &_deltaticks, State* &_nextState, options &_options )
+		bool Overlay::logic( const float &_deltaticks, State* &_nextState, options &_options )
 		{
 			state->logic( _deltaticks, _nextState, _options );
 

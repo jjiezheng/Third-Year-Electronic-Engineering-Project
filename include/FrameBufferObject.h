@@ -21,7 +21,7 @@ namespace de
                 void freeAll();
 
                 //! Testing work-around for ATI cards.
-                de::classes::Sprite sprite;
+                //de::classes::Sprite sprite;
                 //! The Texture that will be the render target.
                 Uint32 image, depthTex;
                 //! Handle to the actual Frame buffer object.
@@ -55,7 +55,7 @@ namespace de
                 //! Virtual function to be derived by inheriting classes
                 virtual void activate( const VideoInfo &_videoSettings ) = 0;
                 //! Virtual function to be derived by inheriting classes
-                virtual de::classes::Sprite render( const VideoInfo &_videoSettings ) = 0;
+                //virtual de::classes::Sprite render( const VideoInfo &_videoSettings ) = 0;
                 //! Handles input
                 virtual void handleEvent( const SDL_Event &_event ) = 0;
                 //! Virtual function to be derived by inheriting classes
@@ -64,7 +64,7 @@ namespace de
 
             protected:
                 //! Testing work-around for ATI cards.
-                de::classes::Sprite sprite;
+                //de::classes::Sprite sprite;
                 //! Buffers used for rendering "image"
                 Uint32 vertexBuffer, colourBuffer, textureBuffer, elementBuffer;
                 //! Class that contains the handle to the Frame buffer object
@@ -101,7 +101,7 @@ namespace de
                 //! Handles input
                 void handleEvent( const SDL_Event &_event );
                 //! Renders the Texture "image" to the current render target. Can't render to itself.
-                de::classes::Sprite render( const VideoInfo &_videoSettings );
+                //de::classes::Sprite render( const VideoInfo &_videoSettings );
 
             private:
 
@@ -125,7 +125,7 @@ namespace de
                 //! Handles input
                 void handleEvent( const SDL_Event &_event );
                 //! Renders the Texture "image" to the current render target. Can't render to itself.
-                de::classes::Sprite render( const VideoInfo &_videoSettings );
+                //de::classes::Sprite render( const VideoInfo &_videoSettings );
 
             private:
 
@@ -152,7 +152,7 @@ namespace de
                 //! Handles input
                 void handleEvent( const SDL_Event &_event );
                 //! Renders the Texture "image" to the current render target. Can't render to itself.
-                de::classes::Sprite render( const VideoInfo &_videoSettings );
+                //de::classes::Sprite render( const VideoInfo &_videoSettings );
 
 
 

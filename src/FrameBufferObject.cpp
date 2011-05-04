@@ -168,23 +168,23 @@ namespace de
 
             de::io::error << "rofl";
             setupBuffers( _width, _height );
-
+			/*
             sprite.priority = 2;
             sprite.setTexture( fbo.image );
             sprite.coords.Setup( _width, _height, false );
             sprite.texCoords.Setup( 1, 1 );
-            sprite.texCoords.flip( true );
+            sprite.texCoords.flip( true );*/
         }
 
         void FrameBufferObject::handleEvent( const SDL_Event &_event )
         {
         }
-
+		/*
         Sprite FrameBufferObject::render( const VideoInfo &_videoSettings )
         {
             return sprite;
         }
-
+		*/
 
 
         void FboGame::activate( const VideoInfo &_videoSettings )
@@ -232,22 +232,22 @@ namespace de
             rect.y = 400;
             rect.w = 600;
             rect.h = 800;
-
+			/*
             sprite.priority = 3;
             sprite.setTexture( fbo.image );
             sprite.coords.Setup( rect, 0 );
             sprite.texCoords.Setup( 1, 1 );
-            sprite.texCoords.flip( true );
+            sprite.texCoords.flip( true );*/
         }
 
         void FboGame::handleEvent( const SDL_Event &_event )
         {
         }
-
+		/*
         Sprite FboGame::render( const VideoInfo &_videoSettings )
         {
             return sprite;
-        }
+        }*/
 
 
 
@@ -319,24 +319,24 @@ namespace de
         void FboUI::handleEvent( const SDL_Event &_event )
         {
         }
-
+		/*
         Sprite FboUI::render( const VideoInfo &_videoSettings )
-        {/*
+        {
             CHECKGL( glBindFramebuffer( GL_FRAMEBUFFER, fbo2.fboHandle ) );
             localRender( fbo, _videoSettings );
 
             CHECKGL( glBindFramebuffer( GL_FRAMEBUFFER, 0 ) );
-            localRender( fbo2, _videoSettings );*/
+            localRender( fbo2, _videoSettings );
 
             CHECKGL( glBindFramebuffer( GL_FRAMEBUFFER, 0 ) );
             localRender( fbo, _videoSettings );
-/*
+
             CHECKGL( glBindFramebuffer( GL_FRAMEBUFFER, 0 ) );
-            localRender( fbo2, _videoSettings );*/
+            localRender( fbo2, _videoSettings );
 
             return sprite;
-        }
-
+        }*/
+		/*
         void FboUI::localRender( FBO &_fbo, const VideoInfo &_videoSettings )
         {
             _fbo.shader.setUniform( "width", width );
@@ -357,21 +357,21 @@ namespace de
             CHECKGL( glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer ) );
 
             CHECKGL( glVertexAttribPointer(
-                _fbo.shader.getAttribute( "position" ),    /* attribute */
-                2,                      /* size */
-                GL_FLOAT,               /* type */
-                GL_FALSE,               /* normalized? */
-                sizeof(GLfloat)*2,      /* stride */
-                (void*)0                /* array buffer offset */
+                _fbo.shader.getAttribute( "position" ),    /* attribute 
+                2,                      // size
+                GL_FLOAT,               // type 
+                GL_FALSE,               // normalized? 
+                sizeof(GLfloat)*2,      // stride 
+                (void*)0                // array buffer offset 
             ) );
             CHECKGL( glEnableVertexAttribArray( _fbo.shader.getAttribute( "position" ) ) );
 
             CHECKGL( glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, elementBuffer ) );
             CHECKGL( glDrawElements(
-                GL_TRIANGLE_STRIP,  /* mode */
-                4,                  /* count */
-                GL_UNSIGNED_INT,    /* type */
-                (void*)0            /* element array buffer offset */
+                GL_TRIANGLE_STRIP,  // mode 
+                4,                  // count 
+                GL_UNSIGNED_INT,    // type 
+                (void*)0            // element array buffer offset 
             ) );
 
             CHECKGL( glDisableVertexAttribArray( _fbo.shader.getAttribute( "position" ) ) );
@@ -385,6 +385,6 @@ namespace de
             CHECKGL( glDisableClientState( GL_VERTEX_ARRAY ) );
             CHECKGL( glDisableClientState( GL_TEXTURE_COORD_ARRAY ) );
         }
-
+		*/
     }
 }

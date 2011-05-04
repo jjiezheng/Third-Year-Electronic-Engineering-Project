@@ -2,9 +2,14 @@
 #include "GameServices.h"
 #include "openGL.h"
 
-modelObject::modelObject() : usingTexture(false), writingToDepth(false), depthTest(false), alphaTest(false), blending(false), active(false), type(GL_TRIANGLES)
+modelObject::modelObject() : refresh(false), usingTexture(false), writingToDepth(false), depthTest(false), alphaTest(false), blending(false), active(false), type(GL_TRIANGLES)
 {
-
+	bindTexture.push_back( GL_TEXTURE0 );
+	bindTexture.push_back( GL_TEXTURE1 );
+	bindTexture.push_back( GL_TEXTURE2 );
+	bindTexture.push_back( GL_TEXTURE3 );
+	bindTexture.push_back( GL_TEXTURE4 );
+	bindTexture.push_back( GL_TEXTURE5 );
 }
 modelObject::~modelObject()
 {
@@ -31,6 +36,11 @@ modelObject& modelObject::blend( bool _blend )
 	blending = _blend;
 	return *this;
 }
+modelObject& modelObject::ccw( bool _ccw )
+{
+	frontFaceCCW = _ccw;
+	return *this;
+}
 
 modelObject& modelObject::setType( const std::string &_type )
 {
@@ -42,15 +52,19 @@ modelObject& modelObject::setType( const std::string &_type )
         type = GL_POINT;
     else if( _type == "Points" )
         type = GL_POINTS;
+    else if( _type == "Line" )
+        type = GL_LINE;
+    else if( _type == "Lines" )
+        type = GL_LINES;
 
 	return *this;
 }
 
-modelObject& modelObject::setTexture( const std::string &_texture, const std::string &_value )
+modelObject& modelObject::setTexture( const std::string &_texture, const std::string &_value, int texNumber )
 {
-	textureName = _value;
-	texture = de::Engine::Resources().getTexture(_value);
-	shader.setUniform( _texture, 0 );
+	shader.setUniform( _texture, texNumber );
+	textures[_texture] = texPair( _value, de::Engine::Resources().getTexture(_value) );
+
 	usingTexture = true;
 
 	return *this;
@@ -60,6 +74,10 @@ modelObject& modelObject::load( const std::string &_mesh, const std::string &_sh
 	meshName = _mesh;
 	shaderName = _shader;
 
+	return loadMesh();
+}
+modelObject& modelObject::loadMesh()
+{
 	vbo = de::Engine::Resources().getMesh( meshName );
     shader = de::Engine::Resources().getShader( shaderName );
     AttributeNames = shader.getAttributeNames();
@@ -81,9 +99,9 @@ modelObject& modelObject::load( const std::string &_mesh, const std::string &_sh
 	return *this;
 }
 
-
 void modelObject::reload()
 {
+	refresh = true;
 
 }
 void modelObject::render()
@@ -93,14 +111,29 @@ void modelObject::render()
 
 void modelObject::actualRender()
 {
+	if( refresh)
+	{
+		refresh = false;
+		loadMesh();
+	}
+
 	if( active )
 	{
 
 		if( usingTexture )
 		{
 			CHECKGL( glEnable( GL_TEXTURE_2D ) );
-			CHECKGL( glActiveTexture( GL_TEXTURE0 ) );
-			CHECKGL( glBindTexture( GL_TEXTURE_2D, texture ) );
+
+			std::map<std::string, texPair>::iterator textureIter = textures.begin(), end = textures.end();
+			std::vector<int>::iterator bindIter = bindTexture.begin(), bindEnd = bindTexture.end();
+
+			for( textureIter; textureIter != end && bindIter!=bindEnd; ++textureIter, ++bindIter )
+			{
+				CHECKGL( glActiveTexture( (*bindIter) ) );
+				CHECKGL( glBindTexture( GL_TEXTURE_2D, textureIter->second.texture ) );
+
+				//de::io::tests << "Binding texture: " << textureIter->second.textureName << " : " << textureIter->first << " : " << textureIter->second.texture << "\n";
+			}			
 		}
 		else
 			CHECKGL( glDisable( GL_TEXTURE_2D ) );
@@ -129,6 +162,13 @@ void modelObject::actualRender()
 		}
 		else CHECKGL( glDisable( GL_BLEND ) );
 
+		if( frontFaceCCW ) 
+		{
+			CHECKGL( glFrontFace(GL_CCW) );
+		}
+		else CHECKGL(glFrontFace(GL_CW) );
+
+						
 
 		shader.bindShader();
 		CHECKGL( glBindBuffer( GL_ARRAY_BUFFER, vbo.vertexBuffer ) );
@@ -168,6 +208,7 @@ void modelObject::actualRender()
 				GL_UNSIGNED_INT,    // type
 				(void*)0            // element array buffer offset
 			) );
+
 			
 		for( iterNames = AttributeNames.begin(); iterNames != AttributeNames.end(); ++iterNames )
 		{

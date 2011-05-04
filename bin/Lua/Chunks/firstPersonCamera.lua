@@ -13,7 +13,7 @@ function firstPersonCamera()
 
 
 	camera.translationVector = vec3( 0.0 )
-	camera.currentPosition = vec3( 0.0, 0.0, -10.0 )
+	camera.currentPosition = vec3( 0.0, 0.0, 0.0 )
 	camera.mouseVector = vec3( 0.0 )
 
 
