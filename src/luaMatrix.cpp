@@ -105,6 +105,12 @@ namespace de
                 luabind::def( "length", (float(*)( const glm::vec3&)) &::glm::length ),
                 luabind::def( "length", (float(*)( const glm::vec4&)) &::glm::length ),
 
+                luabind::def( "cross", (glm::vec3(*)( const glm::vec3&,const glm::vec3&)) &::glm::cross ),
+
+				luabind::def( "dot", (float(*)( const glm::vec2&,const glm::vec2&)) &::glm::dot ),
+                luabind::def( "dot", (float(*)( const glm::vec3&,const glm::vec3&)) &::glm::dot ),
+                luabind::def( "dot", (float(*)( const glm::vec4&,const glm::vec4&)) &::glm::dot ),
+
                 luabind::def( "mix", (float(*)( const float&,const float&,const float&)) &::glm::mix ),
                 luabind::def( "mix", (glm::vec3(*)( const glm::vec3&,const glm::vec3&,const float&)) &::glm::mix ),
                 luabind::def( "mix", (glm::vec4(*)( const glm::vec4&,const glm::vec4&,const float&)) &::glm::mix ),

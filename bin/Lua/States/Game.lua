@@ -174,6 +174,14 @@ end
 
 
 
+
+
+
+
+
+
+
+
 function mouse_ray(mouse_position)
 	local w, h = 1240, 775
 	local ray_start =  unProject( mouse_position, 
@@ -311,11 +319,6 @@ function make_text_entry(_x, _y, _pos)
 		end
 
 		UpdateText( text, text.lua_string )
---[[
-		if finished then
-			return { done=finished, text=text.lua_string}
-		end
-		return { done=finished, text=text.lua_string}--]]
 	end
 
 	function text_box.render()
@@ -523,6 +526,10 @@ end
 
 
 
+
+
+
+
 enemys = {}
 enemys.ships = {}
 function enemys.add( new_enemy )
@@ -626,18 +633,6 @@ function create_bullet(_x,_y,_pos)
 		 end
 	}
 end
-
-
-
-
-
-
-
-
-
-
-
-
 
 bullets = {}
 bullets.player_bullets = {}

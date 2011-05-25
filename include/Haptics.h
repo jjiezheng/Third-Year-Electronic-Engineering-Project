@@ -21,6 +21,7 @@ namespace de
 						 const double &_gain, 
 						 const double &_magnitude );
 		void stopEffect( const int &_effect );
+		void stopAllEffects();
 
 		glm::vec3 getProxy();
 		glm::mat4 getProxyTransform();

@@ -8,6 +8,7 @@ Presentation = {}
 ----------------------------------------------------------------------
 function Presentation.Start( self )
 
+	sys.title( "Christmas Presentation" )
 	loadResources( "Presentation" )
 	self.Projection = perspective( 65.0, 16.0/10.0, 0.1, 1000.0 )
 	self.Slides = makeSlides( {
@@ -184,17 +185,19 @@ function makeSlides( _slideNames, _initalVector, _diffVector, _makeExtra)
 
 	for i, v in ipairs(_slideNames) do
 
-		local vector = _initalVector + _diffVector*(i-1) + vec3(0,0,0.01)
+		local vector = _initalVector + _diffVector*(i-1) + vec3(0,0,0.02)
 		localSlides[i] = mesh()
+		localSlides[i]:writeToDepth( true):depth(true)
 		localSlides[i]:shader("TexturedVbo"):vert_type("TriangleStrip")
-		localSlides[i]:add("Position",slideVertBuff,slideElemBuff):add("Tex",slideTexBuff)
+		localSlides[i]:add("Position",slideVertBuff,slideElemBuff):add("UV_0",slideTexBuff)
 
 		localSlides[i]:uniform( "Model",translate( mat4(1.0),vector) ):uniform( "View",localSlides.view )
 		localSlides[i]:uniform("Projection",_projection)
-		localSlides[i]:uniform("Texture0",v)
+		localSlides[i]:texture("Texture0",v)
 
 		if _makeExtra then
 			localSlides[n+i] = mesh()
+			localSlides[n+i]:writeToDepth( true):depth(true)
 			localSlides[n+i].Model = translate( mat4(1.0), _diffVector*(i-1) + vec3(0,0,-4.5) )
 
 			localSlides[n+i]:shader("vbo"):vert_type("TriangleStrip")
@@ -225,13 +228,13 @@ function makeSlides( _slideNames, _initalVector, _diffVector, _makeExtra)
 		localSlides[C]:uniform("Colour",vec3(1, 1, 0) )
 
 
-		localSlides.ex2 = Sprite()
+		--[[localSlides.ex2 = Sprite()
 		localSlides.ex2:setTexture( "ships","Basic" )
 		localSlides.ex2:setTexCoords( "ships.Dasein1" )
 
 		localSlides.ex2:setPriority( 16 )
 		localSlides.ex2:setCoords( Poly( 200,200,true ) )
-		localSlides.ex2:transform( Vector(640,400), 0, true )
+		localSlides.ex2:transform( Vector(640,400), 0, true )--]]
 	end
 
 	-------------------------------------------------------------
@@ -295,12 +298,12 @@ function makeSlides( _slideNames, _initalVector, _diffVector, _makeExtra)
 
 			if self.changeShader then
 				self.changeShader = false
-
+--[[
 				if self.slideNum == 8 then
 					localSlides.ex2:setTexture( "ships","Basic" )
 				elseif self.slideNum == 9 then
 					localSlides.ex2:setTexture( "ships","Convol" )
-				end
+				end--]]
 			end
 		end
 	end
@@ -314,7 +317,7 @@ function makeSlides( _slideNames, _initalVector, _diffVector, _makeExtra)
 		end
 
 		if self.slideNum == 8 or self.slideNum == 9 then
-			self.ex2:render(3)
+			--self.ex2:render(3)
 		end
 	end
 
@@ -326,7 +329,7 @@ function makeSlides( _slideNames, _initalVector, _diffVector, _makeExtra)
 			v:reload()
 		end
 
-		localSlides.ex2:reload()
+		--localSlides.ex2:reload()
 	end
 
 

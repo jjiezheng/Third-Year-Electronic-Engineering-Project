@@ -16,29 +16,44 @@ function makeString( text, font, X, Y, _align )
 	return String
 end
 
-function Overlay.Start(self)
+function UpdateText( text, update )
+	local _pos = vec3(0)
 
-	self.preAlpha = makeString( "attrition - pre alpha", "Circle" ,510.0, 375.0, "centre" )
-	self.title = makeString( "overlay", "visitor" ,510.0, 375.0, "centre" )
+	if text.alignTo == "left" then
+		_pos = text.pos + text:align()
+	elseif text.alignTo == "right" then
+		_pos = text.pos - text:align()
+	else
+		_pos = text.pos
+	end
 
-	self.theTime = makeString( "Caturday", "visitor" ,510.0, 375.0, "left" )
-	self.theResolution = makeString( "Caturday", "visitor" ,510.0, 355.0, "left" )
-	self.theFrameRate = makeString( "Caturday", "visitor" ,510.0, 335.0, "left" )
-
-
-	self.theTime:shader( "String.Glow" )
-	self.theResolution:shader( "String.Glow" )
-	self.theFrameRate:shader( "String.Glow" )
-
-	self.isActive = false
-	self.finishedAnimation = false
-	self.showCounters = true
-
-	self.ToggleUI = AnimationClosure()
+	text:uniform( "View", rotate( translate( mat4(1.0), _pos ), 180.0, vec3( 1.0,0.0,0.0) ) )
+	text:uniform( "Colour", text.colour )
+	text:text( update )
 end
 
-function AnimationClosure()
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function AnimationClosure(active)
 	local Z = 0
 	local start = -950
 	local finish = -750
@@ -46,6 +61,10 @@ function AnimationClosure()
 	local currentTime = 0
 	local lastFrameShow = false
 
+
+	if not active then
+		currentTime = 100
+	end
 
 	return function( show, _deltaTime )
 
@@ -68,8 +87,88 @@ function AnimationClosure()
 		return Z
 	end
 end
-function Overlay.HandleEvents(self, _events)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function Overlay.ToggleActive(self)
+	if self.isActive then
+		self.isActive = false
+	else
+		self.isActive = true
+	end
+
+end
+
+function Overlay.ToggleShowCounter(self)
+	if self.showCounters then
+		self.showCounters = false
+	else
+		self.showCounters = true
+	end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function Overlay.Start(self)
+	self.preAlpha = makeString( "Daniel Hartnett - ELX3", "Circle" ,510.0, 375.0, "centre" )
+	self.title = makeString( "overlay", "visitor" ,510.0, 375.0, "centre" )
+
+	self.theTime = makeString( "Caturday", "visitor" ,510.0, 375.0, "left" )
+	self.theResolution = makeString( "Caturday", "visitor" ,510.0, 355.0, "left" )
+	self.theFrameRate = makeString( "Caturday", "visitor" ,510.0, 335.0, "left" )
+
+	self.hint = makeString( "F1 for help", "visitor" ,-610.0, 365.0, "right" )
+	self.refresh = makeString( "F5 for refresh", "visitor" ,-610.0, 345.0, "right" )
+	self.restart = makeString( "F6 for restart", "visitor" ,-610.0, 325.0, "right" )
+
+	self.isActive = false
+	self.finishedAnimation = false
+	self.showCounters = false
+
+	self.ToggleUI = AnimationClosure(false)
+end
+
+function Overlay.HandleEvents(self, _events)
 	if events.isKeyDown( _events, key.lctrl ) and events.wasKeyPressed( _events, key.tab ) then
 		self:ToggleActive()
 	end
@@ -78,46 +177,28 @@ function Overlay.HandleEvents(self, _events)
 		self:ToggleShowCounter()
 	end
 
-	if events.wasKeyPressed( _events, key.f2 ) then
-		self.doSpriteSheets = true
-	end
-
-	if events.wasKeyPressed( _events, key.f12 ) then
-		return true
-	else
-		return false
-	end
+	return false
 end
 
-function UpdateText( text, update )
-
-	local _pos = vec3(0)
-
-	if text.alignTo == "left" then
-		_pos = text.pos + text:align()
-	elseif text.alignTo == "right" then
-		_pos = text.pos - text:align()
-	else
-		_pos = text.pos
-	end
-
-	text:uniform( "View", rotate( translate( mat4(1.0), _pos ), 180.0, vec3( 1.0,0.0,0.0) ) )
-	text:uniform( "Colour", text.colour )
-	text:text( update )
-end
 
 function Overlay.Logic(self, _deltaTime)
-
 	_time = _time + _deltaTime
 
 	local Z = self.ToggleUI(self.showCounters, _deltaTime)
 
 	self.preAlpha.pos = vec3(0.0, -375.0, Z)
-	UpdateText( self.preAlpha, "attrition - pre alpha" )
+	UpdateText( self.preAlpha, "Daniel Hartnett - ELX3" )
 
 	self.title.pos = vec3( 0, 375.0, Z)
 	UpdateText( self.title, "overlay" )
 
+	UpdateText( self.hint, "F1 for help" )
+
+	self.refresh.pos = vec3(-610.0, 345.0, Z)
+	UpdateText( self.refresh, "F5 for refresh" )
+
+	self.restart.pos = vec3(-610.0, 325.0, Z)
+	UpdateText( self.restart, "F6 for restart" )
 
 
 	self.theTime.pos = vec3(610.0, 385.0, Z)
@@ -133,8 +214,6 @@ end
 
 
 function Overlay.Render(self)
-
-
 	self.theTime:render()
 	self.theResolution:render()
 	self.theFrameRate:render()
@@ -142,39 +221,20 @@ function Overlay.Render(self)
 	self.preAlpha:render()
 	self.title:render()
 
-	--self.hint:render()
-
+	self.hint:render()
+	self.refresh:render()
+	self.restart:render()
 end
 
 function Overlay.Reload(self)
-
 	self.theTime:reload()
 	self.theResolution:reload()
 	self.theFrameRate:reload()
 
 	self.preAlpha:reload()
 	self.title:reload()
+
+	self.hint:reload()
+	self.refresh:reload()
+	self.restart:reload()
 end
-
-function Overlay.ToggleActive(self)
-
-	--self.fullScreenFade:reverse()
-
-	if self.isActive then
-		self.isActive = false
-	else
-		self.isActive = true
-	end
-
-end
-
-function Overlay.ToggleShowCounter(self)
-
-	if self.showCounters then
-		self.showCounters = false
-	else
-		self.showCounters = true
-	end
-
-end
-

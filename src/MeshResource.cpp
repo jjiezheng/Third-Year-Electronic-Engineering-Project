@@ -70,11 +70,7 @@ namespace de
 			de::io::log << "-------------------------------------------------------\n";
 			de::io::log << "Loading medel from:" << path << "\n";
 			const aiScene* scene = importer.ReadFile( path.c_str(),
-				aiProcess_CalcTangentSpace |
 				aiProcess_Triangulate |
-				aiProcess_SortByPType |
-				aiProcess_JoinIdenticalVertices |
-				aiProcess_ValidateDataStructure  |
 				aiProcess_GenSmoothNormals );
 
 			if( !scene )

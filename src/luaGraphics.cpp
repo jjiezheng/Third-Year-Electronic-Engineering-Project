@@ -127,7 +127,7 @@ namespace de
                     .def( "reload",	(void(StringObject::*)()) &StringObject::reload )
                     .def( "render", (void(StringObject::*)()) &StringObject::render ),
 
-                luabind::class_<SpriteObject>( "Sprite3D" )
+                luabind::class_<SpriteObject>( "Sprite" )
                     .def( luabind::constructor<>() )
                     .def( luabind::constructor<std::string const&, std::string const&, std::string const&>() )
                     .def( "uniform", (SpriteObject&(SpriteObject::*)( std::string const&, float const& )) &SpriteObject::setUniform, luabind::return_reference_to(_1) )
@@ -139,7 +139,13 @@ namespace de
                     .def( "uniform",  (SpriteObject&(SpriteObject::*)( std::string const&, glm::mat4 const& )) &SpriteObject::setUniform, luabind::return_reference_to(_1) )
                     .def( "uniform",  (SpriteObject&(SpriteObject::*)( std::string const&,std::string const&)) &SpriteObject::setUniform, luabind::return_reference_to(_1) )
 
+					.def( "depth",			(SpriteObject&(SpriteObject::*)( bool )) &SpriteObject::depth,			luabind::return_reference_to(_1) )
+					.def( "writeToDepth",	(SpriteObject&(SpriteObject::*)( bool )) &SpriteObject::writeToDepth,	luabind::return_reference_to(_1) )
+					.def( "alpha",			(SpriteObject&(SpriteObject::*)( bool )) &SpriteObject::alpha,			luabind::return_reference_to(_1) )
+					.def( "blend",			(SpriteObject&(SpriteObject::*)( bool )) &SpriteObject::blend,			luabind::return_reference_to(_1) )
+
                     .def( "set",   (SpriteObject&(SpriteObject::*)( std::string const&,std::string const&,std::string const& )) &SpriteObject::set, luabind::return_reference_to(_1) )
+					.def( "set",   (SpriteObject&(SpriteObject::*)( std::string const&,std::string const& )) &SpriteObject::set, luabind::return_reference_to(_1) )
                     .def( "addSprite",   (SpriteObject&(SpriteObject::*)( std::string const&, std::string const&, int ))          &SpriteObject::addSprite, luabind::return_reference_to(_1) )
 
 

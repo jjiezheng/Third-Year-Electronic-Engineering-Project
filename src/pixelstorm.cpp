@@ -11,6 +11,7 @@
 #include "ResourceManager.h"
 #include "OpenHaptics.h"
 #include "Font.h"
+#include "Haptics.h"
 
 
 using namespace de::graphics;
@@ -54,6 +55,7 @@ namespace Attrition
 										  MUSIC | 
 										  SOUNDEFFECTS );
 
+			de::haptics::init();
             overlay = new de::state::Overlay;
         }
     }
@@ -122,6 +124,7 @@ namespace Attrition
                 delete currentState;
                 currentState = nextState;
                 nextState = NULL;
+				de::haptics::stopAllEffects();
                 //de::Engine::Audio().stopMusic();
             }
         }

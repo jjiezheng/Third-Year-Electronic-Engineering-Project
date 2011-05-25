@@ -8,7 +8,9 @@ function Bootstrap.HandleEvents( self, _events )
 end
 
 function Bootstrap.Logic( self, _deltaTime )
-	setState( "Haptics_Demo_Globals" )
+	--setState( "Final_Game" )
+	setState( "Final_Main_Menu" )
+	--setState( "MeshViewer" )
 end
 
 function Bootstrap.Render(self)

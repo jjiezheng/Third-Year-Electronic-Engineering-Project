@@ -184,6 +184,7 @@ namespace de
         }
         void Graphics::interalRender()
         {
+			CHECKGL( glClearColor( 0.0f,0.0f,0.0f,1.0f ) );
 			CHECKGL( glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) );
 				hlBeginFrame();
 				std::vector<renderObject*>::iterator objectIter;

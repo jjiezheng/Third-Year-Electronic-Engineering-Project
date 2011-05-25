@@ -7,6 +7,7 @@ namespace de
 {
 	namespace haptics
 	{
+		static std::map<int, std::string> activeEffects;
 		bool init()
 		{
 			deviceHandle = hdInitDevice(HD_DEFAULT_DEVICE);
@@ -101,7 +102,8 @@ namespace de
 			hlStartEffect(Enumtype, effect);
 			hlEndFrame();
 
-			de::io::tests << "Starting Effect: " << _type << "\n";
+			//de::io::tests << "Starting Effect: " << _type << "\n";
+			activeEffects[effect] = _type;
 			return effect;
 		}
 
@@ -112,7 +114,23 @@ namespace de
 			hlEndFrame();
 			hlDeleteEffects(_effect, 1);
 
-			de::io::tests << "Stopping Effect\n";
+			//de::io::tests << "Stopping Effect\n";
+			activeEffects.erase(_effect);
+		}
+
+		void stopAllEffects()
+		{
+			std::map<int,std::string>::iterator iter;
+			for ( iter=activeEffects.begin(); iter!=activeEffects.end(); iter++ )
+			{
+				hlBeginFrame();
+				hlStopEffect(iter->first);
+				hlEndFrame();
+				hlDeleteEffects(iter->first, 1);
+			}
+			activeEffects.clear();
+
+			de::io::tests << "Stopping all Effects\n";
 		}
 
 		glm::vec3 getProxy()

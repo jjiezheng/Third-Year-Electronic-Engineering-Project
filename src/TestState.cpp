@@ -4,7 +4,7 @@
 using namespace de::enums;
 
 TestState::TestState()
-{
+{/*
 	int num_joy, i;
 	num_joy=SDL_NumJoysticks();
 	de::io::tests << num_joy << " joysticks found\n";
@@ -55,32 +55,32 @@ TestState::TestState()
 
 
 	hlGetString( HL_VERSION );
-	hapticsShape = hlGenShapes(1);
+	hapticsShape = hlGenShapes(1);*/
 }
 
 TestState::~TestState()
-{
+{/*
 	hlBeginFrame();
 	hlStopEffect(viscous);
 	hlEndFrame();
-	hlDeleteEffects(viscous, 1);
+	hlDeleteEffects(viscous, 1);*/
 }
 
 bool TestState::handleEvents( const SDL_Event &_event )
-{
+{/*
     if( _event.type == SDL_USEREVENT )
     {
         if( _event.user.code == events::OPENGL_RELOAD )
         {
             reLoadTextures();
         }
-    }
+    }*/
 
     return true;
 }
 
 bool TestState::logic( const float &_deltaTicks, State* &_nextState, de::state::options &_options )
-{
+{/*
 	using namespace de::misc;
 	double pos[3];
     hlGetDoublev(HL_DEVICE_POSITION, pos);
@@ -88,7 +88,7 @@ bool TestState::logic( const float &_deltaTicks, State* &_nextState, de::state::
 	posText.text( "Pos: x:" + toString(pos[0]) + " y:" + toString(pos[1]) + " z:" + toString(pos[2]) );
 	vender.text( (char*)hlGetString( HL_VENDOR ) );
 	version.text( (char*)hlGetString( HL_VERSION ) );
-
+	*/
     return false;
 }
 
@@ -98,12 +98,12 @@ void TestState::reLoadTextures()
 }
 
 void TestState::render()
-{
+{/*
 	hlBeginFrame();
 	hlEndFrame();
 	posText.render();
 	vender.render();
 	version.render();
-	mesh.render();
+	mesh.render();*/
 
 }

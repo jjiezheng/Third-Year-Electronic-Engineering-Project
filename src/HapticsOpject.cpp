@@ -155,7 +155,7 @@ hapticsOpject& hapticsOpject::load( const std::string &_mesh, const std::string 
 
 hapticsOpject& hapticsOpject::setTexture( const std::string &_texture, const std::string &_value )
 {
-	mesh.setTexture( _texture, _value );
+	mesh.setTexture( _texture, "Texture0", 0 );
 	return *this;
 }
 

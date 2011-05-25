@@ -83,11 +83,11 @@ modelObject& modelObject::loadMesh()
     AttributeNames = shader.getAttributeNames();
 	iterNames = AttributeNames.begin();
 
-	de::io::log << "Textures: " << vbo.textures.size() << "\n";
+	//de::io::log << "Textures: " << vbo.textures.size() << "\n";
 	
 	for( int i = 0; i!=vbo.textures.size();i++ )
 	{
-		de::io::log << "Model " << meshName << " contains texture: " << vbo.textures[i] << "\n";
+		//de::io::log << "Model " << meshName << " contains texture: " << vbo.textures[i] << "\n";
 	}
 	/*
 	if(  vbo.textures.size() )

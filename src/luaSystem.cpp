@@ -40,6 +40,7 @@ namespace de
 		{
 			using namespace de::filesystem;
 			boost::filesystem::path dir( Roots->get( root::SETTINGS ) + _file + ".lua" );
+			de::io::tests << "Loading " << dir.file_string() << "\n";
 			std::string chunks = dir.file_string();
 
 			return chunks;
@@ -57,6 +58,24 @@ namespace de
 			}
 			return false;
 		}
+
+		int getRes( const std::string &_dem )
+		{
+			de::graphics::VideoInfo info = Engine::Graphics().getVideoSettings();
+
+			if( _dem == "width" )
+			{
+				if( info.fullScreen )
+					return info.fullscreenWidth;
+				return info.screenWidth;
+			}
+			else if( _dem == "height" )
+				if( info.fullScreen )
+					return info.fullscreenHeight;
+				return info.screenHeight;
+
+			return 0;
+		}
 	}
 }
 namespace de
@@ -70,6 +89,7 @@ namespace de
                 luabind::def( "getTime",         (std::string(*)()) &::de::time::getTimeString ),
                 luabind::def( "getFrameRate",    (std::string(*)()) &::de::sys::getFrameRate ),
                 luabind::def( "getResolution",   (std::string(*)()) &::de::sys::getResolution ),
+				luabind::def( "get",			 (int(*)(const std::string &)) &::de::sys::getRes ),
                 luabind::def( "title",           (void(*)(const std::string &)) &::de::sys::titleBar ),
 				luabind::def( "exit",            (void(*)()) &::de::sys::exit ),
 				luabind::def( "save_setting",    (bool(*)(const std::string &,const std::string &)) &::de::sys::saveLuaText ),

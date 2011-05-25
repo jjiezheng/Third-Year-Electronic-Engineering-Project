@@ -31,7 +31,10 @@ class SpriteObject : public de::graphics::renderObject
             shader.setUniform( _name, _value );
             return *this;
         }
-
+		SpriteObject& writeToDepth( bool _depth );
+		SpriteObject& depth( bool _depth );
+		SpriteObject& alpha( bool _alpha );
+		SpriteObject& blend( bool _blend );
 
         void reload();
         void render();
@@ -46,7 +49,7 @@ class SpriteObject : public de::graphics::renderObject
         void makeBuffers();
 
 
-        bool refreshVBO;
+        bool refreshVBO, writingToDepth, depthTest, alphaTest, blending;
 
         struct
         {

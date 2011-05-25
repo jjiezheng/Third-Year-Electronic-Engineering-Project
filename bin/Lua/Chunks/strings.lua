@@ -18,7 +18,6 @@ function makeString( _text, _font, X, Y, _align )
 end
 
 function UpdateText( text, _update )
-
 	local _pos = vec3(0)
 
 	if text.alignTo == "left" then

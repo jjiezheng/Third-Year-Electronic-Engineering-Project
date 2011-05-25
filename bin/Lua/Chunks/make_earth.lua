@@ -4,7 +4,7 @@ function make_earth(_scale)
 	local scale = _scale or 1
 	local earth = model()
 	--earth:load( "world.obj", "GroundFromSpace" )
-	earth:load( "sky.obj", "GroundFromSpace" )
+	earth:load( "world.obj", "GroundFromSpace" )
 	--earth:load( "world.obj", "SkyFromSpace" )
 	earth:texture( "Texture1", "world", 1 ):texture( "Texture0", "worldnight", 0 )
 	--earth:load( ".obj", "SkyFromSpace" )
@@ -27,8 +27,8 @@ function make_earth(_scale)
 	local MieScaleDepth = 0.1
 	local MieAsymmetry = -0.95
 
-	local OuterRadius = 10.50*scale
-	local InnerRadius = 10.25*scale
+	local OuterRadius = 10.25*scale
+	local InnerRadius = 10*scale
 	local fScale = 1/(OuterRadius - InnerRadius)
 
 	local cameraPos = vec3( 0,0,0 )
@@ -60,77 +60,140 @@ function make_earth(_scale)
 end
 
 
-function make_world_fancy_camera()
+function gen_lookup_catmull(_positions, resolution)
 
-	local quats = 
-	{ 
-		rotateQuat( math.uQuat(), 0, vec3(0,1,0) ),
-		rotateQuat( math.uQuat(), 0, vec3(0,1,0) ), 
-		rotateQuat( rotateQuat( math.uQuat(), -30, vec3(0,0,1) ), -30, vec3(0,1,0) ), 
-		rotateQuat( rotateQuat( math.uQuat(), -100, vec3(0,0,1) ),  -50, vec3(0,1,0) ), 
-		rotateQuat( rotateQuat( math.uQuat(), -200, vec3(0,0,1)  ), -70, vec3(0,1,0) ), 
-		rotateQuat( rotateQuat( math.uQuat(), -30, vec3(0,0,1) ), -90, vec3(0,1,0) ), 
-		rotateQuat( rotateQuat( math.uQuat(), -180, vec3(0,0,1) ), -110, vec3(0,1,0) )
-	}
+	local samples = {}
+	local pos, old_pos = _positions[2], _positions[2]
+	local arc_length = 0
 
-	local positions = 
-	{	
-		vec3(0,0,1000),
-		vec3(0,0,800),
-		vec3(300,0,300),
-		vec3(400,0,100),
-		vec3(400,0,0),
-		vec3(400,0,-100),
-		vec3(400,0,-100)
-	}
+	table.insert(samples, {p=pos,l=length(pos-old_pos), w=vec3(0), u=vec3(0) } )
+	for seg=2, #_positions-2 do
+		
+		for i=1,resolution do
+			local j = i/resolution
+
+			pos = catmullRom( _positions[seg-1],
+							  _positions[seg],
+					  		  _positions[seg+1],
+					  		  _positions[seg+2],
+					  		  j )
+
+			local w = catmull_w(
+				_positions[seg-1],
+				_positions[seg],
+				_positions[seg+1],
+				_positions[seg+2],
+				j )
+
+			local u = catmull_u(
+				_positions[seg-1],
+				_positions[seg],
+				_positions[seg+1],
+				_positions[seg+2],
+				j )
+
+			arc_length = arc_length + length(pos-old_pos)
+			table.insert(samples, {p=pos,l=arc_length, w=w, u=u } )
+			old_pos = pos
+		end
+	end
+	return samples
+end
+
+
+function move_closure(points)
+
+	local samples = gen_lookup_catmull(points,20)
+	local dist = 0
+	local low,high = 1,2
+
+	return function(_deltaTime)
+
+		dist = dist + _deltaTime*0.02
+		
+		while (samples[high].l < dist )  do
+			if high < #samples-2 then
+				low,high = low+1, low+2
+			else 
+				Log("Gameover\n\n\n\n\n\n\n")
+				return {p=samples[high].p,
+						w=samples[high].w,
+						u=samples[high].u}, true
+			 end
+		end
+
+		local p_dist = samples[high].l - samples[low].l
+		local cur_dist = dist - samples[low].l
+		local ratio = cur_dist/p_dist
+
+		return { p=mix(samples[low].p,samples[high].p,ratio),
+				 w=mix(samples[low].w,samples[high].w,ratio),
+				 u=mix(samples[low].u,samples[high].u,ratio) }, false
+	end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function catmull_dydx1(p0, p1, p2, p3, t)
+	local a = p2-p0
+	local b = ( (p0*2) - (p1*5) + (p2*4) - p3 )*2*t
+	local c = ( (p1*3) - p0 - (p2*3) + p3)*3*t*t
+	
+	return ((a+b+c)*0.5)
+end
+
+
+function catmull_dydx2(p0, p1, p2, p3, t)
+	local b = ( (p0*2) - (p1*5) + (p2*4) - p3 )*2
+	local c = ( (p1*3) - p0 - (p2*3) + p3)*6*t
+	
+	return ((b+c)*0.5)
+end
+
+function catmull_w(p0, p1, p2, p3, t)
+	return  normalise( catmull_dydx1(p0, p1, p2, p3, t) )
+end
+
+function catmull_u(p0, p1, p2, p3, t)
+	return normalise( cross(
+		catmull_dydx1(p0, p1, p2, p3, t),
+		catmull_dydx2(p0, p1, p2, p3, t)) )
+end
+
+
+
+function make_world_fancy_camera(_positons)
+
+	local positions = _positons
 
 	local ori = {}
 	for i = 1, #positions do
-		ori[i] = { rot = quats[i], pos = positions[i] }
+		ori[i] = { pos = positions[i] }
 	end
 
 	ori.current = { rot = math.uQuat(), pos = vec3(0) }
 
-
-	local rot_timer, unit_time = 0, 50000
+	local rot_timer, unit_time = 0, 5000
 	local cur_pos, new_position = 2,2
 	local change_in_position = false
+
+	local movement = move_closure(positions)
 	return 
 	{
 		logic = function(_deltaTime)
-
-			rot_timer = rot_timer + _deltaTime
-			if rot_timer > unit_time and cur_pos < (#ori - 2) then
-				rot_timer = rot_timer - unit_time
-				cur_pos = cur_pos + 1
-			end
-			
-			local t = smoothstep( 0, unit_time, rot_timer )
-
-			local inter1 = intermediate( ori[cur_pos-1].rot,
-										 ori[cur_pos].rot,
-										 ori[cur_pos+1].rot )
-
-			local inter2 = intermediate( ori[cur_pos].rot,
-										 ori[cur_pos+1].rot,
-										 ori[cur_pos+2].rot )
-
-
-			ori.current.rot = squad( normalise(ori[cur_pos].rot),
-									 normalise(ori[cur_pos+1].rot),
-									 normalise(inter1),
-									 normalise(inter2),
-									 smoothstep( 0, unit_time, rot_timer ) )
-
-
-			ori.current.pos = catmullRom( ori[cur_pos-1].pos,
-										  ori[cur_pos].pos,
-										  ori[cur_pos+1].pos,
-										  ori[cur_pos+2].pos,
-										  smoothstep( 0, unit_time, rot_timer ) )
-
-
-			return ori.current.pos, scale( mat4Cast( ori.current.rot ), vec3(1) )
+			local current, finished = movement(_deltaTime)
+			return current.p, lookAt(vec3(0)-current.w, vec3(0), vec3(0,1,0) ), finished
 		end
 	}
 end

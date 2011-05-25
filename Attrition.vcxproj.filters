@@ -308,6 +308,7 @@
     </ClInclude>
     <ClInclude Include="include\Haptics.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="include\luaSound.h">
       <Filter>Header Files\Engine\Lua</Filter>
     </ClInclude>
@@ -541,11 +542,6 @@
     <ClCompile Include="src\Input.cpp">
       <Filter>Source Files\Engine\Services</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Attrition.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Release\Resources\Core\Images\Extra\Attrition.ico">

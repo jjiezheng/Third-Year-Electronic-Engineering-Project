@@ -16,7 +16,8 @@ namespace
     }
 }
 
-SpriteObject::SpriteObject() : refreshVBO(false)
+SpriteObject::SpriteObject() 
+	: refreshVBO(false), writingToDepth(false), depthTest(false), alphaTest(false), blending(false)
 {
     ElementBuffer.push_back( 0 );
     ElementBuffer.push_back( 1 );
@@ -27,8 +28,8 @@ SpriteObject::SpriteObject() : refreshVBO(false)
     Sprites[1].usingTex = false;
     Sprites[2].usingTex = false;
 }
-
-SpriteObject::SpriteObject( const std::string &_textureName, const std::string &_spriteName, const std::string &_shaderName ) : refreshVBO(false)
+SpriteObject::SpriteObject( const std::string &_textureName, const std::string &_spriteName, const std::string &_shaderName )  
+	: refreshVBO(false), writingToDepth(false), depthTest(false), alphaTest(false), blending(false)
 {
     ElementBuffer.push_back( 0 );
     ElementBuffer.push_back( 1 );
@@ -41,7 +42,6 @@ SpriteObject::SpriteObject( const std::string &_textureName, const std::string &
 
     set( _textureName, _spriteName, _shaderName );
 }
-
 SpriteObject::~SpriteObject()
 {
     //dtor
@@ -63,7 +63,6 @@ SpriteObject& SpriteObject::addSprite( const std::string &_textureName, const st
     Sprites[_number].usingTex = true;
     return *this;
 }
-
 SpriteObject& SpriteObject::set( const std::string &_textureName, const std::string &_spriteName, const std::string &_shaderName )
 {
     shaderName = _shaderName;
@@ -87,7 +86,6 @@ SpriteObject& SpriteObject::set( const std::string &_textureName, const std::str
     refreshVBO = true;
     return *this;
 }
-
 SpriteObject& SpriteObject::set( const std::string &_spriteName, const std::string &_shaderName )
 {
     std::vector<std::string> strs;
@@ -122,7 +120,6 @@ void SpriteObject::setFBO( de::classes::Frect _tex, de::classes::Frect _coords )
     VertexBuffer.push_back( vertex( _tex.x + (-_tex.w/2), _tex.y + (-_tex.h/2), 0, 0 ) );
     VertexBuffer.push_back( vertex( _tex.x + (-_tex.w/2), _tex.y + (_tex.h/2),  0, 0 ) );
 }
-
 void SpriteObject::makeBuffers()
 {
     vertexBuffer = make_buffer( GL_ARRAY_BUFFER, &(VertexBuffer[0]), VertexBuffer.size()*sizeof(de::graphics::vertex) );
@@ -130,6 +127,28 @@ void SpriteObject::makeBuffers()
 
     refreshVBO = false;
 }
+
+SpriteObject& SpriteObject::writeToDepth( bool _depth )
+{
+	writingToDepth = _depth;
+	return *this;
+}
+SpriteObject& SpriteObject::depth( bool _depth )
+{
+	depthTest = _depth;
+	return *this;
+}
+SpriteObject& SpriteObject::alpha( bool _alpha )
+{
+	alphaTest = _alpha;
+	return *this;
+}
+SpriteObject& SpriteObject::blend( bool _blend )
+{
+	blending = _blend;
+	return *this;
+}
+
 
 void SpriteObject::reload()
 {
@@ -156,10 +175,33 @@ void SpriteObject::start()
     {
         makeBuffers();
     }
-
     CHECKGL( glEnable( GL_TEXTURE_2D ) );
     CHECKGL( glActiveTexture( GL_TEXTURE0 ) );
     CHECKGL( glBindTexture( GL_TEXTURE_2D, Sprites[0].texture ) );
+
+	if( writingToDepth )
+	{
+		CHECKGL( glDepthMask( GL_TRUE ) );
+	}
+    else glDepthMask( GL_FALSE );
+
+	if( depthTest ) 
+	{
+		CHECKGL( glEnable( GL_DEPTH_TEST ) );
+	}
+    else CHECKGL( glDisable( GL_DEPTH_TEST ) );
+
+	if( alphaTest ) 
+	{
+		CHECKGL( glEnable( GL_ALPHA_TEST ) );
+	}
+    else CHECKGL( glDisable( GL_ALPHA_TEST ) );
+
+	if( blending ) 
+	{
+		CHECKGL( glEnable( GL_BLEND ) );
+	}
+    else CHECKGL( glDisable( GL_BLEND ) );
 
     shader.bindShader();
     CHECKGL( glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer ) );
@@ -179,7 +221,7 @@ void SpriteObject::start()
 
 
     CHECKGL( glVertexAttribPointer(
-        shader.getAttribute( "Tex" ),        // attribute
+        shader.getAttribute( "UV_0" ),        // attribute
         4,                                         // size
         GL_FLOAT,                                     // type
         GL_FALSE,                                     // normalized?
@@ -222,20 +264,20 @@ void SpriteObject::start()
     }
 
     CHECKGL( glEnableVertexAttribArray( shader.getAttribute( "Position" ) ) );
-    CHECKGL( glEnableVertexAttribArray( shader.getAttribute( "Tex" ) ) );
+    CHECKGL( glEnableVertexAttribArray( shader.getAttribute( "UV_0" ) ) );
 }
 
 void SpriteObject::groupRender()
 {
     shader.bindUniforms();
-
+	/*
     glDrawElementsInstancedEXT( GL_TRIANGLE_STRIP,  // mode
                                 ElementBuffer.size(),                  // count
                                 GL_UNSIGNED_SHORT,    // type
                                 (void*)0,            // element array buffer offset )
                                 150
-                                );
-/*
+                                );*/
+	
     CHECKGL( glDrawRangeElements(
         GL_TRIANGLE_STRIP,  // mode
         0,
@@ -243,13 +285,13 @@ void SpriteObject::groupRender()
         ElementBuffer.size(),                  // count
         GL_UNSIGNED_SHORT,    // type
         (void*)0            // element array buffer offset
-    ) );*/
+    ) );
 }
 
 void SpriteObject::end()
 {
     CHECKGL( glDisableVertexAttribArray( shader.getAttribute( "Position" ) ) );
-    CHECKGL( glDisableVertexAttribArray( shader.getAttribute( "Tex" ) ) );
+    CHECKGL( glDisableVertexAttribArray( shader.getAttribute( "UV_0" ) ) );
     if( Sprites[1].usingTex )
     {
         CHECKGL( glDisableVertexAttribArray( shader.getAttribute( "Tex1" ) ) );

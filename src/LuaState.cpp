@@ -2,6 +2,7 @@
 //#include "Pixelstorm.h"
 #include "CoreEngine.h"
 #include <lua.hpp>
+#include "Haptics.h"
 
 namespace fs = boost::filesystem;
 using namespace de::filesystem;
@@ -89,6 +90,7 @@ namespace de
 
 		void LuaState::loadLuaState( const std::string &_luaPath )
 		{
+			de::haptics::stopAllEffects();
 			luaState = luaL_newstate();
 			luaL_openlibs(luaState);
 			luabind::open(luaState);
